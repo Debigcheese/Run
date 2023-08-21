@@ -16,11 +16,13 @@ public class PlayerMovement : MonoBehaviour
     public float slideSpeed = 5;
     public float maxWallClimbTime;
     public float wallGrabCooldown;
+    [SerializeField] public Vector2 wallJumpingPower = new Vector2(8f, 16f);
 
     [Space]
     [Header("Booleans")]
-    public bool wallGrab;
+    public bool isWallGrabbing;
     public bool isJumping;
+    public bool isWallJumping;
 
     [Space]
     private float wallClimbTime = 0f;
@@ -36,50 +38,49 @@ public class PlayerMovement : MonoBehaviour
      {
         moveDirection = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
-        Vector2 dir = new Vector2(moveDirection, y);
+        isJumping = coll.onGround && Input.GetButtonDown("Jump");
 
-        Walk(dir);
-
-        wallGrab = coll.onWall && Input.GetKey(KeyCode.LeftShift);
-
-        if (Input.GetButtonDown("Jump"))
+        if (coll.onGround)
         {
-            if (coll.onGround)
-            {
-                isJumping = true;
-                Jump(Vector2.up, false);
-            }
-            if(coll.onWall && !coll.onGround)
-            {
-                WallJump();
-            }
-          
+            isWallJumping = false;
         }
- 
+        
+        if (isJumping)
+        {
+            Jump(Vector2.up);
+        }
+        Vector2 dir = new Vector2(moveDirection, y);
+        Walk(dir);
         WallGrab();
         WallSlide();
+        WallJump();
         GetComponent<BetterJump>().enabled = true;
-
      }
+
     private void WallJump()
     {
-
+        
+        if (coll.onWall && !coll.onGround && Input.GetButtonDown("Jump"))
+        {
+            Jump(new Vector2(10,1));
+            isWallJumping = true;
+            Flip();
+        }
     }
 
     private void WallGrab()
     {
-        if (wallGrab && !isWallGrabCooldown)
+        isWallGrabbing = coll.onWall && Input.GetKey(KeyCode.LeftShift);
+        if (isWallGrabbing && !isWallGrabCooldown)
         {
             wallClimbTime += Time.deltaTime;
             rb.gravityScale = 0;
-            rb.velocity = new Vector2(rb.velocity.x, 0);
             float speedModifier = y > 0 ? .5f : 1;
             rb.velocity = new Vector2(rb.velocity.x, y * (speed * speedModifier));
         }
         
-        if (wallClimbTime >= maxWallClimbTime || wallGrab == false)
+        if (wallClimbTime >= maxWallClimbTime || isWallGrabbing == false)
         {
-            wallClimbTime = 0f;
             rb.gravityScale = 4;
             isWallGrabCooldown = true;
             StartCoroutine(WallGrabCooldown());
@@ -90,13 +91,13 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(wallGrabCooldown);
         isWallGrabCooldown = false;
-        rb.gravityScale = 4;
+        wallClimbTime = 0f;
     }
 
     private void Walk(Vector2 dir)
     {
-
         rb.velocity = (new Vector2(dir.x * speed, rb.velocity.y));
+
         if (moveDirection > 0f && isFacingRight)
         {
             Flip();
@@ -105,12 +106,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
-
     }
 
-    private void Jump(Vector2 dir, bool wall)
+    private void Jump(Vector2 dir)
     {
-        rb.velocity = new Vector2(rb.velocity.x, 0);
+        isJumping = true;
         rb.velocity += dir * JumpForce;
     }
 
@@ -125,15 +125,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-
-        if(moveDirection < 0 || moveDirection > 0)
-        {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
-
-        }
     }
 
 }
