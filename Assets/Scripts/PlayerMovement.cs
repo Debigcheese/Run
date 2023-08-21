@@ -14,14 +14,13 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10;
     public float JumpForce = 50;
     public float slideSpeed = 5;
-    public float maxWallClimbTime = 2f;
-    public float wallGrabCooldown = 2f;
+    public float maxWallClimbTime;
+    public float wallGrabCooldown;
 
     [Space]
     [Header("Booleans")]
     public bool wallGrab;
     public bool isJumping;
-    private bool canWallGrab = true;
 
     [Space]
     private float wallClimbTime = 0f;
@@ -69,21 +68,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallGrab()
     {
-        if (wallGrab && wallClimbTime < maxWallClimbTime && !isWallGrabCooldown && canWallGrab)
+        if (wallGrab && !isWallGrabCooldown)
         {
             wallClimbTime += Time.deltaTime;
             rb.gravityScale = 0;
             rb.velocity = new Vector2(rb.velocity.x, 0);
             float speedModifier = y > 0 ? .5f : 1;
             rb.velocity = new Vector2(rb.velocity.x, y * (speed * speedModifier));
-            canWallGrab = false;
         }
         
         if (wallClimbTime >= maxWallClimbTime || wallGrab == false)
         {
             wallClimbTime = 0f;
-            canWallGrab = false;
             rb.gravityScale = 4;
+            isWallGrabCooldown = true;
             StartCoroutine(WallGrabCooldown());
         }
     }
@@ -92,10 +90,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(wallGrabCooldown);
         isWallGrabCooldown = false;
-        wallClimbTime = 0f;
-        wallGrab = true;
         rb.gravityScale = 4;
-        canWallGrab = true;
     }
 
     private void Walk(Vector2 dir)
