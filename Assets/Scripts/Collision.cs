@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    [Header("Layers")]
-    public LayerMask layer;
-
-    [Space]
-    public bool onGround;
-    public bool onWall;
-
 
     [Space]
 
     [Header("Collision")]
+    [SerializeField] private LayerMask layer;
+    [SerializeField] private Transform groundcheck;
+    [SerializeField] private Transform wallCheck;
 
-    public float collisionRadius = 0.25f;
-    public float bottomCollisionRadius = 0.30f;
-    public Vector2 bottomOffset, rightOffset, leftOffset;
-    private Color debugCollisionColor = Color.red;
+    public bool onGround;
+    public bool onWall;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,21 +25,15 @@ public class Collision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        onGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, bottomCollisionRadius, layer);
-        onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, layer)
-            || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, layer);
-
-       
+        onGround = Physics2D.OverlapCircle(groundcheck.position, 0.2f, layer);
+        onWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, layer);
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
+    private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
+            Gizmos.DrawWireSphere(groundcheck.position, 0.2f);
+        }
 
-        var positions = new Vector2[] { bottomOffset, rightOffset, leftOffset };
-
-        Gizmos.DrawWireSphere((Vector2)transform.position + bottomOffset, collisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
-    }
 }
