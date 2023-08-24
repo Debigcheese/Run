@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public float moveDirection = 0f;
     private float y = 0f;
-    private bool isFacingRight;
+    
     private float originalSpeed;
     private float originalGravity;
     
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Space]
     [Header("Booleans")]
+    public bool cantMove;
     public bool isMoving;
     public bool isJumping;
     public bool isFalling;
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isWallJumping;
     public bool isDashing;
     public bool ledgeDetected;
+    public bool isFacingLeft;
 
     [Space]
     [Header("WallJumping")]
@@ -42,13 +44,16 @@ public class PlayerMovement : MonoBehaviour
     public bool hasDashed;
 
     [Space]
-    [Header("Dash")]
+    [Header("LedgeClimbing")]
     public Vector2 offset1;
     public Vector2 offset2;
+    public Vector2 offsetLeft1;
+    public Vector2 offsetLeft2;
     private Vector2 climbBegunPosition;
     private Vector2 climbOverPosition;
     public bool canGrabLedge = true;
-    public bool canClimbLedge = false;
+    public bool isClimbingLedge = false;
+    public float ledgeClimbFinish;
 
     void Start()
     {
@@ -89,60 +94,79 @@ public class PlayerMovement : MonoBehaviour
 
         //Methods
 
-        Vector2 dir = new Vector2(moveDirection, y);
-        Walk(dir);
-        CheckForLedge();
-        if (coll.onGround && Input.GetButtonDown("Jump"))
+        if (!cantMove)
         {
-            Jump(Vector2.up);
-        }
+            Vector2 dir = new Vector2(moveDirection, y);
+            Walk(dir);
 
-        if (coll.onWall && !coll.onGround && rb.velocity.y < 0 && moveDirection != 0f)
-        {
-            WallSlide();
-        }
-
-        if (coll.onWall && !coll.onGround && Input.GetButtonDown("Jump"))
-        {
-            WallJump();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
-        {
-            if (xRaw != 0 || yRaw != 0)
+            if (coll.onGround && Input.GetButtonDown("Jump"))
             {
-                Dash(xRaw, yRaw);
+                Jump(Vector2.up);
+            }
+            if (coll.onWall && !coll.onGround && Input.GetButtonDown("Jump"))
+            {
+                WallJump();
+            }
+            if (coll.onWall && !coll.onGround && rb.velocity.y < 0 && moveDirection != 0f)
+            {
+                WallSlide();
+            }
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
+            {
+                if (xRaw != 0 || yRaw != 0)
+                {
+                    Dash(xRaw, yRaw);
+                }
             }
         }
-
+        
+        CheckForLedge();
         GetComponent<BetterJump>().enabled = true;
      }
 
     private void CheckForLedge()
     {
-        if (ledgeDetected && canGrabLedge)
+        if (ledgeDetected && canGrabLedge  )
         {
             canGrabLedge = false;
+            isClimbingLedge = true;
+            cantMove = true;
             Vector2 ledgePosition = GetComponentInChildren<LedgeDetection>().transform.position;
-            climbBegunPosition = ledgePosition + offset1;
-            climbOverPosition = ledgePosition + offset2;
+
+
+            if (!isFacingLeft)
+            {
+                climbBegunPosition = ledgePosition + offset1;
+                climbOverPosition = ledgePosition + offset2;
+            }
+            if(isFacingLeft)
+            {
+                climbBegunPosition = ledgePosition + offsetLeft1;
+                climbOverPosition = ledgePosition + offsetLeft2;
+            }
+
             StartCoroutine(LedgeClimbOver());
-            canClimbLedge = true;
         }
 
-        if (canClimbLedge)
+        if (isClimbingLedge)
         {
+            rb.gravityScale = -1.7f;
             transform.position = climbBegunPosition;
         }
     }
     IEnumerator LedgeClimbOver()
     {
-        yield return new WaitForSeconds(1.5f);
-        canClimbLedge = false;
+        yield return new WaitForSeconds(ledgeClimbFinish);
+        rb.gravityScale = 4;
+        isClimbingLedge = false;
         transform.position = climbOverPosition;
         Invoke("AllowLedgeGrab", .1f);
     }
-    private void AllowLedgeGrab() => canGrabLedge = true;
+    private void AllowLedgeGrab() 
+    {
+        canGrabLedge = true;
+        cantMove = false;
+    }
 
     private void Dash(float x, float y)
     {
@@ -202,14 +226,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpingSlowMo * Time.deltaTime);
         }
-        if(!isWallJumping)
+        if(!isWallJumping )
         {
             rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
             MoveDirectionFlip();
         }
         else
         {
-            StartCoroutine(EnableFlip(.5f));
+            StartCoroutine(EnableFlip(.4f));
         }
     }
 
@@ -236,21 +260,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveDirectionFlip()
     {
-        if (moveDirection > 0f && isFacingRight  )
+        if (!cantMove)
         {
-            isFacingRight = true;
-            Flip();
-        }
-        if(moveDirection < 0f && isFacingRight == false)
-        {
-            isFacingRight = false;
-            Flip();
+            if (moveDirection > 0f && isFacingLeft)
+            {
+                isFacingLeft = true;
+                Flip();
+            }
+            if (moveDirection < 0f && isFacingLeft == false)
+            {
+                isFacingLeft = false;
+                Flip();
+            }
         }
     }
 
     private void Flip()
     {
-            isFacingRight = !isFacingRight;
+            isFacingLeft = !isFacingLeft;
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;

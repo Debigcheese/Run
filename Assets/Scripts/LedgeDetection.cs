@@ -7,7 +7,6 @@ public class LedgeDetection : MonoBehaviour
     [SerializeField] private float radius;
     public LayerMask layer;
     public PlayerMovement playerMovement;
-
     private bool canDetect;
 
     // Start is called before the first frame update
