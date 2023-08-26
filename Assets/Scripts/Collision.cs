@@ -11,6 +11,8 @@ public class Collision : MonoBehaviour
     [SerializeField] private LayerMask layer;
     [SerializeField] private Transform groundcheck;
     [SerializeField] private Transform wallCheck;
+    [SerializeField] private float groundRadius;
+    [SerializeField] private float wallRadius;
 
     public bool onGround;
     public bool onWall;
@@ -25,15 +27,15 @@ public class Collision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        onGround = Physics2D.OverlapCircle(groundcheck.position, 0.2f, layer);
-        onWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, layer);
+        onGround = Physics2D.OverlapCircle(groundcheck.position, groundRadius, layer);
+        onWall = Physics2D.OverlapCircle(wallCheck.position, wallRadius, layer);
     }
 
     private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
-            Gizmos.DrawWireSphere(groundcheck.position, 0.2f);
+            Gizmos.DrawWireSphere(wallCheck.position, wallRadius);
+            Gizmos.DrawWireSphere(groundcheck.position, groundRadius);
         }
 
 }

@@ -10,34 +10,33 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public float moveDirection = 0f;
     private float y = 0f;
-    
     private float originalSpeed;
     private float originalGravity;
-    
 
     [Header("Stats")]
     public float speed = 10;
-    public float JumpForce = 50;
     public float slideSpeed = 5;
     public float dashSpeed = 5f;
+    public float JumpForce = 50;
+    [SerializeField] public Vector2 wallJumpingForce = new Vector2(6f, 15f);
 
     [Space]
     [Header("Booleans")]
-    public bool cantMove;
     public bool isMoving;
     public bool isJumping;
     public bool isFalling;
     public bool isWallSliding;
     public bool isWallJumping;
-    public bool isDashing;
-    public bool ledgeDetected;
-    public bool isFacingLeft;
+    public bool isClimbingLedge;
+
+    //Booleans that dont need to be public for animations
+    private bool cantMove;
+    private bool isFacingLeft;
 
     [Space]
     [Header("WallJumping")]
-    [SerializeField] public Vector2 wallJumpingPower = new Vector2(1f, 1f);
     private float wallJumpingDirection;
-    public float wallJumpingSlowMo;
+    private float wallJumpingSlowMo = 16f;
 
     [Space]
     [Header("Dash")]
@@ -45,19 +44,27 @@ public class PlayerMovement : MonoBehaviour
 
     [Space]
     [Header("LedgeClimbing")]
+    public bool ledgeDetected;
+    private bool canGrabLedge = true;
+    private float ledgeClimbFinish = 0.5f;
+    private Vector2 climbBegunPosition;
+    private Vector2 climbOverPosition;
     public Vector2 offset1;
     public Vector2 offset2;
     public Vector2 offsetLeft1;
     public Vector2 offsetLeft2;
-    private Vector2 climbBegunPosition;
-    private Vector2 climbOverPosition;
-    public bool canGrabLedge = true;
-    public bool isClimbingLedge = false;
-    public float ledgeClimbFinish;
+
+    [Space]
+    [Header("Particles")]
+    public ParticleSystem jumpParticle;
+    public ParticleSystem walljumprightParticle;
+    public ParticleSystem walljumpleftParticle;
+    public ParticleSystem sliderightParticle;
+    public ParticleSystem slideleftParticle;
 
     void Start()
     {
-        originalGravity = 4;
+        originalGravity = 3.5f;
         originalSpeed = speed;
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collision>();
@@ -91,7 +98,11 @@ public class PlayerMovement : MonoBehaviour
             isFalling = true;
         }
 
-
+        if (!isWallSliding)
+        {
+            sliderightParticle.Stop();
+            slideleftParticle.Stop();
+        }
         //Methods
 
         if (!cantMove)
@@ -110,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
             if (coll.onWall && !coll.onGround && rb.velocity.y < 0 && moveDirection != 0f)
             {
                 WallSlide();
+
             }
             if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
             {
@@ -119,20 +131,20 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        
+
         CheckForLedge();
+        
         GetComponent<BetterJump>().enabled = true;
      }
 
     private void CheckForLedge()
     {
-        if (ledgeDetected && canGrabLedge  )
+        if (ledgeDetected && canGrabLedge )
         {
             canGrabLedge = false;
             isClimbingLedge = true;
             cantMove = true;
             Vector2 ledgePosition = GetComponentInChildren<LedgeDetection>().transform.position;
-
 
             if (!isFacingLeft)
             {
@@ -157,15 +169,15 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator LedgeClimbOver()
     {
         yield return new WaitForSeconds(ledgeClimbFinish);
-        rb.gravityScale = 4;
+        rb.gravityScale = originalGravity;
         isClimbingLedge = false;
         transform.position = climbOverPosition;
-        Invoke("AllowLedgeGrab", .1f);
+        cantMove = false;
+        Invoke("AllowLedgeGrab", 1f);
     }
     private void AllowLedgeGrab() 
     {
         canGrabLedge = true;
-        cantMove = false;
     }
 
     private void Dash(float x, float y)
@@ -185,13 +197,11 @@ public class PlayerMovement : MonoBehaviour
 
         rb.gravityScale = 0;
         GetComponent<BetterJump>().enabled = false;
-        isDashing = true;
 
         yield return new WaitForSeconds(1f);
 
         rb.gravityScale = originalGravity;
         GetComponent<BetterJump>().enabled = true;
-        isDashing = false;
     }
 
     IEnumerator GroundDash()
@@ -208,8 +218,17 @@ public class PlayerMovement : MonoBehaviour
          StartCoroutine(DisableMovement(.15f));
          isWallJumping = true;
          wallJumpingDirection = -transform.localScale.x;
-         rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+         rb.velocity = new Vector2(wallJumpingDirection * wallJumpingForce.x, wallJumpingForce.y);
          Flip();
+
+        if (isFacingLeft)
+        {
+            walljumprightParticle.Play();
+        }
+        else
+        {
+            walljumpleftParticle.Play();
+        }
     }
 
     IEnumerator DisableMovement(float time)
@@ -246,6 +265,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(Vector2 dir)
     {
+        jumpParticle.Play();
         isJumping = true;
         rb.velocity += dir * JumpForce;
     }
@@ -256,6 +276,15 @@ public class PlayerMovement : MonoBehaviour
         isFalling = false;
         isWallSliding = true;
         rb.velocity = new Vector2(rb.velocity.x, -slideSpeed);
+        if (!isFacingLeft)
+        {
+            sliderightParticle.Play();
+        }
+        else if (isFacingLeft)
+        {
+            slideleftParticle.Play();
+        }
+       
     }
 
     private void MoveDirectionFlip()

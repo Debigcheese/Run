@@ -7,23 +7,26 @@ public class LedgeDetection : MonoBehaviour
     [SerializeField] private float radius;
     public LayerMask layer;
     public PlayerMovement playerMovement;
-    private bool canDetect;
+    public bool canDetect;
 
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         if (canDetect)
         {
+            
             playerMovement.ledgeDetected = Physics2D.OverlapCircle(transform.position, radius, layer);
+            
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

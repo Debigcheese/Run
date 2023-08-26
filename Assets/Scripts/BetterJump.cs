@@ -6,19 +6,24 @@ public class BetterJump : MonoBehaviour
 {
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
-
-    Rigidbody2D rb;
+    private PlayerMovement playerMovement;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (rb.velocity.y < 0)
+        if(rb.velocity.y < 0 && playerMovement.isWallJumping)
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier-1.4f) * Time.deltaTime;
+        }
+        if (rb.velocity.y < 0 && !playerMovement.isWallJumping)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
