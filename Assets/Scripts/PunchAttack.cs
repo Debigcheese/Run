@@ -6,12 +6,14 @@ public class PunchAttack : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     public Transform attackPoint;
-    public float attackRange = 0.5f;
     public LayerMask enemy;
     private bool switchToLongPunch = false;
     public bool isLongPunching;
     public bool isNormalPunching;
     public bool isPunching = false;
+
+    public float attackRange = 0.5f;
+    public int attackDamage = 20;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,10 @@ public class PunchAttack : MonoBehaviour
             }
 
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
+            foreach(Collider2D enemy in hitEnemies)
+            {
+                enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            }
             Debug.Log("hit");
             StartCoroutine("PunchCD");
         }

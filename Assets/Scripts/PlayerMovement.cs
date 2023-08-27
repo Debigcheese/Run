@@ -59,8 +59,6 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem jumpParticle;
     public ParticleSystem walljumprightParticle;
     public ParticleSystem walljumpleftParticle;
-    public ParticleSystem sliderightParticle;
-    public ParticleSystem slideleftParticle;
 
     void Start()
     {
@@ -70,8 +68,8 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<Collision>();
     }
 
-     void Update()
-     {
+    void Update()
+    {
         moveDirection = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
         float xRaw = Input.GetAxisRaw("Horizontal");
@@ -97,12 +95,8 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
             isFalling = true;
         }
+    
 
-        if (!isWallSliding)
-        {
-            sliderightParticle.Stop();
-            slideleftParticle.Stop();
-        }
         //Methods
 
         if (!cantMove)
@@ -120,8 +114,8 @@ public class PlayerMovement : MonoBehaviour
             }
             if (coll.onWall && !coll.onGround && rb.velocity.y < 0 && moveDirection != 0f)
             {
+               
                 WallSlide();
-
             }
             if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
             {
@@ -225,10 +219,11 @@ public class PlayerMovement : MonoBehaviour
         {
             walljumprightParticle.Play();
         }
-        else
+        else if (!isFacingLeft)
         {
             walljumpleftParticle.Play();
         }
+
     }
 
     IEnumerator DisableMovement(float time)
@@ -276,15 +271,8 @@ public class PlayerMovement : MonoBehaviour
         isFalling = false;
         isWallSliding = true;
         rb.velocity = new Vector2(rb.velocity.x, -slideSpeed);
-        if (!isFacingLeft)
-        {
-            sliderightParticle.Play();
-        }
-        else if (isFacingLeft)
-        {
-            slideleftParticle.Play();
-        }
-       
+
+
     }
 
     private void MoveDirectionFlip()
