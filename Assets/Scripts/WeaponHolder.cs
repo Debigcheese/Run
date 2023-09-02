@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class WeaponHolder : MonoBehaviour
 {
-    PlayerMovement playerMovement;
+  
 
+    private PlayerMovement playerMovement;
     public Transform weaponHolder;
     public GameObject[] weapons;
     public GameObject currentWeapon;
@@ -15,43 +16,35 @@ public class WeaponHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        punchAttack = GetComponentInParent<PunchAttack>();
         playerMovement = GetComponentInParent<PlayerMovement>();
+        punchAttack = GetComponentInParent<PunchAttack>();
+
+        currentWeapon = weapons[0];
+            
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge)
-        {
-            Attack();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            
-        }
-        if (currentWeapon == null)
-        {
-            currentWeapon = Instantiate(weapons[0], weaponHolder);
-            punchAttack = currentWeapon.GetComponent<PunchAttack>();
-        }
+        
+       
     }
 
-    public void Attack()
-    {
-        if(currentWeapon == weapons[0])
-        {
-           punchAttack.Punch();
-        }
-    }
+    //public void Attack()
+    //{
+    //    if (currentWeapon == weapons[0])
+    //    {
+    //        punchAttack.Attack();
+    //    }
+    //    if (currentWeapon == weapons[1])
+    //    {
+    //        swordWeapon.Attack();
+    //    }
+    //}
 
-    public void EquipWeapon(GameObject newWeapon)
-    {
-        if (currentWeapon != null)
-        {
-            Destroy(currentWeapon.gameObject);
-        }
-        currentWeapon = newWeapon;
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    //Gizmos.DrawWireSphere(PickupPoint.position, PickupRange);
+    //}
 
 }

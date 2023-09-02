@@ -7,17 +7,16 @@ public class AnimationController : MonoBehaviour
 
     private Animator anim;
     private PlayerMovement playerMovement;
-    private PunchAttack punchAttack;
+    private PlayerAttack playerAttack;
     private float movement;
     private float jumpingLanding;
-    private float punching;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         playerMovement = GetComponentInParent<PlayerMovement>();
-        punchAttack = GetComponentInParent<PunchAttack>();
+        playerAttack = GetComponentInParent<PlayerAttack>();
     }
 
     // Update is called once per frame
@@ -39,24 +38,13 @@ public class AnimationController : MonoBehaviour
         {
             jumpingLanding = 0f;
         }
-        if (punchAttack.isNormalPunching)
-        {
-            punching = 1f;
-        }
-        if (punchAttack.isLongPunching)
-        {
-            punching = 0f;
-        }
 
         anim.SetFloat("jumpingLanding", jumpingLanding);
-        anim.SetFloat("punching", punching);
         anim.SetFloat("movement", movement);
-
+        anim.SetBool("isAttacking", playerAttack.isAttacking);
         anim.SetBool("isJumping", playerMovement.isJumping);
         anim.SetBool("isClimbingLedge", playerMovement.isClimbingLedge);
         anim.SetBool("isWallSliding", playerMovement.isWallSliding);
-
-        anim.SetBool("isPunching", punchAttack.isPunching);
 
     }
 

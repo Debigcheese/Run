@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Collision coll;
+    private PlayerAttack playerAttack;
 
     [HideInInspector]
     public float moveDirection = 0f;
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
         originalSpeed = speed;
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collision>();
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     void Update()
@@ -75,6 +77,9 @@ public class PlayerMovement : MonoBehaviour
         float xRaw = Input.GetAxisRaw("Horizontal");
         float yRaw = Input.GetAxisRaw("Vertical");
         isMoving = moveDirection != 0;
+
+        //combat
+
 
         //Animation
         if (coll.onGround)
@@ -108,16 +113,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump(Vector2.up);
             }
-            if (coll.onWall && !coll.onGround && Input.GetButtonDown("Jump"))
+            if (coll.onWall && !coll.onGround && Input.GetButtonDown("Jump") && !playerAttack.isAttacking)
             {
                 WallJump();
             }
-            if (coll.onWall && !coll.onGround && rb.velocity.y < 0 && moveDirection != 0f)
+            if (coll.onWall && !coll.onGround && rb.velocity.y < 0 && moveDirection != 0f && !playerAttack.isAttacking)
             {
                
                 WallSlide();
             }
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed && !playerAttack.isAttacking)
             {
                 if (xRaw != 0 || yRaw != 0)
                 {
@@ -133,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckForLedge()
     {
-        if (ledgeDetected && canGrabLedge )
+        if (ledgeDetected && canGrabLedge && !playerAttack.isAttacking )
         {
             canGrabLedge = false;
             isClimbingLedge = true;

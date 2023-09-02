@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class EnemyLeftToRight : MonoBehaviour
 {
+    [Header("Movement")]
+    public float speed;
+    private float Direction;
+    private Rigidbody2D rb;
+
+    [Space]
+    [Header("checks")]
     public LayerMask layer;
     public Transform groundCheck;
+    public Transform wallCheck;
     public float groundRadius;
-    public bool onGround;
-
-    public float movement;
-    public float Direction;
-    private Rigidbody2D rb;
-    
+    private bool onGround;
+    private bool onWall;
 
     // Start is called before the first frame update
     void Start()
@@ -25,26 +29,28 @@ public class EnemyLeftToRight : MonoBehaviour
     void Update()
     {
         onGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, layer);
-        rb.velocity = new Vector2(movement * Direction, rb.velocity.y);
+        onWall = Physics2D.OverlapCircle(wallCheck.position, groundRadius, layer);
+
+        rb.velocity = new Vector2(speed * Direction, rb.velocity.y);
         
-        if (!onGround)
+        if (!onGround || onWall)
         {
-            Turn();
+            Flip();
         }
+        
     }
 
-    private void Turn()
+    private void Flip()
     {
         Direction *= -1f;
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1f;
-        transform.localScale = localScale;
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
+        Gizmos.DrawWireSphere(wallCheck.position, groundRadius);
     }
 
 }
