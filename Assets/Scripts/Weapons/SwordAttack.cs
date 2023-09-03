@@ -7,7 +7,7 @@ public class SwordAttack : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
     private Animator baseAnimator;
-    private Animator WeaponAnimator;
+    private Animator weaponAnimator;
     public LayerMask enemy;
     public Transform attackPoint;
 
@@ -30,7 +30,7 @@ public class SwordAttack : MonoBehaviour
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         baseAnimator = transform.Find("Base").GetComponent<Animator>();
-        WeaponAnimator = transform.Find("Weapon").GetComponent<Animator>();
+        weaponAnimator = transform.Find("Weapon").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class SwordAttack : MonoBehaviour
             Attack();
         }
         baseAnimator.SetBool("isSwordAttackingBase", isSwordAttacking);
-        WeaponAnimator.SetBool("isSwordAttacking", isSwordAttacking);
+        weaponAnimator.SetBool("isSwordAttacking", isSwordAttacking);
         //baseAnimator.SetFloat("attackCounter", attackCounter);
     }
 
