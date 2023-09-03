@@ -6,7 +6,6 @@ public class SwordAttack : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
-    private Animator baseAnimator;
     private Animator weaponAnimator;
     public LayerMask enemy;
     public Transform attackPoint;
@@ -29,8 +28,7 @@ public class SwordAttack : MonoBehaviour
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
-        baseAnimator = transform.Find("Base").GetComponent<Animator>();
-        weaponAnimator = transform.Find("Weapon").GetComponent<Animator>();
+        weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,9 +38,8 @@ public class SwordAttack : MonoBehaviour
         {
             Attack();
         }
-        baseAnimator.SetBool("isSwordAttackingBase", isSwordAttacking);
         weaponAnimator.SetBool("isSwordAttacking", isSwordAttacking);
-        //baseAnimator.SetFloat("attackCounter", attackCounter);
+        weaponAnimator.SetFloat("attackCounter", attackCounter);
     }
 
     public void Attack()
@@ -57,7 +54,7 @@ public class SwordAttack : MonoBehaviour
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
             foreach (Collider2D enemy in hitEnemies)
             {
-                enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
                 Debug.Log(attackDamage);
             }
 

@@ -28,7 +28,7 @@ public class PunchAttack : MonoBehaviour
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
-        baseAnimator = transform.Find("Base").GetComponent<Animator>();
+        baseAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class PunchAttack : MonoBehaviour
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
             foreach(Collider2D enemy in hitEnemies)
             {
-                enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
                 Debug.Log(attackDamage);
             }
             

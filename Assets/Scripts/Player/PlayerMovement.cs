@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private float originalSpeed;
     private float originalGravity;
 
+
     [Header("Stats")]
     public float speed = 10;
     public float slideSpeed = 5;
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isClimbingLedge;
 
     //Booleans that dont need to be public for animations
-    private bool cantMove;
+    public bool cantMove;
     private bool isFacingLeft;
 
     [Space]
@@ -79,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = moveDirection != 0;
 
         //combat
-
+ 
 
         //Animation
         if (coll.onGround)
