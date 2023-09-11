@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private float originalSpeed;
     private float originalGravity;
 
-
     [Header("Stats")]
     public float speed = 10;
     public float slideSpeed = 5;
@@ -32,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isClimbingLedge;
 
     //Booleans that dont need to be public for animations
-    public bool cantMove;
-    private bool isFacingLeft;
+    private bool cantMove;
+    public bool isFacingLeft;
 
     [Space]
     [Header("WallJumping")]
@@ -81,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
         //combat
  
-
         //Animation
         if (coll.onGround)
         {
@@ -135,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
         CheckForLedge();
         
         GetComponent<BetterJump>().enabled = true;
-     }
+    }
 
     private void CheckForLedge()
     {
@@ -277,13 +275,11 @@ public class PlayerMovement : MonoBehaviour
         isFalling = false;
         isWallSliding = true;
         rb.velocity = new Vector2(rb.velocity.x, -slideSpeed);
-
-
     }
 
     private void MoveDirectionFlip()
     {
-        if (!cantMove)
+        if (!cantMove && !playerAttack.isAttacking && !playerAttack.stopFlip)
         {
             if (moveDirection > 0f && isFacingLeft)
             {
@@ -298,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
             isFacingLeft = !isFacingLeft;
             Vector3 localScale = transform.localScale;
