@@ -48,16 +48,15 @@ public class SwordWeapon : MonoBehaviour
 
     public void Attack()
     {
-            isSwordAttacking = true;
-            attackDamage = Random.Range(minDmg, maxDmgMinusOne);
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
-                Debug.Log(attackDamage);
-            }
-
-            StartCoroutine("SwordCD");
+        isSwordAttacking = true;
+        attackDamage = Random.Range(minDmg, maxDmgMinusOne);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
+            Debug.Log(attackDamage);
+        }
+        StartCoroutine("SwordCD");
     }
 
     IEnumerator AttackDelay()
