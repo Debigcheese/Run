@@ -60,6 +60,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
+            isMoving = false;
             detected = false;
             DetectionSymbolPopup.SetActive(false);
         }
@@ -119,7 +120,6 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Movement
-        isMoving = false;
         if (canMove)
         {
             rb.velocity = new Vector2(force.x, rb.velocity.y);

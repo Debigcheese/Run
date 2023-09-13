@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    private PlayerHP playerHP;
     private EnemyAI enemyAI;
-    private EnemyHp enemyHP;
     public Transform attackPoint;
 
     [Header("Booleans")]
     public bool isAttacking;
-    public bool canAttack;
+    public bool inRange;
 
     [Header("Balancing")]
     public int attackDamage;
@@ -21,25 +21,34 @@ public class EnemyAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerHP = FindAnyObjectByType<PlayerHP>();
         enemyAI = GetComponent<EnemyAI>();
-        enemyHP = GetComponent<EnemyHp>();
-        canAttack = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        InvokeRepeating("CheckForPlayer", 0f, 0.3f);
 
         Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange);
         if (hitPlayer != null && hitPlayer.CompareTag("Player"))
         {
-            Debug.Log($"Detected GameObject with tag: {hitPlayer.tag}");
+            inRange = true;
+        }
+        else
+        {
+            inRange = false;
+        }
+    }
+
+    private void CheckForPlayer()
+    {
+        if (inRange)
+        {
             enemyAI.canMove = false;
             if (!isAttacking)
             {
-                
                 isAttacking = true;
-                canAttack = false;
                 StartCoroutine("AttackDmgDelay");
             }
         }
@@ -53,7 +62,10 @@ public class EnemyAttack : MonoBehaviour
 
     private void Attack()
     {
-        
+        if (inRange)
+        {
+            playerHP.takeDamage(attackDamage);
+        }
         StartCoroutine("AttackSpeed");
     }
 
@@ -61,7 +73,6 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(attackSpeed);
         isAttacking = false;
-        canAttack = true;
         enemyAI.canMove = true;
     }
 

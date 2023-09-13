@@ -54,7 +54,6 @@ public class SwordWeapon : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
-            Debug.Log(attackDamage);
         }
         StartCoroutine("SwordCD");
     }

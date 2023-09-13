@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class EnemyHp : MonoBehaviour
+public class PlayerHP : MonoBehaviour
 {
-    [Header("Balancing")]
+    public Slider HealthBar;
     public int maxHealth = 100;
-    int currentHealth;
+    public int currentHealth;
 
     [Space]
     [Header("DamagePopup")]
@@ -18,35 +19,34 @@ public class EnemyHp : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        HealthBar.maxValue = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    public void TakeDamage(int damageAmount)
-    {
-        currentHealth -= damageAmount;
-        //play hurt animation
-        if(currentHealth <= 0)
-        {
-            Die();
-        }
-
-         ShowDamagePopup(damageAmount);
         
     }
 
-    void Die()
+    public void takeDamage(int damageAmount)
     {
-        Debug.Log("Enemy died!");
+        currentHealth -= damageAmount;
+        HealthBar.value = currentHealth;
+        if(currentHealth < 0)
+        {
+            playerDie();
+        }
+        ShowDamagePopup(damageAmount);
+    }
+
+    public void playerDie()
+    {
+        Debug.Log("playerDie");
     }
 
     protected void ShowDamagePopup(float damageAmount)
     {
-        
+
         // Generate random offset within maxOffsetDistance
         float offsetX = Random.Range(-maxOffsetDistanceX, maxOffsetDistanceX);
         float offsetY = Random.Range(-maxOffsetDistanceY, maxOffsetDistanceY);
@@ -65,8 +65,6 @@ public class EnemyHp : MonoBehaviour
         // Pass a reference of the enemy object to the damage popup script
         damagePopupScript.ShowDamageAmount(damageAmount, gameObject);
     }
-
-  
 
 
 }
