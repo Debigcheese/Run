@@ -8,6 +8,7 @@ public class AnimationController : MonoBehaviour
     private Animator anim;
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
+    private PlayerHP playerHp;
     private float movement;
     private float jumpingLanding;
 
@@ -17,6 +18,7 @@ public class AnimationController : MonoBehaviour
         anim = GetComponent<Animator>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
+        playerHp = GetComponentInParent<PlayerHP>();
     }
 
     // Update is called once per frame
@@ -41,6 +43,7 @@ public class AnimationController : MonoBehaviour
 
         anim.SetFloat("jumpingLanding", jumpingLanding);
         anim.SetFloat("movement", movement);
+        anim.SetBool("isHurt", playerHp.isHurt);
         anim.SetBool("isAttacking", playerAttack.isAttacking);
         anim.SetBool("isJumping", playerMovement.isJumping);
         anim.SetBool("isClimbingLedge", playerMovement.isClimbingLedge);

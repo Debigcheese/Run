@@ -192,4 +192,7 @@ MonoBehaviour:
   maxDmgMinusOne: 9
   attackRange: 0.75
   attackSpeed: 0.33
-  secondSwingDmgDelay: 0.2
+  firstSwingDmgDelay: 0.3
+  SecondSwingDmgDelay: 0.1
+  knockBackTrue: 0
+  firstSwing: 0

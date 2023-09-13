@@ -38,7 +38,7 @@ public class PunchAttack : MonoBehaviour
         {
             Attack();
         }
-        baseAnimator.SetBool("isPunching", isPunching);
+        baseAnimator.SetBool("isAttacking", playerAttack.isAttacking);
         baseAnimator.SetFloat("attackCounter", attackCounter);
     }
 

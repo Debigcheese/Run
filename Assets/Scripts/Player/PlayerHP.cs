@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
+    private DamageFlash damageFlash;
     public Slider HealthBar;
     public int maxHealth = 100;
     public int currentHealth;
+    public bool isHurt;
 
     [Space]
     [Header("DamagePopup")]
@@ -18,6 +20,7 @@ public class PlayerHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        damageFlash = GetComponent<DamageFlash>();
         currentHealth = maxHealth;
         HealthBar.maxValue = maxHealth;
     }
@@ -32,11 +35,20 @@ public class PlayerHP : MonoBehaviour
     {
         currentHealth -= damageAmount;
         HealthBar.value = currentHealth;
+        damageFlash.CallDamageFlash();
+        isHurt = true;
         if(currentHealth < 0)
         {
             playerDie();
         }
         ShowDamagePopup(damageAmount);
+        StartCoroutine("isHurtAnimStop");
+    }
+
+    private IEnumerator isHurtAnimStop()
+    {
+        yield return new WaitForSeconds(.25f);
+        isHurt = false;
     }
 
     public void playerDie()

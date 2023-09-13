@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyHp : MonoBehaviour
 {
+    private DamageFlash damageFlash;
+
     [Header("Balancing")]
     public int maxHealth = 100;
     int currentHealth;
@@ -17,6 +19,7 @@ public class EnemyHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        damageFlash = GetComponent<DamageFlash>();
         currentHealth = maxHealth;
     }
 
@@ -35,13 +38,13 @@ public class EnemyHp : MonoBehaviour
             Die();
         }
 
-         ShowDamagePopup(damageAmount);
-        
+        damageFlash.CallDamageFlash();
+        ShowDamagePopup(damageAmount);
     }
 
     void Die()
     {
-        Debug.Log("Enemy died!");
+        
     }
 
     protected void ShowDamagePopup(float damageAmount)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
     private PlayerHP playerHP;
     private EnemyAI enemyAI;
     public Transform attackPoint;
@@ -21,6 +22,7 @@ public class EnemyAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
         playerHP = FindAnyObjectByType<PlayerHP>();
         enemyAI = GetComponent<EnemyAI>();
     }
@@ -34,6 +36,8 @@ public class EnemyAttack : MonoBehaviour
         if (hitPlayer != null && hitPlayer.CompareTag("Player"))
         {
             inRange = true;
+
+            
         }
         else
         {
@@ -65,6 +69,18 @@ public class EnemyAttack : MonoBehaviour
         if (inRange)
         {
             playerHP.takeDamage(attackDamage);
+
+            //knockback the player
+            playerMovement.KBCounter = playerMovement.KBTotalTime;
+            if (playerMovement.transform.position.x <= transform.position.x)
+            {
+                playerMovement.KnockFromRight = true;
+            }
+            if (playerMovement.transform.position.x >= transform.position.x)
+            {
+                playerMovement.KnockFromRight = false;
+            }
+            
         }
         StartCoroutine("AttackSpeed");
     }

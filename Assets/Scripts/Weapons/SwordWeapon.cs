@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SwordWeapon : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+    private EnemyKnockBack enemyKnockBack;
     private PlayerAttack playerAttack;
     private Animator weaponAnimator;
     public LayerMask enemy;
@@ -11,8 +13,8 @@ public class SwordWeapon : MonoBehaviour
 
     [Space]
     [Header("Animation")]
-    private float attackCounter = 1f;
-    public bool isSwordAttacking = false;
+    public float attackCounter = 1f;
+    public bool isMeleeAttacking = false;
 
     [Space]
     [Header("Balancing")]
@@ -21,57 +23,92 @@ public class SwordWeapon : MonoBehaviour
     private int attackDamage = 20;
     public float attackRange = 0.5f;
     public float attackSpeed = 0.4f;
-    public float secondSwingDmgDelay = 0.4f;
-    
+
+    [Space]
+    [Header("DamageDelay")]
+    public float firstSwingDmgDelay = 0.4f;
+    public float SecondSwingDmgDelay = 0.1f;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
+        enemyKnockBack = FindAnyObjectByType<EnemyKnockBack>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerAttack.isAttacking && !isSwordAttacking && attackCounter <= 0)
+       
+        if(playerAttack.isAttacking && !isMeleeAttacking )
         {
             Attack();
         }
-        else if(playerAttack.isAttacking && !isSwordAttacking && attackCounter >= 0)
-        {
-            StartCoroutine("AttackDelay");
-        }
-        weaponAnimator.SetBool("isSwordAttacking", isSwordAttacking);
+ 
+        weaponAnimator.SetBool("meleeAttack", playerAttack.isAttacking);
         weaponAnimator.SetFloat("attackCounter", attackCounter);
     }
 
     public void Attack()
     {
-        isSwordAttacking = true;
+        isMeleeAttacking = true;
         attackDamage = Random.Range(minDmg, maxDmgMinusOne);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
+        List<GameObject> damagedEnemies = new List<GameObject>();
         foreach (Collider2D enemy in hitEnemies)
+        {
+            damagedEnemies.Add(enemy.gameObject);
+            StartCoroutine(SwingDelay(damagedEnemies));
+        }
+        StartCoroutine(MeleeCD());
+    }
+
+    IEnumerator SwingDelay(List<GameObject> damagedEnemies)
+    {
+        if (attackCounter >= 0)
+        {
+            enemyKnockBack.firstSwing = true;
+            yield return new WaitForSeconds(firstSwingDmgDelay);
+        }
+        else
+        {
+            enemyKnockBack.firstSwing = false;
+            yield return new WaitForSeconds(SecondSwingDmgDelay);
+        }
+        
+        foreach (GameObject enemy in damagedEnemies)
         {
             enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
         }
-        StartCoroutine("SwordCD");
+        KnockBack();
+        
     }
 
-    IEnumerator AttackDelay()
-    {
-        isSwordAttacking = true;
-        yield return new WaitForSeconds(secondSwingDmgDelay);
-        Attack();
-    }
-
-    IEnumerator SwordCD()
+    IEnumerator MeleeCD()
     {
         yield return new WaitForSeconds(attackSpeed);
-        isSwordAttacking = false;
+        attackCounter *= -1f;
+        isMeleeAttacking = false;
         playerAttack.isAttacking = false;
-        attackCounter *= -1;
     }
+
+    private void KnockBack()
+    {
+        //knockback the enemy
+        enemyKnockBack.KBCounter = enemyKnockBack.KBTotalTime;
+        if (enemyKnockBack.transform.position.x <= transform.position.x)
+        {
+            enemyKnockBack.KnockFromRight = true;
+        }
+        if (enemyKnockBack.transform.position.x >= transform.position.x)
+        {
+            enemyKnockBack.KnockFromRight = false;
+        }
+    }
+
 
     private void OnDrawGizmosSelected()
     {

@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Collision coll;
     private PlayerAttack playerAttack;
+    private EnemyAttack enemyAttack;
 
     [HideInInspector]
     public float moveDirection = 0f;
@@ -14,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private float originalSpeed;
     private float originalGravity;
 
-    [Header("Stats")]
+    [Header("BaseStats")]
     public float speed = 10;
     public float slideSpeed = 5;
     public float dashSpeed = 5f;
@@ -33,6 +34,13 @@ public class PlayerMovement : MonoBehaviour
     //Booleans that dont need to be public for animations
     private bool cantMove;
     public bool isFacingLeft;
+
+    [Space]
+    [Header("KnockBack")]
+    public float KBForce;
+    public float KBCounter;
+    public float KBTotalTime;
+    public bool KnockFromRight;
 
     [Space]
     [Header("WallJumping")]
@@ -68,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collision>();
         playerAttack = GetComponent<PlayerAttack>();
+        enemyAttack = FindAnyObjectByType<EnemyAttack>();
     }
 
     void Update()
@@ -78,7 +87,28 @@ public class PlayerMovement : MonoBehaviour
         float yRaw = Input.GetAxisRaw("Vertical");
         isMoving = moveDirection != 0;
 
-        //combat
+        //Get knockback
+        if(KBCounter <= 0)
+        {
+            playerAttack.canAttack = true;
+            cantMove = false;
+        }
+        else
+        {
+            if (KnockFromRight == true)
+            {
+                rb.velocity = new Vector2(-KBForce, KBForce);
+            }
+            if (KnockFromRight == false)
+            {
+                rb.velocity = new Vector2(KBForce, KBForce);
+            }
+            KBCounter -= Time.deltaTime;
+
+   
+            playerAttack.canAttack = false;
+            cantMove = true;
+        }
  
         //Animation
         if (coll.onGround)

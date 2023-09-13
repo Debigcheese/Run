@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: df8cb2259e453384189ef0990c874ca1
+guid: f84206f98a073e841841173d0c356e5a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Owlet_Monster_Hurt_4_0
+      name: Owlet_hurt_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 0
-        width: 21
-        height: 26
+        x: 48
+        y: 88
+        width: 23
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,19 +131,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b0b39b8357c3404faadaa656e505e5b
-      internalID: -467560115
+      spriteID: 2c25347f9ec03e64cb1e8d16ea656f66
+      internalID: -1614127231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Owlet_Monster_Hurt_4_1
+      name: Owlet_hurt_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 0
-        width: 21
+        x: 92
+        y: 88
+        width: 22
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51ca75e617f766e44aff865ed900d370
+      internalID: 1575872617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owlet_hurt_2
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 88
+        width: 22
         height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -152,50 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34ba180e84640fb45aa66d40e409126c
-      internalID: -1697008576
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Owlet_Monster_Hurt_4_2
-      rect:
-        serializedVersion: 2
-        x: 67
-        y: 0
-        width: 21
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8172ec9666c2b5a4a957f31608dce85a
-      internalID: 488786732
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Owlet_Monster_Hurt_4_3
-      rect:
-        serializedVersion: 2
-        x: 99
-        y: 0
-        width: 21
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2c6fc0fa1b6f4842aa3520894e7ea85
-      internalID: 233888274
+      spriteID: 1ff615c6da7c4fa47a49c30471fe88e1
+      internalID: -356137828
       vertices: []
       indices: 
       edges: []
@@ -211,10 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Owlet_Monster_Hurt_4_0: -467560115
-      Owlet_Monster_Hurt_4_1: -1697008576
-      Owlet_Monster_Hurt_4_2: 488786732
-      Owlet_Monster_Hurt_4_3: 233888274
+      Owlet_hurt_0: -1614127231
+      Owlet_hurt_1: 1575872617
+      Owlet_hurt_2: -356137828
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
