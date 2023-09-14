@@ -82,9 +82,9 @@ public class SwordWeapon : MonoBehaviour
         foreach (GameObject enemy in damagedEnemies)
         {
             enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
+            KnockBack();
         }
-        KnockBack();
-        
+
     }
 
     IEnumerator MeleeCD()

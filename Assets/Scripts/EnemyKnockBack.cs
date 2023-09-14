@@ -33,6 +33,7 @@ public class EnemyKnockBack : MonoBehaviour
     void Update()
     {
         
+        
         if (KBCounter <= 0)
         {
             enemyAI.canMove = true;
@@ -41,8 +42,9 @@ public class EnemyKnockBack : MonoBehaviour
         {
             enemyAI.canMove = false;
 
+           
+
             SwordWeaponKnockback();
-            
 
             KBCounter -= Time.deltaTime;
 
@@ -53,6 +55,15 @@ public class EnemyKnockBack : MonoBehaviour
             //if (KnockFromRight == false)
             //{
             //    rb.velocity = new Vector2(KBForceX, KBForceY);
+            //}
+
+
+            //foreach (SwordWeapon weapon in swordWeapon)
+            //{
+            //    if (weapon.gameObject.activeSelf)
+            //    {
+            //        SwordWeaponKnockback();
+            //    }
             //}
         }
     }
@@ -72,7 +83,7 @@ public class EnemyKnockBack : MonoBehaviour
                 rb.velocity = new Vector2(1.5f, 0);
             }
         }
-        else 
+        else
         {
             Debug.Log("second");
             if (KnockFromRight == true)
@@ -84,5 +95,6 @@ public class EnemyKnockBack : MonoBehaviour
                 rb.velocity = new Vector2(meleeKBForceX, meleeKBForceY);
             }
         }
+
     }
 }

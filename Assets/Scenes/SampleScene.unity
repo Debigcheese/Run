@@ -974,7 +974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  AttackMoveSpeed: 1.8
+  AttackMoveSpeed: 1.6
   checkMousePositionX: 0
   stopFlip: 0
   canAttack: 1
