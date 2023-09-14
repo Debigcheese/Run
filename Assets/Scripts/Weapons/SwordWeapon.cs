@@ -36,7 +36,7 @@ public class SwordWeapon : MonoBehaviour
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
-        enemyKnockBack = FindAnyObjectByType<EnemyKnockBack>();
+        enemyKnockBack = FindObjectOfType<EnemyKnockBack>();
     }
 
     // Update is called once per frame
@@ -50,6 +50,7 @@ public class SwordWeapon : MonoBehaviour
  
         weaponAnimator.SetBool("meleeAttack", playerAttack.isAttacking);
         weaponAnimator.SetFloat("attackCounter", attackCounter);
+
     }
 
     public void Attack()
@@ -65,6 +66,8 @@ public class SwordWeapon : MonoBehaviour
         }
         StartCoroutine(MeleeCD());
     }
+
+    
 
     IEnumerator SwingDelay(List<GameObject> damagedEnemies)
     {
