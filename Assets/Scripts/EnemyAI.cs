@@ -5,6 +5,8 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+
     [Header("Pathfinding")]
     public Transform target;
     public float detectionRadius = 50f;
@@ -39,6 +41,8 @@ public class EnemyAI : MonoBehaviour
 
     public void Start()
     {
+        playerMovement = FindObjectOfType<PlayerMovement>();
+        target = playerMovement.GetComponent<Transform>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         anim = transform.Find("EnemyDetectionAnim").GetComponent<Animator>();

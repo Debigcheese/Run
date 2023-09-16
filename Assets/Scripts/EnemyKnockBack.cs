@@ -1,100 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class EnemyKnockBack : MonoBehaviour
+public class EnemyKnockback : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private EnemyAI enemyAI;
-    private EnemyHp enemyHp;
-    private SwordWeapon swordWeapon;
+    [SerializeField]
+    public Rigidbody2D rb;
 
     [Space]
+    
     [Header("Knockback")]
-    public float KBForceX;
-    public float KBForceY;
-    public float meleeKBForceX = 3f;
-    public float meleeKBForceY = 3f;
-    public float KBCounter;
-    public float KBTotalTime;
-    public bool KnockFromRight;
-    public bool firstSwing;
+    [SerializeField]
+    private float KnockbackForceX = 10f, KnockbackForceY = 10f, delay = 0.15f;
+
+    public UnityEvent OnBegin, OnDone;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        enemyAI = GetComponent<EnemyAI>();
-        enemyHp = GetComponent<EnemyHp>();
-        swordWeapon = FindObjectOfType<SwordWeapon>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        
-        if (KBCounter <= 0)
-        {
-            enemyAI.canMove = true;
-        }
-        else
-        {
-            enemyAI.canMove = false;
-
-           
-
-            SwordWeaponKnockback();
-
-            KBCounter -= Time.deltaTime;
-
-            //if (KnockFromRight == true)
-            //{
-            //    rb.velocity = new Vector2(-KBForceX, KBForceY);
-            //}
-            //if (KnockFromRight == false)
-            //{
-            //    rb.velocity = new Vector2(KBForceX, KBForceY);
-            //}
-
-
-            //foreach (SwordWeapon weapon in swordWeapon)
-            //{
-            //    if (weapon.gameObject.activeSelf)
-            //    {
-            //        SwordWeaponKnockback();
-            //    }
-            //}
-        }
     }
 
-    private void SwordWeaponKnockback()
+    public void PlayFeedBack(GameObject sender)
     {
-
-        if (firstSwing)
-        {
-            Debug.Log("first");
-            if (KnockFromRight == true)
-            {
-                rb.velocity = new Vector2(-1.5f, 0);
-            }
-            if (KnockFromRight == false)
-            {
-                rb.velocity = new Vector2(1.5f, 0);
-            }
-        }
-        else
-        {
-            Debug.Log("second");
-            if (KnockFromRight == true)
-            {
-                rb.velocity = new Vector2(-meleeKBForceX, meleeKBForceY);
-            }
-            if (KnockFromRight == false)
-            {
-                rb.velocity = new Vector2(meleeKBForceX, meleeKBForceY);
-            }
-        }
-
+        sender = GameObject.FindGameObjectWithTag("Player");
+        StopAllCoroutines();
+        OnBegin.Invoke();
+		Vector2 direction = (transform.position - sender.transform.position).normalized;
+        Vector2 newVelocity = rb.velocity;
+        newVelocity.x = direction.x * KnockbackForceX;
+        newVelocity.y = rb.velocity.y + KnockbackForceY;
+        rb.velocity = newVelocity;
+        StartCoroutine(Reset());
     }
+
+    private IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(delay);
+        rb.velocity = Vector3.zero;
+        OnDone.Invoke();
+    }
+
+
 }

@@ -30,18 +30,20 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InvokeRepeating("CheckForPlayer", 0f, 0.3f);
+        InvokeRepeating("CheckForPlayer", 0f, 0.1f);
 
-        Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange);
-        if (hitPlayer != null && hitPlayer.CompareTag("Player"))
+        Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
+        foreach (Collider2D hitplayer in hitPlayers) 
         {
-            inRange = true;
-
-            
-        }
-        else
-        {
-            inRange = false;
+            if (hitplayer.CompareTag("Player") && hitplayer != null)
+            {
+                inRange = true;
+                break;
+            }
+            else
+            {
+                inRange = false;
+            }
         }
     }
 
@@ -80,7 +82,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 playerMovement.KnockFromRight = false;
             }
-            
+
         }
         StartCoroutine("AttackSpeed");
     }

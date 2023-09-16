@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHp : MonoBehaviour
 {
     private DamageFlash damageFlash;
+    public UnityEvent EnemyKnockback;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -15,6 +17,9 @@ public class EnemyHp : MonoBehaviour
     public GameObject damagePopupPrefab;
     [SerializeField] private float maxOffsetDistanceX = 0.1f;
     [SerializeField] private float maxOffsetDistanceY = 0.2f;
+
+    [Header("Particles")]
+    public ParticleSystem meleeHitParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -37,9 +42,10 @@ public class EnemyHp : MonoBehaviour
         {
             Die();
         }
-
+        EnemyKnockback.Invoke();
         damageFlash.CallDamageFlash();
         ShowDamagePopup(damageAmount);
+        meleeHitParticle.Play();
     }
 
     void Die()
