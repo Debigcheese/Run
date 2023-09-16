@@ -18,9 +18,6 @@ public class EnemyHp : MonoBehaviour
     [SerializeField] private float maxOffsetDistanceX = 0.1f;
     [SerializeField] private float maxOffsetDistanceY = 0.2f;
 
-    [Header("Particles")]
-    public ParticleSystem meleeHitParticle;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +42,6 @@ public class EnemyHp : MonoBehaviour
         EnemyKnockback.Invoke();
         damageFlash.CallDamageFlash();
         ShowDamagePopup(damageAmount);
-        meleeHitParticle.Play();
     }
 
     void Die()

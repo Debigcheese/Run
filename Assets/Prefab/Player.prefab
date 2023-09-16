@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  AttackMoveSpeed: 1.6
+  AttackMoveSpeed: 1.9
   checkMousePositionX: 0
   stopFlip: 0
   canAttack: 1
@@ -803,6 +803,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772776127003771157}
     m_Modifications:
+    - target: {fileID: 1278914923690987324, guid: 6fbb60308a429154f881eb78fdd3a50d, type: 3}
+      propertyPath: attackRange
+      value: 0.85
+      objectReference: {fileID: 0}
     - target: {fileID: 1893087291026693028, guid: 6fbb60308a429154f881eb78fdd3a50d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -850,6 +854,10 @@ PrefabInstance:
     - target: {fileID: 4476503807848782002, guid: 6fbb60308a429154f881eb78fdd3a50d, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5039921416770756723, guid: 6fbb60308a429154f881eb78fdd3a50d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.15
       objectReference: {fileID: 0}
     - target: {fileID: 6433480665602715039, guid: 6fbb60308a429154f881eb78fdd3a50d, type: 3}
       propertyPath: m_Name
@@ -926,6 +934,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RageBladePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 5451306241981297519, guid: 846a78c809b31754b93ff92afb296d1f, type: 3}
+      propertyPath: attackRange
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6277977620390674050, guid: 846a78c809b31754b93ff92afb296d1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 846a78c809b31754b93ff92afb296d1f, type: 3}
 --- !u!1 &894370027209411945 stripped
@@ -946,20 +962,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 5772776127003771157}
     m_Modifications:
     - target: {fileID: 661397464572687732, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
+      propertyPath: minDmg
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 661397464572687732, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: attackSpeed
       value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 661397464572687732, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: firstSwingDmgDelay
-      value: 0.25
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 661397464572687732, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: SecondSwingDmgDelay
-      value: 0.25
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 2011730834248066528, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: m_Size.x
-      value: 1.5
+      value: 1.1666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011730834248066528, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
+      propertyPath: m_Size.y
+      value: 1.4444444
       objectReference: {fileID: 0}
     - target: {fileID: 2011730834248066528, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: m_WasSpriteAssigned
@@ -1008,6 +1032,10 @@ PrefabInstance:
     - target: {fileID: 4589517847255787254, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919150968203238689, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 8988329858553286861, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: m_Name

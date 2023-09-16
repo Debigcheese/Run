@@ -17,10 +17,6 @@ public class PlayerHP : MonoBehaviour
     [SerializeField] private float maxOffsetDistanceX = 0.1f;
     [SerializeField] private float maxOffsetDistanceY = 0.2f;
 
-    [Space]
-    [Header("Particles")]
-    public ParticleSystem damageFeedbackParticles;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +42,6 @@ public class PlayerHP : MonoBehaviour
             playerDie();
         }
         ShowDamagePopup(damageAmount);
-        damageFeedbackParticles.Play();
         StartCoroutine("isHurtAnimStop");
     }
 

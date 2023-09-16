@@ -30,7 +30,7 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InvokeRepeating("CheckForPlayer", 0f, 0.1f);
+        InvokeRepeating("CheckForPlayer", 0f, 0.6f);
 
         Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
         foreach (Collider2D hitplayer in hitPlayers) 
@@ -52,7 +52,7 @@ public class EnemyAttack : MonoBehaviour
         if (inRange)
         {
             enemyAI.canMove = false;
-            if (!isAttacking)
+            if (!isAttacking )
             {
                 isAttacking = true;
                 StartCoroutine("AttackDmgDelay");
@@ -93,6 +93,7 @@ public class EnemyAttack : MonoBehaviour
         isAttacking = false;
         enemyAI.canMove = true;
     }
+
 
     private void OnDrawGizmos()
     {

@@ -6,13 +6,13 @@ using UnityEngine.Events;
 public class EnemyKnockback : MonoBehaviour
 {
     [SerializeField]
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     [Space]
-    
     [Header("Knockback")]
-    [SerializeField]
-    private float KnockbackForceX = 10f, KnockbackForceY = 10f, delay = 0.15f;
+    [SerializeField] private float KnockbackForceX = 10f;
+    [SerializeField] private float KnockbackForceY = 3f;
+    [SerializeField] private float delay = 0.15f;
 
     public UnityEvent OnBegin, OnDone;
 

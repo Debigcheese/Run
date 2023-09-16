@@ -347,7 +347,7 @@ MonoBehaviour:
   isAttacking: 0
   inRange: 0
   attackDamage: 3
-  attackSpeed: 0.7
+  attackSpeed: 1
   attackDmgDelay: 0.45
   attackRange: 1.15
 --- !u!114 &7207162281585163198
@@ -459,34 +459,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7207162281585163136}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnDone:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7207162281585163139}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 7207162281585163136}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -518,7 +494,7 @@ MonoBehaviour:
         m_MethodName: PlayFeedBack
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 5772776125996605046, guid: 16e82dfb3c6fd5344b8cdaf2d87d3238, type: 3}
+          m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
