@@ -187,12 +187,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackPoint: {fileID: 6277977620390674050}
-  isSwordAttacking: 0
+  attackCounter: 1
+  isMeleeAttacking: 0
   minDmg: 3
   maxDmgMinusOne: 9
   attackRange: 0.75
   attackSpeed: 0.33
-  firstSwingDmgDelay: 0.3
+  firstSwingDmgDelay: 0.4
   SecondSwingDmgDelay: 0.1
-  knockBackTrue: 0
-  firstSwing: 0

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class EnemyHp : MonoBehaviour
 {
+    private CrystalDropper crystalDropper;
     private DamageFlash damageFlash;
     public UnityEvent EnemyKnockback;
 
@@ -21,6 +22,7 @@ public class EnemyHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        crystalDropper = GetComponent<CrystalDropper>();
         damageFlash = GetComponent<DamageFlash>();
         currentHealth = maxHealth;
     }
@@ -46,7 +48,7 @@ public class EnemyHp : MonoBehaviour
 
     void Die()
     {
-        
+        crystalDropper.DropCrystal();
     }
 
     protected void ShowDamagePopup(float damageAmount)
