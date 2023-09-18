@@ -1,0 +1,641 @@
+fileFormatVersion: 2
+guid: 66eae031d0f0f4f428a524307f85821a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 18
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Chomperr_0
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 320
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c886582a27bbc4f46bc9227ea1d7bcfe
+      internalID: -457118534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_1
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 320
+        width: 20
+        height: 20
+      alignment: 9
+      pivot: {x: 0.58004534, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91848cacfd227134f87fb13c5149c2e2
+      internalID: -1877665364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_2
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 320
+        width: 20
+        height: 21
+      alignment: 9
+      pivot: {x: 0.56985396, y: 0.4667315}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc862bb0f2448a74395da78c23fd78c0
+      internalID: 1667233222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 317
+        width: 25
+        height: 25
+      alignment: 9
+      pivot: {x: 0.47207153, y: 0.49689087}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e9f481f29d555543b29975b9731d60c
+      internalID: 283871405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_4
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 320
+        width: 20
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5810669, y: 0.50000304}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65b8e6b706ab8614186a15ae068b83e3
+      internalID: -231609701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_5
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 320
+        width: 21
+        height: 20
+      alignment: 9
+      pivot: {x: 0.55482554, y: 0.5000061}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8976dbd206b63341aec78876fe2ca07
+      internalID: 1865324702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_6
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 263
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c528fa7fb01a88249a1fbe64ee49de10
+      internalID: 2045041092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 263
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 242d541403d915544acf427481d13d18
+      internalID: 1830792470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_8
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 263
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 758c477a3ffdb6a469aaa3e03e44a251
+      internalID: 1698656565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_9
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 263
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3544c01d0f3bae468dcef1f96ecfe54
+      internalID: 1528714697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_10
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 263
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 069f968c77b2a9b48a6411982bb45aa6
+      internalID: 1282473621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_11
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 263
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99f61177198daf8448513ea70858a73b
+      internalID: 959152576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_12
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 192
+        width: 22
+        height: 28
+      alignment: 9
+      pivot: {x: 0.53129196, y: 0.36069435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0247b502081fec4992b0364318bf994
+      internalID: -779924214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_13
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 192
+        width: 30
+        height: 31
+      alignment: 9
+      pivot: {x: 0.37620494, y: 0.33027896}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87ac7ff62de65604f87c6d542e32e424
+      internalID: -605785589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_14
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 192
+        width: 30
+        height: 24
+      alignment: 9
+      pivot: {x: 0.35557148, y: 0.43551955}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef79abc531116c642985d520eb45f798
+      internalID: 1910544697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_15
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 192
+        width: 30
+        height: 27
+      alignment: 9
+      pivot: {x: 0.38651836, y: 0.385372}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebf61ef53fac5da439c9e2e13d6116b0
+      internalID: -1487588727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_16
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 192
+        width: 29
+        height: 27
+      alignment: 9
+      pivot: {x: 0.4428306, y: 0.38427678}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63b3eaea6cce6d0499bd356be64ce0e2
+      internalID: -58031261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_17
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 192
+        width: 22
+        height: 26
+      alignment: 9
+      pivot: {x: 0.5919883, y: 0.40269646}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a600685b86394c948af10c534371cc00
+      internalID: -505785066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_18
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 192
+        width: 22
+        height: 25
+      alignment: 9
+      pivot: {x: 0.5657959, y: 0.4007428}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f2246de2199ccd45996de311a391f6f
+      internalID: 1746044712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_19
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 192
+        width: 20
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5861511, y: 0.50000155}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f39445931a0e3bc4fae89cf005ef4454
+      internalID: -1107138479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_20
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 128
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e5b5961750517741abcda3a1db072c0
+      internalID: -1274225618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_21
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 128
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d12b4e6dc8788464da47c69b29ce1835
+      internalID: -201257026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chomperr_22
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 128
+        width: 28
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 437df5b010f1e384a8feaa7dbc56f00e
+      internalID: -91728860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Chomperr_0: -457118534
+      Chomperr_1: -1877665364
+      Chomperr_10: 1282473621
+      Chomperr_11: 959152576
+      Chomperr_12: -779924214
+      Chomperr_13: -605785589
+      Chomperr_14: 1910544697
+      Chomperr_15: -1487588727
+      Chomperr_16: -58031261
+      Chomperr_17: -505785066
+      Chomperr_18: 1746044712
+      Chomperr_19: -1107138479
+      Chomperr_2: 1667233222
+      Chomperr_20: -1274225618
+      Chomperr_21: -201257026
+      Chomperr_22: -91728860
+      Chomperr_3: 283871405
+      Chomperr_4: -231609701
+      Chomperr_5: 1865324702
+      Chomperr_6: 2045041092
+      Chomperr_7: 1830792470
+      Chomperr_8: 1698656565
+      Chomperr_9: 1528714697
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

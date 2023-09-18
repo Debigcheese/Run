@@ -105,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
             }
             KBCounter -= Time.deltaTime;
 
-   
             playerAttack.canAttack = false;
             cantMove = true;
         }
@@ -309,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveDirectionFlip()
     {
-        if (!cantMove && !playerAttack.isAttacking && !playerAttack.stopFlip)
+        if (!cantMove && !playerAttack.isAttacking && !playerAttack.stopFlip && !isClimbingLedge)
         {
             if (moveDirection > 0f && isFacingLeft)
             {

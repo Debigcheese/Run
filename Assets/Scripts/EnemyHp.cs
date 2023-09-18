@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHp : MonoBehaviour
 {
+    private CrystalDropper crystalDropper;
     private DamageFlash damageFlash;
+    public UnityEvent EnemyKnockback;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -19,6 +22,7 @@ public class EnemyHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        crystalDropper = GetComponent<CrystalDropper>();
         damageFlash = GetComponent<DamageFlash>();
         currentHealth = maxHealth;
     }
@@ -37,14 +41,14 @@ public class EnemyHp : MonoBehaviour
         {
             Die();
         }
-
+        EnemyKnockback.Invoke();
         damageFlash.CallDamageFlash();
         ShowDamagePopup(damageAmount);
     }
 
     void Die()
     {
-        
+        crystalDropper.DropCrystal();
     }
 
     protected void ShowDamagePopup(float damageAmount)
