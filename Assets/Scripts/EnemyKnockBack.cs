@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class EnemyKnockback : MonoBehaviour
 {
-    [SerializeField]
     private Rigidbody2D rb;
 
     [Space]
@@ -25,7 +24,7 @@ public class EnemyKnockback : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PlayFeedBack(GameObject sender)
@@ -33,7 +32,7 @@ public class EnemyKnockback : MonoBehaviour
         sender = GameObject.FindGameObjectWithTag("Player");
         StopAllCoroutines();
         OnBegin.Invoke();
-		Vector2 direction = (transform.position - sender.transform.position).normalized;
+        Vector2 direction = (transform.position - sender.transform.position).normalized;
         Vector2 newVelocity = rb.velocity;
         newVelocity.x = direction.x * KnockbackForceX;
         newVelocity.y = rb.velocity.y + KnockbackForceY;

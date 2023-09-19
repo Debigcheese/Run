@@ -14,28 +14,23 @@ public class PlayerState : MonoBehaviour
 
     [Header("Crystals")]
     public int totalCrystalAmount;
-    public int totalcrystalCollected;
+    public int tempCrystalAmount;
     public int justCollected;
-
-    public int addCrystalValue;
+    public int previousCollected;
 
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        justCollected = totalcrystalCollected;
         totalCrystalAmount = 0;
-        totalcrystalCollected = 0;
+        justCollected = 0;
         //RespawnPosition = startPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(justCollected > 0)
-        {
 
-        }
     }
 
 

@@ -18,12 +18,13 @@ public class Crystal : MonoBehaviour
     public bool pickedUp = false;
 
     [Header("Crystal")]
-    public int crystalValue;
-    
+    public int crystalValue = 1;
+    public bool firstCollected;
+
     [Header("magnetize")]
     public float magnetizeRadius = 5f;
     public float crystalMs = 6.5f;
-    public float delay = .6f;
+    public float stopMovingDelay = .6f;
     private Vector3 offset;
     
 
@@ -69,13 +70,14 @@ public class Crystal : MonoBehaviour
             }
         }
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, magnetizeRadius);
     }
     public IEnumerator StopMoving()
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(stopMovingDelay);
         stopMoving = true;
     }
 
@@ -90,44 +92,40 @@ public class Crystal : MonoBehaviour
             rb.velocity = Vector2.zero;
             SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
             renderer.enabled = false;
-            renderer.color = new Color(0f, 0f, 0f, 1f);
 
             playerState.totalCrystalAmount += crystalValue;
-            playerState.totalcrystalCollected += 1;
-            playerState.justCollected += 1;
-            if (playerState.justCollected <= 1)
-            {
-                StartCoroutine(showFloatingText());
-            }
-            else
-            {
-                StopCoroutine("showFloatingText");
-                playerState.addCrystalValue += crystalValue;
-                StartCoroutine(showFloatingTextTotal());
-            }
-            
-            StartCoroutine(destroyObj());  
+            playerState.tempCrystalAmount += crystalValue;
+            playerState.justCollected++;
+            firstCollected = true;
+
+            StartCoroutine(StopCounting());
         }
     }
 
-    private IEnumerator showFloatingText()
+    public IEnumerator StopCounting()
     {
-        yield return new WaitForSeconds(.5f);
-        GameObject text = Instantiate(textPrefab, transform.position, Quaternion.identity, transform);
-        text.GetComponentInChildren<TextMeshPro>().text = "+" + crystalValue.ToString();
+        yield return new WaitForSeconds(.3f);
+        playerState.previousCollected++;
+        StartCoroutine(destroyObj());
+
+        if (playerState.justCollected == playerState.previousCollected && firstCollected)
+        {
+            ShowFloatingTextTotal();
+        }
     }
 
-    private IEnumerator showFloatingTextTotal()
+    private void ShowFloatingTextTotal()
     {
-        yield return new WaitForSeconds(1f);
         GameObject text = Instantiate(textPrefab, transform.position, Quaternion.identity, transform);
-        text.GetComponentInChildren<TextMeshPro>().text = "+" + playerState.addCrystalValue.ToString();
+        text.GetComponentInChildren<TextMeshPro>().text = "+" + playerState.tempCrystalAmount.ToString();
+        playerState.tempCrystalAmount = 0;
         playerState.justCollected = 0;
     }
 
     private IEnumerator destroyObj()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(.8f);
+        playerState.previousCollected = playerState.justCollected;
         Destroy(this.gameObject);
     }
 }

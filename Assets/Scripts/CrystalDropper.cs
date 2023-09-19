@@ -22,16 +22,24 @@ public class CrystalDropper : MonoBehaviour
 
     public void DropCrystal()
     {
-        while(crystalLeftAmount > 81)
+        while (crystalLeftAmount >= 840)
+        {
+            InstantiateCrystal(3);
+            crystalLeftAmount -= 840;
+        }
+        //max 6 crystals
+        while (crystalLeftAmount >= 140)
         {
             InstantiateCrystal(2);
-            crystalLeftAmount -= 81;
+            crystalLeftAmount -= 140;
         }
-        while (crystalLeftAmount > 9)
+        //max 9 crystals
+        while (crystalLeftAmount >= 14)
         {
             InstantiateCrystal(1);
-            crystalLeftAmount -= 9;
+            crystalLeftAmount -= 14;
         }
+        //max 13 crystals
         while (crystalLeftAmount > 0)
         {
             InstantiateCrystal(0);
