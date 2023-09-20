@@ -6,6 +6,7 @@ public class MeleeWeapon : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
+    private PlayerState playerState;
     private Animator weaponAnimator;
     public LayerMask enemy;
     public Transform attackPoint;
@@ -22,6 +23,7 @@ public class MeleeWeapon : MonoBehaviour
     private int attackDamage = 20;
     public float attackRange = 0.5f;
     public float attackSpeed = 0.4f;
+    public float staminaPerAttack = 25f;
 
     [Space]
     [Header("DamageDelay")]
@@ -32,6 +34,7 @@ public class MeleeWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerState = GetComponentInParent<PlayerState>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
@@ -40,8 +43,16 @@ public class MeleeWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        if(playerAttack.isAttacking && !isMeleeAttacking )
+        if(playerState.currentStamina <= staminaPerAttack)
+        {
+            playerAttack.canAttack = false;
+        }
+        else
+        {
+            playerAttack.canAttack = true;
+        }
+
+        if(playerAttack.isAttacking && !isMeleeAttacking && playerAttack.canAttack)
         {
             Attack();
         }
@@ -52,6 +63,7 @@ public class MeleeWeapon : MonoBehaviour
 
     public void Attack()
     {
+        playerState.ReduceStamina(staminaPerAttack);
         isMeleeAttacking = true;
         attackDamage = Random.Range(minDmg, maxDmgMinusOne);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
@@ -89,6 +101,7 @@ public class MeleeWeapon : MonoBehaviour
         isMeleeAttacking = false;
         playerAttack.isAttacking = false;
     }
+
 
     private void OnDrawGizmosSelected()
     {

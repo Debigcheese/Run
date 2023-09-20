@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class EnemyKnockback : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private PlayerMovement playerMovement;
 
     [Space]
     [Header("Knockback")]
@@ -18,6 +19,7 @@ public class EnemyKnockback : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement = FindObjectOfType<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -27,12 +29,11 @@ public class EnemyKnockback : MonoBehaviour
 
     }
 
-    public void PlayFeedBack(GameObject sender)
+    public void PlayFeedBack()
     {
-        sender = GameObject.FindGameObjectWithTag("Player");
         StopAllCoroutines();
         OnBegin.Invoke();
-        Vector2 direction = (transform.position - sender.transform.position).normalized;
+        Vector2 direction = (transform.position - playerMovement.transform.position).normalized;
         Vector2 newVelocity = rb.velocity;
         newVelocity.x = direction.x * KnockbackForceX;
         newVelocity.y = rb.velocity.y + KnockbackForceY;

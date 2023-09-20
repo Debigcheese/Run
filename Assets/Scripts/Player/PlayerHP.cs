@@ -28,13 +28,12 @@ public class PlayerHP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        HealthBar.value = currentHealth;
     }
 
     public void takeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        HealthBar.value = currentHealth;
         damageFlash.CallDamageFlash();
         isHurt = true;
         if(currentHealth < 0)

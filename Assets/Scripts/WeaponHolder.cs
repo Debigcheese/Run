@@ -10,12 +10,18 @@ public class WeaponHolder : MonoBehaviour
 
     public GameObject[] weapons;
     public GameObject currentWeapon;
+    private GameObject previousWeapon;
+    public bool justSwitchedWeapon;
+
+    public bool meleeEquipped;
+    public bool magicEquipped;
 
     // Start is called before the first frame update
     void Start()
     {
         pickupWeapons = FindObjectsOfType<PickupWeapon>();
         playerMovement = GetComponentInParent<PlayerMovement>();
+        previousWeapon = currentWeapon;
 
         for (int i = 0; i < weapons.Length; i++)
         {
@@ -28,7 +34,32 @@ public class WeaponHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(currentWeapon == null)
+        {
+            currentWeapon = weapons[0];
+        }
+        if(currentWeapon != previousWeapon)
+        {
+            justSwitchedWeapon = true;
+            previousWeapon = currentWeapon;
+        }
+        else
+        {
+            justSwitchedWeapon = false;
+        }
+
+        //check which weapon is equipped;
+        if (currentWeapon == weapons[0] || currentWeapon == weapons[1] || currentWeapon == weapons[2])
+        {
+            meleeEquipped = true;
+            magicEquipped = false;
+        }
+        else
+        {
+            meleeEquipped = false;
+            magicEquipped = true;
+        }
+
     }
 
 }

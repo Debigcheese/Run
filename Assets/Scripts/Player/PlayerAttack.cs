@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public float AttackMoveSpeed;
     public bool checkMousePositionX;
     public bool stopFlip = false;
+    public bool canAttackFromKnockback = true;
     public bool canAttack = true;
 
     // Start is called before the first frame update
@@ -26,7 +27,7 @@ public class PlayerAttack : MonoBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
-        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttack)
+        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack)
         {
             isAttacking = true;
             if (mousePosition.x > transform.position.x && playerMovement.isFacingLeft || mousePosition.x < transform.position.x && !playerMovement.isFacingLeft)

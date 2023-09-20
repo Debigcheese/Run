@@ -55,7 +55,6 @@ MonoBehaviour:
   pickedUp: 0
   crystalValue: 140
   firstCollected: 0
-  magnetizeRadius: 5
   crystalMs: 10
   stopMovingDelay: 0.6
 --- !u!50 &654757764468190574
@@ -152,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 6080365709454538543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.82, y: 0.82, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 654757764468190576}

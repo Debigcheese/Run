@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &631295659130308426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8137738983444914035}
+  - component: {fileID: 8775810605908653659}
+  m_Layer: 0
+  m_Name: CrystalDropper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8137738983444914035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631295659130308426}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5383039, y: 5.6111956, z: -0.10788365}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8775810605908653659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631295659130308426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0afe39370acd9c4fbe5b3c919c6355f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crystalPrefabs:
+  - {fileID: 6257805469850492171, guid: 3dc4e0baa10a57b40bb1451111b2812e, type: 3}
+  - {fileID: 3740088089758505015, guid: e4d84302b3749254ca1341092c268a69, type: 3}
+  - {fileID: 654757764468190577, guid: 4bd4ce7bbceb22a40bdd198478b70159, type: 3}
+  - {fileID: 8083822389027191353, guid: 5784aa649db2e7d4bb8d6a2d2055e425, type: 3}
+  crystalDropAmount: 10

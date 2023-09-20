@@ -22,7 +22,7 @@ public class EnemyHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        crystalDropper = GetComponent<CrystalDropper>();
+        crystalDropper = GetComponentInChildren<CrystalDropper>();
         damageFlash = GetComponent<DamageFlash>();
         currentHealth = maxHealth;
     }

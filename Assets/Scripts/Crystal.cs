@@ -22,9 +22,8 @@ public class Crystal : MonoBehaviour
     public bool firstCollected;
 
     [Header("magnetize")]
-    public float magnetizeRadius = 5f;
-    public float crystalMs = 6.5f;
-    public float stopMovingDelay = .6f;
+    public float crystalMs = 9f;
+    public float stopMovingDelay = .8f;
     private Vector3 offset;
     
 
@@ -34,6 +33,7 @@ public class Crystal : MonoBehaviour
         collider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         playerState = FindAnyObjectByType<PlayerState>();
+        playerState.canPickup = true;
         textPrefab.SetActive(true);
         offset = new Vector3(Random.Range(1.5f, -1.5f), Random.Range(0, 2));
         StartCoroutine(StopMoving());
@@ -50,81 +50,65 @@ public class Crystal : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
-        if (stopMoving && magnetize && !pickedUp)
+        if (stopMoving && magnetize)
         {
             Vector2 direction = (playerState.transform.position - rb.transform.position).normalized;
             rb.velocity = direction * crystalMs;
         }
-
-        Collider2D[] crystalMagnetize = Physics2D.OverlapCircleAll(transform.position, magnetizeRadius);
-        foreach (Collider2D crystalmagnet in crystalMagnetize)
-        {
-            if (crystalmagnet.CompareTag("Player") && !pickedUp)
-            {
-                magnetize = true; 
-                break; 
-            }
-            else
-            {
-                magnetize = false;
-            }
-        }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, magnetizeRadius);
-    }
     public IEnumerator StopMoving()
     {
         yield return new WaitForSeconds(stopMovingDelay);
         stopMoving = true;
+        magnetize = true;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && stopMoving)
+        if (collision.CompareTag("Player") && stopMoving && playerState.canPickup)
         {
-            Debug.Log(crystalValue);
             pickedUp = true;
             magnetize = false;
-            collider.enabled = false;
             rb.velocity = Vector2.zero;
             SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
             renderer.enabled = false;
+            collider.enabled = false;
 
             playerState.totalCrystalAmount += crystalValue;
             playerState.tempCrystalAmount += crystalValue;
             playerState.justCollected++;
             firstCollected = true;
-
             StartCoroutine(StopCounting());
         }
     }
 
     public IEnumerator StopCounting()
     {
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.5f);
         playerState.previousCollected++;
-        StartCoroutine(destroyObj());
 
         if (playerState.justCollected == playerState.previousCollected && firstCollected)
         {
             ShowFloatingTextTotal();
         }
+
+        StartCoroutine(destroyObj());
     }
 
     private void ShowFloatingTextTotal()
     {
         GameObject text = Instantiate(textPrefab, transform.position, Quaternion.identity, transform);
         text.GetComponentInChildren<TextMeshPro>().text = "+" + playerState.tempCrystalAmount.ToString();
+        playerState.canPickup = false;
         playerState.tempCrystalAmount = 0;
         playerState.justCollected = 0;
     }
 
     private IEnumerator destroyObj()
     {
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(.9f);
+        playerState.canPickup = true;
         playerState.previousCollected = playerState.justCollected;
         Destroy(this.gameObject);
     }

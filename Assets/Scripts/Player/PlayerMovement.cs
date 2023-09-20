@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         //Get knockback
         if(KBCounter <= 0)
         {
-            playerAttack.canAttack = true;
+            playerAttack.canAttackFromKnockback = true;
             cantMove = false;
         }
         else
@@ -105,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
             }
             KBCounter -= Time.deltaTime;
 
-            playerAttack.canAttack = false;
+            playerAttack.canAttackFromKnockback = false;
             cantMove = true;
         }
  
