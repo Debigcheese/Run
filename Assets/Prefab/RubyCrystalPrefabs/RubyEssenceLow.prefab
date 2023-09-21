@@ -139,7 +139,7 @@ MonoBehaviour:
   pickedUp: 0
   crystalValue: 1
   firstCollected: 0
-  crystalMs: 10
+  crystalMs: 15
   stopMovingDelay: 0.6
 --- !u!50 &6257805469850492180
 Rigidbody2D:

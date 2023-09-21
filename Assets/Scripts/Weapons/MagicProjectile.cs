@@ -8,10 +8,12 @@ public class MagicProjectile : MonoBehaviour
     public LayerMask enemyLayer;
     public LayerMask groundLayer;
     private Vector3 mousePos;
+    public GameObject explosionPrefab;
 
     public float force;
     public float radiusCollider;
     private int damage = 0;
+    public float rotationOff;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,7 @@ public class MagicProjectile : MonoBehaviour
         Vector3 rotation = transform.position - GetMousePosition();
         rb.velocity = new Vector2(direction.x, direction.y) * force;
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rot );
+        transform.rotation = Quaternion.Euler(0, 0, rot + rotationOff );
 
         StartCoroutine(TimeToDestroy());
     }
@@ -38,34 +40,55 @@ public class MagicProjectile : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
+            HashSet<GameObject> hurtEnemies = new HashSet<GameObject>();
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, radiusCollider, enemyLayer);
-            List<GameObject> hurtEnemies = new List<GameObject>();
-            foreach (Collider2D enemy in hitEnemies)
+
+            foreach(Collider2D enemy in hitEnemies)
             {
                 if (!hurtEnemies.Contains(enemy.gameObject))
                 {
                     enemy.GetComponent<EnemyHp>().TakeDamage(getDamage());
+                    hurtEnemies.Add(enemy.gameObject);
                 }
-                hurtEnemies.Add(enemy.gameObject);
             }
-            Explode();
+  
+            BeforeExplosion();
         }
         else if (((1 << collision.gameObject.layer) & groundLayer) != 0)
         {
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, radiusCollider, enemyLayer);
+
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                enemy.GetComponent<EnemyHp>().TakeDamage(getDamage());
+            }
             // Destroy the projectile when it collides with the ground layer
-            Explode();
+            BeforeExplosion();
         }
     }
 
-    public void Explode()
+    private void BeforeExplosion()
     {
+        Collider2D collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+        SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
+        renderer.enabled = false;
+        rb.velocity = Vector2.zero;
+
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        StartCoroutine(Explode());
+    }
+
+    public IEnumerator Explode()
+    {
+        yield return new WaitForSeconds(1.6f);
         Destroy(this.gameObject);
     }
 
     private IEnumerator TimeToDestroy()
     {
-        yield return new WaitForSeconds(1.6f);
-        Explode();
+        yield return new WaitForSeconds(3f);
+        BeforeExplosion();
     }
 
     public void SetMousePosition(Vector3 mousePOS)

@@ -49,7 +49,7 @@ public class WeaponHolder : MonoBehaviour
         }
 
         //check which weapon is equipped;
-        if (currentWeapon == weapons[0] || currentWeapon == weapons[1] || currentWeapon == weapons[2])
+        if (currentWeapon == weapons[0] || currentWeapon == weapons[1] || currentWeapon == weapons[2] || currentWeapon == weapons[3] || currentWeapon == weapons[4])
         {
             meleeEquipped = true;
             magicEquipped = false;

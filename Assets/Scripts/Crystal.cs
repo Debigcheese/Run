@@ -66,40 +66,54 @@ public class Crystal : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && stopMoving && playerState.canPickup)
+
+            if (collision.CompareTag("Player") && stopMoving && playerState.canPickup)
+            {
+                pickedUp = true;
+                magnetize = false;
+                rb.velocity = Vector2.zero;
+                SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
+                renderer.enabled = false;
+                collider.enabled = false;
+
+                playerState.totalCrystalAmount += crystalValue;
+                playerState.tempCrystalAmount += crystalValue;
+                playerState.justCollected++;
+                firstCollected = true;
+                StartCoroutine(StopCounting());
+            }
+    }
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player") && stopMoving && playerState.canPickup)
         {
-            pickedUp = true;
             magnetize = false;
             rb.velocity = Vector2.zero;
             SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
             renderer.enabled = false;
-            collider.enabled = false;
 
-            playerState.totalCrystalAmount += crystalValue;
-            playerState.tempCrystalAmount += crystalValue;
-            playerState.justCollected++;
-            firstCollected = true;
-            StartCoroutine(StopCounting());
+
         }
     }
 
     public IEnumerator StopCounting()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.9f);
         playerState.previousCollected++;
-
-        if (playerState.justCollected == playerState.previousCollected && firstCollected)
+        if(playerState.justCollected == playerState.previousCollected && firstCollected)
         {
             ShowFloatingTextTotal();
         }
-
+            
         StartCoroutine(destroyObj());
     }
 
     private void ShowFloatingTextTotal()
     {
+        float tempCrystal = playerState.tempCrystalAmount;
         GameObject text = Instantiate(textPrefab, transform.position, Quaternion.identity, transform);
-        text.GetComponentInChildren<TextMeshPro>().text = "+" + playerState.tempCrystalAmount.ToString();
+        text.GetComponentInChildren<TextMeshPro>().text = "+" + tempCrystal.ToString();
         playerState.canPickup = false;
         playerState.tempCrystalAmount = 0;
         playerState.justCollected = 0;
@@ -107,9 +121,9 @@ public class Crystal : MonoBehaviour
 
     private IEnumerator destroyObj()
     {
-        yield return new WaitForSeconds(.9f);
+        yield return new WaitForSeconds(.8f);
         playerState.canPickup = true;
-        playerState.previousCollected = playerState.justCollected;
+        playerState.previousCollected = 0;
         Destroy(this.gameObject);
     }
 }

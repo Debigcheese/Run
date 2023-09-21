@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
     private WeaponHolder weaponHolder;
-    private Crystal crystal;
 
     [Header("Respawn")]
     private GameObject RespawnPosition;
@@ -33,19 +31,24 @@ public class PlayerState : MonoBehaviour
     public float maxMana = 100;
     public float currentMana;
 
+    [Space]
+    [Header("Crosshair")]
+    public GameObject mageCrosshair;
+
 
     // Start is called before the first frame update
     void Start()
     {
         weaponHolder = GetComponent<WeaponHolder>();
-        playerMovement = GetComponent<PlayerMovement>();
         totalCrystalAmount = 0;
         justCollected = 0;
+
+        mageCrosshair.SetActive(true);
 
         manaStaminaBar.maxValue = maxMana;
         currentMana = maxMana;
         currentStamina = maxStamina;
-        InvokeRepeating("RefillMana", 0f, .046f);
+        InvokeRepeating("RefillMana", 0f, .3f);
         InvokeRepeating("RefillStamina", 0f, 0.05f);
     }
 
@@ -55,19 +58,22 @@ public class PlayerState : MonoBehaviour
         if (weaponHolder.meleeEquipped)
         {
             manaStaminaBar.value = currentStamina;
-            if(currentStamina >= maxStamina)
-            {
-                currentStamina = maxStamina;
-            }
+            
+        }
+
+        if (currentStamina >= maxStamina)
+        {
+            currentStamina = maxStamina;
         }
 
         if (weaponHolder.magicEquipped)
         {
             manaStaminaBar.value = currentMana;
-            if (currentMana >= maxMana)
-            {
-                currentMana = maxMana;
-            }
+        }
+
+        if (currentMana >= maxMana)
+        {
+            currentMana = maxMana;
         }
 
         if (weaponHolder.justSwitchedWeapon)
@@ -95,7 +101,7 @@ public class PlayerState : MonoBehaviour
 
     private void RefillMana()
     {
-        currentMana += 1f;
+        currentMana += 5f;
     }
 
 }

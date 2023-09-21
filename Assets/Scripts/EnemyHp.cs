@@ -8,6 +8,7 @@ public class EnemyHp : MonoBehaviour
     private CrystalDropper crystalDropper;
     private DamageFlash damageFlash;
     public UnityEvent EnemyKnockback;
+    private bool tookDamage;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -35,15 +36,27 @@ public class EnemyHp : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        currentHealth -= damageAmount;
-        //play hurt animation
-        if(currentHealth <= 0)
+        if (!tookDamage)
         {
-            Die();
+            tookDamage = true;
+            currentHealth -= damageAmount;
+            //play hurt animation
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+            EnemyKnockback.Invoke();
+            damageFlash.CallDamageFlash();
+            ShowDamagePopup(damageAmount);
+            StartCoroutine(CanTakeDamage());
+
         }
-        EnemyKnockback.Invoke();
-        damageFlash.CallDamageFlash();
-        ShowDamagePopup(damageAmount);
+    }
+
+    private IEnumerator CanTakeDamage()
+    {
+        yield return new WaitForSeconds(.15f);
+        tookDamage = false;
     }
 
     void Die()
