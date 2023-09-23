@@ -8,7 +8,7 @@ public class MagicWeapon : MonoBehaviour
     private PlayerAttack playerAttack;
     private Animator weaponAnimator;
     public Transform projectilePoint;
-    public GameObject projectile;
+    public GameObject magicProjectile;
 
     private Vector3 storedMousePos;
 
@@ -41,7 +41,7 @@ public class MagicWeapon : MonoBehaviour
         {
             playerAttack.canAttack = false;
         }
-        else
+        else if(!playerAttack.isAttacking)
         {
             playerAttack.canAttack = true;
         }
@@ -67,12 +67,12 @@ public class MagicWeapon : MonoBehaviour
 
     public void ShootProjectile(Vector3 storedMousePos)
     {
-        GameObject newProjectile = Instantiate(projectile, projectilePoint.position, Quaternion.identity);
-        MagicProjectile magicProjectile = newProjectile.GetComponent<MagicProjectile>();
+        GameObject newProjectile = Instantiate(magicProjectile, projectilePoint.position, Quaternion.identity);
+        Projectile projectile = newProjectile.GetComponent<Projectile>();
 
         int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
-        magicProjectile.SetDamage(randomDamage);
-        magicProjectile.SetMousePosition(storedMousePos);
+        projectile.SetDamage(randomDamage);
+        projectile.SetMousePosition(storedMousePos);
 
         StartCoroutine(ShootCooldown());
     }

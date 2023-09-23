@@ -55,7 +55,7 @@ public class EnemyHp : MonoBehaviour
 
     private IEnumerator CanTakeDamage()
     {
-        yield return new WaitForSeconds(.15f);
+        yield return new WaitForSeconds(.01f);
         tookDamage = false;
     }
 

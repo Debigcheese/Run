@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     public bool stopFlip = false;
     public bool canAttackFromKnockback = true;
     public bool canAttack = true;
+    public bool stopAttacking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +28,17 @@ public class PlayerAttack : MonoBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
-        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack)
+        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack && !stopAttacking)
         {
             isAttacking = true;
-            if (mousePosition.x > transform.position.x && playerMovement.isFacingLeft || mousePosition.x < transform.position.x && !playerMovement.isFacingLeft)
+            if (mousePosition.x > transform.position.x && playerMovement.isFacingLeft || mousePosition.x < transform.position.x && !playerMovement.isFacingLeft )
             {
                 stopFlip = true;
                 playerMovement.Flip();
             }
         }
         //cant attack when ledgeclimb,wallslide,walljump,hurt
-        if (playerMovement.isClimbingLedge || playerMovement.isWallSliding || playerMovement.isWallJumping || playerHP.isHurt)
+        if (playerMovement.isClimbingLedge || playerMovement.isWallSliding || playerMovement.isWallJumping)
         {
             isAttacking = false;
         }

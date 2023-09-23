@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
+    private PlayerMovement pMovement;
+    private PlayerAttack pAttack;
     private DamageFlash damageFlash;
     public Slider HealthBar;
     public int maxHealth = 100;
@@ -20,6 +22,8 @@ public class PlayerHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pMovement = GetComponent<PlayerMovement>();
+        pAttack = GetComponent<PlayerAttack>();
         damageFlash = GetComponent<DamageFlash>();
         currentHealth = maxHealth;
         HealthBar.maxValue = maxHealth;
@@ -35,13 +39,19 @@ public class PlayerHP : MonoBehaviour
     {
         currentHealth -= damageAmount;
         damageFlash.CallDamageFlash();
-        isHurt = true;
+        
         if(currentHealth < 0)
         {
             playerDie();
         }
-        ShowDamagePopup(damageAmount);
-        StartCoroutine("isHurtAnimStop");
+
+        if (!pAttack.isAttacking && !pMovement.isWallSliding && !pMovement.isClimbingLedge)
+        {
+            isHurt = true;
+            StartCoroutine("isHurtAnimStop");
+            Debug.Log("ishurt");
+        }
+            ShowDamagePopup(damageAmount);
     }
 
     private IEnumerator isHurtAnimStop()

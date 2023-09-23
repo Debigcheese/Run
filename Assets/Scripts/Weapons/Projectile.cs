@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicProjectile : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     private Rigidbody2D rb;
     public LayerMask enemyLayer;
@@ -47,7 +47,7 @@ public class MagicProjectile : MonoBehaviour
             {
                 if (!hurtEnemies.Contains(enemy.gameObject))
                 {
-                    enemy.GetComponent<EnemyHp>().TakeDamage(getDamage());
+                    enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
                     hurtEnemies.Add(enemy.gameObject);
                 }
             }
@@ -60,7 +60,7 @@ public class MagicProjectile : MonoBehaviour
 
             foreach (Collider2D enemy in hitEnemies)
             {
-                enemy.GetComponent<EnemyHp>().TakeDamage(getDamage());
+                enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
             }
             // Destroy the projectile when it collides with the ground layer
             BeforeExplosion();
@@ -105,7 +105,7 @@ public class MagicProjectile : MonoBehaviour
         damage = newDamage;
     }
 
-    public int getDamage()
+    public int GetDamage()
     {
         return damage;
     }

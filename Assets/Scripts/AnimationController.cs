@@ -43,12 +43,12 @@ public class AnimationController : MonoBehaviour
 
         anim.SetFloat("jumpingLanding", jumpingLanding);
         anim.SetFloat("movement", movement);
-        anim.SetBool("isHurt", playerHp.isHurt);
         anim.SetBool("isAttacking", playerAttack.isAttacking);
         anim.SetBool("isJumping", playerMovement.isJumping);
         anim.SetBool("isClimbingLedge", playerMovement.isClimbingLedge);
         anim.SetBool("isWallSliding", playerMovement.isWallSliding);
-
+        anim.SetBool("isHurt", playerHp.isHurt);
+        
     }
 
 

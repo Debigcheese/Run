@@ -63,6 +63,7 @@ public class MeleeWeapon : MonoBehaviour
 
     public void Attack()
     {
+        playerAttack.canAttack = false;
         playerState.ReduceStamina(staminaPerAttack);
         isMeleeAttacking = true;
         attackDamage = Random.Range(minDmg, maxDmgMinusOne);
@@ -100,6 +101,7 @@ public class MeleeWeapon : MonoBehaviour
         attackCounter *= -1f;
         isMeleeAttacking = false;
         playerAttack.isAttacking = false;
+        playerAttack.canAttack = true;
     }
 
 

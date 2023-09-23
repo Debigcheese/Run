@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePoint: {fileID: 8840068980370417231}
-  projectile: {fileID: 7127742449494675844, guid: a1170cf23e6787e4dacadb97b086f8e5, type: 3}
+  magicProjectile: {fileID: 7127742449494675844, guid: a1170cf23e6787e4dacadb97b086f8e5, type: 3}
   attackCounter: 1
   isMagicAttacking: 0
   canAttack: 1

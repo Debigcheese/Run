@@ -49,7 +49,7 @@ public class PlayerState : MonoBehaviour
         currentMana = maxMana;
         currentStamina = maxStamina;
         InvokeRepeating("RefillMana", 0f, .3f);
-        InvokeRepeating("RefillStamina", 0f, 0.05f);
+        InvokeRepeating("RefillStamina", 0f, 0.02f);
     }
 
     // Update is called once per frame
@@ -91,7 +91,7 @@ public class PlayerState : MonoBehaviour
 
     private void RefillStamina()
     {
-        currentStamina += 5f;
+        currentStamina += 1f;
     }
 
     public void ReduceMana(float manaToReduce)
