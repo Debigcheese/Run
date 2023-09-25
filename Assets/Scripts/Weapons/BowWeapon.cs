@@ -11,7 +11,6 @@ public class BowWeapon : MonoBehaviour
     public Transform projectilePoint;
     public GameObject arrowProjectile;
 
-
     [Space]
     [Header("Animation")]
     public bool isBowAttacking = false;
@@ -28,6 +27,9 @@ public class BowWeapon : MonoBehaviour
     [SerializeField] private int maxDmgMinusOne = 5;
     public float staminaPerProjectile = 70;
     public bool doubleProjectile = false;
+    private float timeElapsed = 0.4f;
+    private float damageMultiplier = 1.0f;
+    private int count = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -85,12 +87,34 @@ public class BowWeapon : MonoBehaviour
 
         if (playerAttack.isAttacking && playerAttack.canAttack && !playerAttack.stopAttacking )
         {
+
             StartCoroutine(BowCharge());
+
+            if (mousePos.x > playerMovement.transform.position.x && playerMovement.isFacingLeft)
+            {
+                playerMovement.Flip();
+            }
+            if (mousePos.x > playerMovement.transform.position.x && playerMovement.isFacingLeft )
+            {
+                playerMovement.Flip();
+            }
+        }
+
+        if (playerAttack.isAttacking)
+        {
+            timeElapsed += Time.deltaTime;
+            if (timeElapsed >= .6f && count != 3)
+            {
+                count++;
+                damageMultiplier += 0.4f+(count*0.65f);
+                timeElapsed = 0f;
+            }
         }
 
         if (bowCharge && Input.GetButtonDown("Fire1") )
         {
-            BowShoot();
+            BowShoot(damageMultiplier);
+            count = 0;
             isBowShooting = true;
             bowCharge = false;
             canDisableBowCharge = false;
@@ -105,11 +129,11 @@ public class BowWeapon : MonoBehaviour
         canDisableBowCharge = true;
         playerAttack.canAttack = false;
         playerAttack.isAttacking = true;
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(.1f);
         bowCharge = true;
     }
 
-    public void BowShoot()
+    public void BowShoot(float damageMultiplier)
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -117,18 +141,21 @@ public class BowWeapon : MonoBehaviour
         Projectile projectile = newProjectile.GetComponent<Projectile>();
 
         int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
-        projectile.SetDamage(randomDamage);
+        float totalDamage =  randomDamage * damageMultiplier;
+        int roundedDamage = Mathf.RoundToInt(totalDamage);
+        projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(mousePos);
+        projectile.SetArrowDamageMultipler(damageMultiplier);
 
         if (doubleProjectile)
         {
-            StartCoroutine(DoubleProjectile(mousePos));
+            StartCoroutine(DoubleProjectile(mousePos, damageMultiplier));
         }
         playerState.ReduceStamina(staminaPerProjectile);
         StartCoroutine(FinishAnimation());
     }
 
-    public IEnumerator DoubleProjectile(Vector2 mousePos)
+    public IEnumerator DoubleProjectile(Vector2 mousePos, float damageMultiplier)
     {
         yield return new WaitForSeconds(.1f);
 
@@ -136,18 +163,22 @@ public class BowWeapon : MonoBehaviour
         Projectile projectile = newProjectile.GetComponent<Projectile>();
 
         int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
-        projectile.SetDamage(randomDamage);
+        float totalDamage = randomDamage * damageMultiplier;
+        int roundedDamage = Mathf.RoundToInt(totalDamage);
+        projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(mousePos);
+        projectile.SetArrowDamageMultipler(damageMultiplier);
         playerState.ReduceStamina(staminaPerProjectile);
-
     }
 
     public IEnumerator FinishAnimation()
     {
-        yield return new WaitForSeconds(.35f);
+        yield return new WaitForSeconds(.25f);
         isBowAttacking = false;
         isBowShooting = false;
         playerAttack.isAttacking = false;
         playerAttack.canAttack = true;
+        count = 0;
+        damageMultiplier = 1;
     }
 }

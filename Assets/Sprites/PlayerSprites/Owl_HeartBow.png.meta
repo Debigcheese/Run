@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ba00122aad4c88245b0960801001a82d
+guid: 90b3951a4e2a51c4abc5acd29e7f0e5f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,148 +117,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Owl_DarkBow 1_0
-      rect:
-        serializedVersion: 2
-        x: 76
-        y: 159
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.4586613, y: 0.4934799}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 19a1c1403baeabe4790e60077b68c380
-      internalID: -1271472838
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Owl_DarkBow 1_1
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 159
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.4461038, y: 0.4934784}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bd2aa8b604fa61e4f939b2874fab6b29
-      internalID: 329338664
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Owl_DarkBow 1_2
-      rect:
-        serializedVersion: 2
-        x: 188
-        y: 159
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.4461038, y: 0.4934784}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 78de1126b5cb67743ab9bc33315b8438
-      internalID: -376203052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Owl_DarkBow 1_3
-      rect:
-        serializedVersion: 2
-        x: 262
-        y: 159
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.4461038, y: 0.4934784}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 710ff442e6c7bd64b8ce356a4dce9fff
-      internalID: 556288854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Owl_DarkBow 1_4
+      name: Owl_HeartBow 1_0
       rect:
         serializedVersion: 2
         x: 77
-        y: 79
+        y: 158
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.4586613, y: 0.4934799}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b6c27a5565f99048ac92b826f2516a0
-      internalID: -1807370665
+      spriteID: d05a4b9437bfc6b468805018818a6cc0
+      internalID: 731642908
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Owl_DarkBow 1_5
+      name: Owl_HeartBow 1_1
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 158
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cffa2fdd6d2f853439c382d7b560bb0b
+      internalID: 660843542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_HeartBow 1_2
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 158
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db3aa4fe88890474fa459409b17d9965
+      internalID: -957360175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_HeartBow 1_3
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 158
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a44c6d862f68cc40bb805352cfdfc7d
+      internalID: -1115116818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_HeartBow 1_4
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 78
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdedc6f1b64ad6a4f98fd91a22ad47d4
+      internalID: -1304063303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_HeartBow 1_5
       rect:
         serializedVersion: 2
         x: 140
-        y: 80
+        y: 79
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.4538263, y: 0.4765556}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8a660baf35e196468decf3644651371
-      internalID: -281967174
+      spriteID: 47b577f61f9cca3458e05a86a20aab37
+      internalID: 814185518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Owl_DarkBow 1_6
+      name: Owl_HeartBow 1_6
       rect:
         serializedVersion: 2
         x: 205
-        y: 80
+        y: 79
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.4538263, y: 0.4765556}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c482d81fc1fef846aa6fbfc160d5ae0
-      internalID: -1912216604
+      spriteID: 12c449ead96f80444b61bbd0ab953d15
+      internalID: 887613902
       vertices: []
       indices: 
       edges: []
@@ -274,13 +274,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Owl_DarkBow 1_0: -1271472838
-      Owl_DarkBow 1_1: 329338664
-      Owl_DarkBow 1_2: -376203052
-      Owl_DarkBow 1_3: 556288854
-      Owl_DarkBow 1_4: -1807370665
-      Owl_DarkBow 1_5: -281967174
-      Owl_DarkBow 1_6: -1912216604
+      Owl_HeartBow 1_0: 731642908
+      Owl_HeartBow 1_1: 660843542
+      Owl_HeartBow 1_2: -957360175
+      Owl_HeartBow 1_3: -1115116818
+      Owl_HeartBow 1_4: -1304063303
+      Owl_HeartBow 1_5: 814185518
+      Owl_HeartBow 1_6: 887613902
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
