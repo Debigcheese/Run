@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BowWeapon : MonoBehaviour
 {
+    private WeaponHolder weaponHolder;
     private PlayerMovement playerMovement;
     private PlayerState playerState;
     private PlayerAttack playerAttack;
@@ -34,6 +35,7 @@ public class BowWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weaponHolder = GetComponentInParent<WeaponHolder>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerState = GetComponentInParent<PlayerState>();
         playerAttack = GetComponentInParent<PlayerAttack>();
@@ -43,6 +45,19 @@ public class BowWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (weaponHolder.swapWeapons)
+        {
+            canDisableBowCharge = false;
+            bowCharge = false;
+            isBowAttacking = false;
+            isBowShooting = false;
+            playerAttack.isAttacking = false;
+            playerAttack.canAttack = true;
+            count = 0;
+            damageMultiplier = 1;
+        }
+
+        //needs fixing
         if (playerState.currentStamina < staminaPerProjectile+staminaPerProjectile)
         {
             playerAttack.stopAttacking = true;

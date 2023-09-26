@@ -166,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckForLedge()
     {
-        if (ledgeDetected && canGrabLedge && !playerAttack.isAttacking )
+        if (ledgeDetected && canGrabLedge  )
         {
             canGrabLedge = false;
             isClimbingLedge = true;

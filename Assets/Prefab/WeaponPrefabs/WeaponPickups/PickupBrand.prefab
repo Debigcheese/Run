@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1aff6b66c382f44ca39c1b4d4f46d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  identifier: 6
+  identifier: 11
   inRange: 0
   EKeyCap: {fileID: 6353430157026203360}
 --- !u!61 &2978434192310097900

@@ -24,12 +24,13 @@ public class PlayerState : MonoBehaviour
     [Header("Stamina")]
     public float maxStamina = 100;
     public float currentStamina;
-    public Slider manaStaminaBar;
+    public Slider staminaBar;
 
     [Space]
     [Header("Mana")]
     public float maxMana = 100;
     public float currentMana;
+    public Slider manaBar;
 
     [Space]
     [Header("Crosshair")]
@@ -43,10 +44,9 @@ public class PlayerState : MonoBehaviour
         totalCrystalAmount = 0;
         justCollected = 0;
 
-        mageCrosshair.SetActive(true);
-
-        manaStaminaBar.maxValue = maxMana;
+        manaBar.maxValue = maxMana;
         currentMana = maxMana;
+        staminaBar.maxValue = maxStamina;
         currentStamina = maxStamina;
         InvokeRepeating("RefillMana", 0f, .3f);
         InvokeRepeating("RefillStamina", 0f, 0.02f);
@@ -55,10 +55,11 @@ public class PlayerState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (weaponHolder.meleeEquipped)
+        if (weaponHolder.meleeEquipped )
         {
-            manaStaminaBar.value = currentStamina;
-            
+            staminaBar.value = currentStamina;
+            manaBar.gameObject.SetActive(false);
+            staminaBar.gameObject.SetActive(true);
         }
 
         if (currentStamina >= maxStamina)
@@ -68,18 +69,14 @@ public class PlayerState : MonoBehaviour
 
         if (weaponHolder.magicEquipped)
         {
-            manaStaminaBar.value = currentMana;
+            manaBar.value = currentMana;
+            staminaBar.gameObject.SetActive(false);
+            manaBar.gameObject.SetActive(true);
         }
 
         if (currentMana >= maxMana)
         {
             currentMana = maxMana;
-        }
-
-        if (weaponHolder.justSwitchedWeapon)
-        {
-            currentMana = maxMana;
-            currentStamina = maxStamina;
         }
   
     }

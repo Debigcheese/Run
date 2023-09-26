@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MagicWeapon : MonoBehaviour
 {
+    private WeaponHolder weaponHolder;
     private PlayerState playerState;
     private PlayerAttack playerAttack;
     private Animator weaponAnimator;
@@ -29,6 +30,7 @@ public class MagicWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weaponHolder = GetComponentInParent<WeaponHolder>();
         playerState = GetComponentInParent<PlayerState>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
@@ -37,7 +39,14 @@ public class MagicWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerState.currentMana < manaPerProjectile)
+        if (weaponHolder.swapWeapons)
+        {
+            isMagicAttacking = false;
+            playerAttack.isAttacking = false;
+            playerAttack.canAttack = true;
+        }
+
+        if (playerState.currentMana < manaPerProjectile)
         {
             playerAttack.canAttack = false;
         }

@@ -9,9 +9,11 @@ public class PlayerHP : MonoBehaviour
     private PlayerAttack pAttack;
     private DamageFlash damageFlash;
     public Slider HealthBar;
+    public Slider easeHealthBar;
     public int maxHealth = 100;
     public int currentHealth;
     public bool isHurt;
+    private float lerpSpeed = 0.014f;
 
     [Space]
     [Header("DamagePopup")]
@@ -27,12 +29,20 @@ public class PlayerHP : MonoBehaviour
         damageFlash = GetComponent<DamageFlash>();
         currentHealth = maxHealth;
         HealthBar.maxValue = maxHealth;
+        easeHealthBar.value = HealthBar.value;
     }
 
     // Update is called once per frame
     void Update()
     {
         HealthBar.value = currentHealth;
+
+        if(HealthBar.value != easeHealthBar.value)
+        {
+            easeHealthBar.value = Mathf.Lerp(easeHealthBar.value, currentHealth, lerpSpeed);
+        }
+        
+        
     }
 
     public void takeDamage(int damageAmount)
@@ -42,25 +52,25 @@ public class PlayerHP : MonoBehaviour
         
         if(currentHealth < 0)
         {
-            playerDie();
+            PlayerDie();
         }
 
         if (!pAttack.isAttacking && !pMovement.isWallSliding && !pMovement.isClimbingLedge)
         {
             isHurt = true;
-            StartCoroutine("isHurtAnimStop");
+            StartCoroutine("IsHurtAnimStop");
             Debug.Log("ishurt");
         }
             ShowDamagePopup(damageAmount);
     }
 
-    private IEnumerator isHurtAnimStop()
+    private IEnumerator IsHurtAnimStop()
     {
         yield return new WaitForSeconds(.25f);
         isHurt = false;
     }
 
-    public void playerDie()
+    public void PlayerDie()
     {
         Debug.Log("playerDie");
     }

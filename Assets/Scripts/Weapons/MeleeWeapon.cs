@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
+    private WeaponHolder weaponHolder;
     private PlayerAttack playerAttack;
     private PlayerState playerState;
     private Animator weaponAnimator;
@@ -30,12 +30,11 @@ public class MeleeWeapon : MonoBehaviour
     public float firstSwingDmgDelay = 0.4f;
     public float SecondSwingDmgDelay = 0.1f;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        weaponHolder = GetComponentInParent<WeaponHolder>();
         playerState = GetComponentInParent<PlayerState>();
-        playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
     }
@@ -43,6 +42,14 @@ public class MeleeWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (weaponHolder.swapWeapons)
+        {
+            attackCounter *= -1f;
+            isMeleeAttacking = false;
+            playerAttack.isAttacking = false;
+            playerAttack.canAttack = true;
+        }
+
         if(playerState.currentStamina <= staminaPerAttack)
         {
             playerAttack.canAttack = false;
