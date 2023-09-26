@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     public bool canMove = true;
     public bool isMoving;
 
+    public bool lookingRight;
     public bool detected = false;
     public GameObject DetectionSymbolPopup;
 
@@ -64,9 +65,9 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
+            DetectionSymbolPopup.SetActive(false);
             isMoving = false;
             detected = false;
-            DetectionSymbolPopup.SetActive(false);
         }
 
         anim.SetBool("Detected", detected);
@@ -143,9 +144,11 @@ public class EnemyAI : MonoBehaviour
             if (rb.velocity.x > 0.05f)
             {
                 transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                lookingRight = true;
             }
             else if (rb.velocity.x < -0.05f)
             {
+                lookingRight = false;
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
         }

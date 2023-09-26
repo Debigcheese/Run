@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
     private WeaponHolder weaponHolder;
     private PlayerAttack playerAttack;
     private PlayerState playerState;
@@ -33,6 +34,7 @@ public class MeleeWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement = GetComponentInParent<PlayerMovement>();
         weaponHolder = GetComponentInParent<WeaponHolder>();
         playerState = GetComponentInParent<PlayerState>();
         playerAttack = GetComponentInParent<PlayerAttack>();
@@ -42,7 +44,8 @@ public class MeleeWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (weaponHolder.swapWeapons)
+        //cancels melee
+        if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
         {
             attackCounter *= -1f;
             isMeleeAttacking = false;

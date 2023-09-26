@@ -12,13 +12,13 @@ public class WeaponHolder : MonoBehaviour
     public GameObject currentWeapon;
     public GameObject secondWeapon;
     private GameObject previousWeapon;
-    public bool swapWeapons;
 
 
-
+    public bool isSwappingWeapons;
     public bool meleeEquipped;
     public bool magicEquipped;
     public bool justSwitchedWeapon;
+    public bool canSwitchWeapons = true;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,11 @@ public class WeaponHolder : MonoBehaviour
 
         for (int i = 0; i < weapons.Length; i++)
         {
+            
+            if(weapons[i].gameObject == null || weapons[i] == null)
+            {
+                weapons[i] = weapons[0].gameObject;
+            }
             weapons[i].SetActive(false);
         }
         currentWeapon = weapons[0];
@@ -39,9 +44,9 @@ public class WeaponHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) )
+        if (Input.GetKeyDown(KeyCode.Q) && !isSwappingWeapons)
         {
-            swapWeapons = true;
+            isSwappingWeapons = true;
             StartCoroutine(SwitchWeapon());
         }
 
@@ -60,7 +65,7 @@ public class WeaponHolder : MonoBehaviour
         }
 
         //check which weapon is equipped;
-        if (currentWeapon == weapons[10] || currentWeapon == weapons[11] || currentWeapon == weapons[12] || currentWeapon == weapons[13] || currentWeapon == weapons[14])
+        if (currentWeapon == weapons[10] || currentWeapon == weapons[11])
         {
             meleeEquipped = false;
             magicEquipped = true;
@@ -74,15 +79,17 @@ public class WeaponHolder : MonoBehaviour
 
     public IEnumerator SwitchWeapon()
     {
-        yield return new WaitForSeconds(.16f);
+        yield return new WaitForSeconds(.1f);
         playerAttack.isAttacking = false;
         playerAttack.canAttack = true;
+
         GameObject temp = currentWeapon;
         currentWeapon.SetActive(false);
         currentWeapon = secondWeapon;
         currentWeapon.SetActive(true);
         secondWeapon = temp;
-        swapWeapons = false;
+
+        isSwappingWeapons = false;
     }
 
 }

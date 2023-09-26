@@ -45,7 +45,8 @@ public class BowWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (weaponHolder.swapWeapons)
+        //cancels bow
+        if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
         {
             canDisableBowCharge = false;
             bowCharge = false;
@@ -58,14 +59,21 @@ public class BowWeapon : MonoBehaviour
         }
 
         //needs fixing
-        if (playerState.currentStamina < staminaPerProjectile+staminaPerProjectile)
+        if (doubleProjectile)
         {
-            playerAttack.stopAttacking = true;
+            if (playerState.currentStamina < (staminaPerProjectile+staminaPerProjectile))
+            {
+                playerAttack.stopAttacking = true;
+            }
         }
-        else if (!playerAttack.isAttacking)
+        else if(!doubleProjectile)
         {
-            playerAttack.stopAttacking = false;
+            if(playerState.currentStamina < staminaPerProjectile)
+            {
+                playerAttack.stopAttacking = true;
+            }
         }
+        
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -103,7 +111,7 @@ public class BowWeapon : MonoBehaviour
         if (playerAttack.isAttacking && playerAttack.canAttack && !playerAttack.stopAttacking )
         {
 
-            StartCoroutine(BowCharge());
+            BowCharge();
 
             if (mousePos.x > playerMovement.transform.position.x && playerMovement.isFacingLeft)
             {
@@ -126,7 +134,7 @@ public class BowWeapon : MonoBehaviour
             }
         }
 
-        if (bowCharge && Input.GetButtonDown("Fire1") )
+        if (bowCharge && Input.GetMouseButtonUp(0) )
         {
             BowShoot(damageMultiplier);
             count = 0;
@@ -138,13 +146,12 @@ public class BowWeapon : MonoBehaviour
         weaponAnimator.SetBool("isBowShooting", isBowShooting);
     }
 
-    public IEnumerator BowCharge()
+    public void BowCharge()
     {
         isBowAttacking = true;
         canDisableBowCharge = true;
         playerAttack.canAttack = false;
         playerAttack.isAttacking = true;
-        yield return new WaitForSeconds(.1f);
         bowCharge = true;
     }
 

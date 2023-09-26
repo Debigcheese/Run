@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class EnemyHp : MonoBehaviour
 {
+    private EnemyAI enemyAi;
     private CrystalDropper crystalDropper;
     private DamageFlash damageFlash;
     public UnityEvent EnemyKnockback;
@@ -13,6 +15,13 @@ public class EnemyHp : MonoBehaviour
     [Header("Balancing")]
     public int maxHealth = 100;
     int currentHealth;
+
+    [Header("EnemyHealthBar")]
+    public Slider enemyHealthBar;
+    public Slider easeHealthBar;
+    private float lerpSpeed = 0.01f;
+    private RectTransform rectHealthbar;
+    private RectTransform rectEaseHealthbar;
 
     [Space]
     [Header("DamagePopup")]
@@ -23,15 +32,36 @@ public class EnemyHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyAi = GetComponent<EnemyAI>();
         crystalDropper = GetComponentInChildren<CrystalDropper>();
         damageFlash = GetComponent<DamageFlash>();
+        rectHealthbar = enemyHealthBar.GetComponent<RectTransform>();
+        rectEaseHealthbar = easeHealthBar.GetComponent<RectTransform>();
         currentHealth = maxHealth;
+        enemyHealthBar.maxValue = maxHealth;
+        easeHealthBar.maxValue = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
+        enemyHealthBar.value = currentHealth;
+        if (enemyHealthBar.value != easeHealthBar.value)
+        {
+            easeHealthBar.value = Mathf.Lerp(easeHealthBar.value, currentHealth, lerpSpeed);
+        }
 
+        if (enemyAi.lookingRight)
+        {
+            rectHealthbar.localScale = new Vector2(-1* Mathf.Abs(rectHealthbar.localScale.x), rectHealthbar.localScale.y);
+            rectEaseHealthbar.localScale = new Vector2(-1 * Mathf.Abs(rectEaseHealthbar.localScale.x), rectEaseHealthbar.localScale.y);
+        }
+        else
+        {
+            rectHealthbar.localScale = new Vector2(1 * Mathf.Abs(rectHealthbar.localScale.x), rectHealthbar.localScale.y);
+            rectEaseHealthbar.localScale = new Vector2(1 * Mathf.Abs(rectEaseHealthbar.localScale.x), rectEaseHealthbar.localScale.y);
+        }
+        
     }
 
     public void TakeDamage(int damageAmount)

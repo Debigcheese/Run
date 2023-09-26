@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Collision coll;
     private PlayerAttack playerAttack;
-    private EnemyAttack enemyAttack;
+    private DamageFlash damageFlash;
 
     [HideInInspector]
     public float moveDirection = 0f;
@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("BaseStats")]
     public float speed = 10;
     public float slideSpeed = 5;
-    public float dashSpeed = 5f;
     public float JumpForce = 50;
     [SerializeField] public Vector2 wallJumpingForce = new Vector2(6f, 15f);
 
@@ -30,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isWallSliding;
     public bool isWallJumping;
     public bool isClimbingLedge;
+    public bool isDashing;
 
     //Booleans that dont need to be public for animations
     private bool cantMove;
@@ -49,7 +49,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Space]
     [Header("Dash")]
-    public bool hasDashed;
+    public float dashSpeed = 5f;
+    public float dashDuration = 0.3f;
+    public float dashCooldown = 5f;
+    private bool canDash = true;
+    private bool dashFlash = false;
+    private float flashTimer;
+    private int flashCounter;
 
     [Space]
     [Header("LedgeClimbing")]
@@ -73,18 +79,16 @@ public class PlayerMovement : MonoBehaviour
     {
         originalGravity = 3.5f;
         originalSpeed = speed;
+        damageFlash = GetComponent<DamageFlash>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collision>();
         playerAttack = GetComponent<PlayerAttack>();
-        enemyAttack = FindAnyObjectByType<EnemyAttack>();
     }
 
     void Update()
     {
         moveDirection = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
-        float xRaw = Input.GetAxisRaw("Horizontal");
-        float yRaw = Input.GetAxisRaw("Vertical");
         isMoving = moveDirection != 0;
 
         //Get knockback
@@ -128,13 +132,13 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
             isFalling = true;
         }
-    
+
 
         //Methods
-
-        if (!cantMove)
+        Vector2 dir = new Vector2(moveDirection, y);
+        if (!cantMove && !isDashing)
         {
-            Vector2 dir = new Vector2(moveDirection, y);
+            
             Walk(dir);
 
             if (coll.onGround && Input.GetButtonDown("Jump"))
@@ -150,13 +154,12 @@ public class PlayerMovement : MonoBehaviour
                
                 WallSlide();
             }
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed && !playerAttack.isAttacking)
-            {
-                if (xRaw != 0 || yRaw != 0)
-                {
-                    Dash(xRaw, yRaw);
-                }
-            }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing && canDash && isMoving)
+        {
+            Dash(dir);
         }
 
         CheckForLedge();
@@ -193,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = climbBegunPosition;
         }
     }
+
     IEnumerator LedgeClimbOver()
     {
         yield return new WaitForSeconds(ledgeClimbFinish);
@@ -202,41 +206,47 @@ public class PlayerMovement : MonoBehaviour
         cantMove = false;
         Invoke("AllowLedgeGrab", 1f);
     }
+
     private void AllowLedgeGrab() 
     {
         canGrabLedge = true;
     }
 
-    private void Dash(float x, float y)
+    private void Dash(Vector2 dir)
     {
-        rb.velocity = Vector2.zero;
-        Vector2 dir = new Vector2(3*x, y);
-
-        hasDashed = true;
-
-        rb.velocity += dir.normalized * dashSpeed;
+        
+        canDash = false;
+        isDashing = true;
+        if(rb.velocity.x > 0)
+        {
+            rb.AddForce(new Vector2(1, 0)*dashSpeed, ForceMode2D.Impulse);
+        }
+        if(rb.velocity.x < 0)
+        {
+            rb.AddForce(new Vector2(-1, 0) * dashSpeed, ForceMode2D.Impulse);
+        }
+        damageFlash.dashFlashOn = true;
         StartCoroutine(DashWait());
+        damageFlash.CallDashFlash();
     }
 
     IEnumerator DashWait()
     {
-        StartCoroutine(GroundDash());
-
         rb.gravityScale = 0;
-        GetComponent<BetterJump>().enabled = false;
-
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(dashDuration);
 
         rb.gravityScale = originalGravity;
-        GetComponent<BetterJump>().enabled = true;
+        isDashing = false;
+        damageFlash.dashFlashOn = false;
+        StartCoroutine(DashCooldown());
     }
 
-    IEnumerator GroundDash()
+    IEnumerator DashCooldown()
     {
-        yield return new WaitForSeconds(.15f);
-        if (coll.onGround)
-            hasDashed = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
+
 
     private void WallJump()
     {

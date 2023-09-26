@@ -7,7 +7,7 @@ public class Crystal : MonoBehaviour
 {
     private Rigidbody2D rb;
     private PlayerState playerState;
-    private Collider2D collider;
+    private Collider2D crystalCollider;
 
     public Transform crystalTrans;
     public GameObject textPrefab;
@@ -30,7 +30,7 @@ public class Crystal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        collider = GetComponent<Collider2D>();
+        crystalCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         playerState = FindAnyObjectByType<PlayerState>();
         playerState.canPickup = true;
@@ -74,7 +74,7 @@ public class Crystal : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
                 renderer.enabled = false;
-                collider.enabled = false;
+                crystalCollider.enabled = false;
 
                 playerState.totalCrystalAmount += crystalValue;
                 playerState.tempCrystalAmount += crystalValue;

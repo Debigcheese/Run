@@ -8,6 +8,7 @@ public class DamageFlash : MonoBehaviour
     [SerializeField] private Color flashColor = Color.white;
     [SerializeField] private float flashTime = 0.25f;
     [SerializeField] private AnimationCurve flashSpeedCurve;
+    public bool dashFlashOn;
 
     private SpriteRenderer[] spriteRenderers;
     private Material[] materials;
@@ -38,9 +39,30 @@ public class DamageFlash : MonoBehaviour
         }
     }
 
+    public void CallDashFlash()
+    {
+        StartCoroutine(DashFlash());
+    }
+
     public void CallDamageFlash()
     {
         damageFlashCoroutine = StartCoroutine(DamageFlasher());
+    }
+
+    private IEnumerator DashFlash()
+    {
+        SetFlashColor();
+
+        float currentFlashAmount = 0f;
+        float elapsedTime = 0f;
+        while (elapsedTime < flashTime)
+        {
+            elapsedTime += Time.deltaTime;
+            currentFlashAmount = Mathf.Lerp(1f, flashSpeedCurve.Evaluate(elapsedTime), (elapsedTime / flashTime));
+            SetFlashAmount(currentFlashAmount);
+            yield return null;
+        }
+        flashColor = Color.white;
     }
 
     private IEnumerator DamageFlasher()
@@ -62,9 +84,20 @@ public class DamageFlash : MonoBehaviour
     {
         for (int i = 0; i < materials.Length; i++)
         {
-            materials[i].SetColor("_FlashColor", flashColor);
+            if (dashFlashOn)
+            {
+                flashColor = Color.cyan;
+                materials[i].SetColor("_FlashColor", flashColor);
+            }
+            else
+            {
+                flashColor = Color.white;
+                materials[i].SetColor("_FlashColor", flashColor);
+            }
+            
         }
     }
+
 
     private void SetFlashAmount(float amount)
     {

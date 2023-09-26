@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     private PlayerMovement playerMovement;
-    private PlayerHP playerHP;
+    private PlayerState playerState;
     private EnemyAI enemyAI;
     public Transform attackPoint;
 
@@ -23,7 +23,7 @@ public class EnemyAttack : MonoBehaviour
     void Start()
     {
         playerMovement = FindAnyObjectByType<PlayerMovement>();
-        playerHP = FindAnyObjectByType<PlayerHP>();
+        playerState = FindAnyObjectByType<PlayerState>();
         enemyAI = GetComponent<EnemyAI>();
     }
 
@@ -70,7 +70,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if (inRange)
         {
-            playerHP.takeDamage(attackDamage);
+            playerState.TakeDamage(attackDamage);
 
             //knockback the player
             playerMovement.KBCounter = playerMovement.KBTotalTime;

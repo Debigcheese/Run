@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MagicWeapon : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
     private WeaponHolder weaponHolder;
     private PlayerState playerState;
     private PlayerAttack playerAttack;
@@ -30,6 +31,7 @@ public class MagicWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement = GetComponentInParent<PlayerMovement>();
         weaponHolder = GetComponentInParent<WeaponHolder>();
         playerState = GetComponentInParent<PlayerState>();
         playerAttack = GetComponentInParent<PlayerAttack>();
@@ -39,7 +41,7 @@ public class MagicWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (weaponHolder.swapWeapons)
+        if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
         {
             isMagicAttacking = false;
             playerAttack.isAttacking = false;

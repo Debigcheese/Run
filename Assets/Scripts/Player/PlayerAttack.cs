@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private PlayerHP playerHP;
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
     public bool isAttacking = false;
@@ -20,7 +19,6 @@ public class PlayerAttack : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
-        playerHP = GetComponent<PlayerHP>();
     }
 
     // Update is called once per frame
@@ -43,7 +41,7 @@ public class PlayerAttack : MonoBehaviour
             isAttacking = false;
         }
         //if attacking and not in air, slow ms
-        if (isAttacking && !playerMovement.isFalling)
+        if (isAttacking && !playerMovement.isFalling && !playerMovement.isDashing)
         {
             rb.velocity = new Vector2(playerMovement.moveDirection * AttackMoveSpeed, rb.velocity.y);
         }
@@ -52,7 +50,11 @@ public class PlayerAttack : MonoBehaviour
         {
             stopFlip = false;
         }
-        
+        if (!isAttacking)
+        {
+            stopAttacking = false;
+        }
+
     }
 
 }
