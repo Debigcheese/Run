@@ -30,10 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isWallJumping;
     public bool isClimbingLedge;
     public bool isDashing;
-
-    //Booleans that dont need to be public for animations
-    private bool cantMove;
     public bool isFacingLeft;
+    private bool cantMove;
 
     [Space]
     [Header("KnockBack")]

@@ -13,12 +13,18 @@ public class WeaponHolder : MonoBehaviour
     public GameObject secondWeapon;
     private GameObject previousWeapon;
 
-
     public bool isSwappingWeapons;
     public bool meleeEquipped;
     public bool magicEquipped;
     public bool justSwitchedWeapon;
     public bool canSwitchWeapons = true;
+
+    [Header("Images")]
+    public GameObject canvas;
+    public GameObject[] currentWeaponImages;
+    public GameObject[] secondWeaponImages;
+    private GameObject currentWeaponImage;
+    private GameObject secondWeaponImage;
 
     // Start is called before the first frame update
     void Start()
@@ -27,10 +33,11 @@ public class WeaponHolder : MonoBehaviour
         playerMovement = GetComponentInParent<PlayerMovement>();
         previousWeapon = currentWeapon;
 
+        
         for (int i = 0; i < weapons.Length; i++)
         {
-            
-            if(weapons[i].gameObject == null || weapons[i] == null)
+            //weapons
+            if (weapons[i].gameObject == null || weapons[i] == null)
             {
                 weapons[i] = weapons[0].gameObject;
             }
@@ -39,12 +46,39 @@ public class WeaponHolder : MonoBehaviour
         currentWeapon = weapons[0];
         secondWeapon = weapons[1];
         currentWeapon.SetActive(true);
+
+        canvas.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !isSwappingWeapons)
+        //images
+
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            if (weapons[i] == currentWeapon)
+            {
+                currentWeaponImage = currentWeaponImages[i];
+                currentWeaponImage.SetActive(true);
+            }
+            else
+            {
+                currentWeaponImages[i].SetActive(false);
+            }
+            if (weapons[i] == secondWeapon)
+            {
+                secondWeaponImage = secondWeaponImages[i];
+                secondWeaponImage.SetActive(true);
+            }
+            else
+            {
+                secondWeaponImages[i].SetActive(false);
+            }
+        }
+
+
+        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("Fire2")) && !isSwappingWeapons)
         {
             isSwappingWeapons = true;
             StartCoroutine(SwitchWeapon());
