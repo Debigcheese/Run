@@ -163,7 +163,15 @@ public class BowWeapon : MonoBehaviour
         Projectile projectile = newProjectile.GetComponent<Projectile>();
 
         int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
-        float totalDamage =  randomDamage * damageMultiplier;
+        float totalDamage;
+        if (playerAttack.critAttack)
+        {
+            totalDamage = randomDamage * damageMultiplier * playerAttack.critDamageMultiplier;
+        }
+        else
+        {
+            totalDamage = randomDamage * damageMultiplier;
+        }
         int roundedDamage = Mathf.RoundToInt(totalDamage);
         projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(mousePos);
@@ -185,7 +193,15 @@ public class BowWeapon : MonoBehaviour
         Projectile projectile = newProjectile.GetComponent<Projectile>();
 
         int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
-        float totalDamage = randomDamage * damageMultiplier;
+        float totalDamage;
+        if (playerAttack.critAttack)
+        {
+            totalDamage = randomDamage * damageMultiplier * playerAttack.critDamageMultiplier;
+        }
+        else
+        {
+            totalDamage = randomDamage * damageMultiplier;
+        }
         int roundedDamage = Mathf.RoundToInt(totalDamage);
         projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(mousePos);

@@ -82,7 +82,17 @@ public class MagicWeapon : MonoBehaviour
         Projectile projectile = newProjectile.GetComponent<Projectile>();
 
         int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
-        projectile.SetDamage(randomDamage);
+        float totalDamage;
+        if (playerAttack.critAttack)
+        {
+            totalDamage = randomDamage * playerAttack.critDamageMultiplier;
+        }
+        else
+        {
+            totalDamage = randomDamage;
+        }
+        int roundedDamage = Mathf.RoundToInt(totalDamage);
+        projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(storedMousePos);
 
         StartCoroutine(ShootCooldown());

@@ -51,9 +51,6 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.3f;
     public float dashCooldown = 5f;
     private bool canDash = true;
-    private bool dashFlash = false;
-    private float flashTimer;
-    private int flashCounter;
 
     [Space]
     [Header("LedgeClimbing")]

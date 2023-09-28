@@ -76,7 +76,6 @@ public class MeleeWeapon : MonoBehaviour
         playerAttack.canAttack = false;
         playerState.ReduceStamina(staminaPerAttack);
         isMeleeAttacking = true;
-        attackDamage = Random.Range(minDmg, maxDmgMinusOne);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
         List<GameObject> damagedEnemies = new List<GameObject>();
         foreach (Collider2D enemy in hitEnemies)
@@ -97,10 +96,22 @@ public class MeleeWeapon : MonoBehaviour
         {
             yield return new WaitForSeconds(SecondSwingDmgDelay);
         }
-        
+
+        attackDamage = Random.Range(minDmg, maxDmgMinusOne);
+        float totalDamage;
+        if (playerAttack.critAttack)
+        {
+            totalDamage = attackDamage * playerAttack.critDamageMultiplier;
+        }
+        else
+        {
+            totalDamage = attackDamage;
+        }
+        int roundedDamage = Mathf.RoundToInt(totalDamage);
+
         foreach (GameObject enemy in damagedEnemies)
         {
-            enemy.GetComponent<EnemyHp>().TakeDamage(attackDamage);
+            enemy.GetComponent<EnemyHp>().TakeDamage(roundedDamage);
         }
 
     }
@@ -113,7 +124,6 @@ public class MeleeWeapon : MonoBehaviour
         playerAttack.isAttacking = false;
         playerAttack.canAttack = true;
     }
-
 
     private void OnDrawGizmosSelected()
     {

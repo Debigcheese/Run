@@ -14,6 +14,11 @@ public class PlayerAttack : MonoBehaviour
     public bool canAttack = true;
     public bool stopAttacking = false;
 
+    [Header("CritAttack")]
+    public bool critAttack;
+    public float critChance = 4f;
+    public float critDamageMultiplier = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +33,15 @@ public class PlayerAttack : MonoBehaviour
         mousePosition.z = 0f;
         if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack && !stopAttacking)
         {
+            float randomValue = Random.Range(0f, 100f);
+            if(randomValue <= critChance)
+            {
+                critAttack = true;
+            }
+            else
+            {
+                critAttack = false;
+            }
             isAttacking = true;
             if (mousePosition.x > transform.position.x && playerMovement.isFacingLeft || mousePosition.x < transform.position.x && !playerMovement.isFacingLeft )
             {

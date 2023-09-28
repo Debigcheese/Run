@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemyHp : MonoBehaviour
 {
+    private PlayerAttack playerAttack;
     private EnemyAI enemyAi;
     private CrystalDropper crystalDropper;
     private DamageFlash damageFlash;
@@ -32,6 +34,7 @@ public class EnemyHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerAttack = FindAnyObjectByType<PlayerAttack>();
         enemyAi = GetComponent<EnemyAI>();
         crystalDropper = GetComponentInChildren<CrystalDropper>();
         damageFlash = GetComponent<DamageFlash>();
@@ -40,6 +43,7 @@ public class EnemyHp : MonoBehaviour
         currentHealth = maxHealth;
         enemyHealthBar.maxValue = maxHealth;
         easeHealthBar.maxValue = maxHealth;
+        TextMeshPro damageTextComponent = damagePopupPrefab.GetComponentInChildren<TextMeshPro>();
     }
 
     // Update is called once per frame
@@ -103,6 +107,15 @@ public class EnemyHp : MonoBehaviour
         Vector3 offset = new Vector3(offsetX, offsetY, 0f);
         Vector3 startPosition = transform.position + offset;
 
+        TextMeshPro damageTextComponent = damagePopupPrefab.GetComponentInChildren<TextMeshPro>();
+        if (playerAttack.critAttack)
+        {
+            damageTextComponent.color = Color.yellow;
+        }
+        else
+        {
+            damageTextComponent.color = Color.white;
+        }
         // Instantiate the damage popup prefab with random offset
         GameObject damagePopup = Instantiate(damagePopupPrefab, startPosition, Quaternion.identity);
 
