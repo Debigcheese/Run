@@ -222,48 +222,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Terrain_and_Props_5
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fced5716aa419dd489efb4359cc92383
-      internalID: -28712389
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Terrain_and_Props_6
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 528
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7ae778110a19d03449a82fc2f86d0f6d
-      internalID: 1890416896
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Terrain_and_Props_7
       rect:
         serializedVersion: 2
@@ -380,7 +338,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: 8}
+        - {x: 8, y: -8}
+        - {x: 2, y: -8}
       tessellationDetail: 0
       bones: []
       spriteID: 87cfab1fe18a1944d8320e24990283ca
@@ -464,7 +426,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: -8, y: 8}
+        - {x: 0, y: 0}
+        - {x: 8, y: -8}
       tessellationDetail: 0
       bones: []
       spriteID: 119934a4798ac3842a6d46884cd65ce0
@@ -510,7 +476,11 @@ TextureImporter:
         - {x: -8, y: 8}
         - {x: 8, y: 8}
         - {x: 8, y: -8}
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: 8}
+        - {x: 8, y: -8}
+        - {x: 2, y: -8}
       tessellationDetail: 0
       bones: []
       spriteID: 2dcc0625f306f3a4aa22b8c24510210f
@@ -602,7 +572,11 @@ TextureImporter:
         - {x: -8, y: 8}
         - {x: 8, y: 8}
         - {x: 8, y: -8}
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: -8, y: 8}
+        - {x: 0, y: 0}
+        - {x: 8, y: -8}
       tessellationDetail: 0
       bones: []
       spriteID: ea28114b83a9a3d419c107e138396046
@@ -707,7 +681,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: 8}
+        - {x: 8, y: 0}
+        - {x: 8, y: -8}
       tessellationDetail: 0
       bones: []
       spriteID: 86a699e16dd167f42b1cbd5da0fad277
@@ -833,7 +811,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: -8, y: 8}
+        - {x: 0, y: 0}
+        - {x: 8, y: -8}
       tessellationDetail: 0
       bones: []
       spriteID: d186e7f6093ff1e49b07cf754a69450d
@@ -879,7 +861,11 @@ TextureImporter:
         - {x: -8, y: 8}
         - {x: 8, y: 8}
         - {x: 8, y: -8}
-      physicsShape: []
+      physicsShape:
+      - - {x: 8, y: -8}
+        - {x: -8, y: -8}
+        - {x: 8, y: 8}
+        - {x: 8, y: -4}
       tessellationDetail: 0
       bones: []
       spriteID: 2906d92bd65aed54c9317dc025d14fff
@@ -1013,7 +999,11 @@ TextureImporter:
         - {x: -8, y: 8}
         - {x: 8, y: 8}
         - {x: 8, y: -8}
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: -8, y: 8}
+        - {x: 0, y: 0}
+        - {x: 8, y: -8}
       tessellationDetail: 0
       bones: []
       spriteID: c19510e88bf8f4c4abf95025849d24d9
@@ -8032,6 +8022,48 @@ TextureImporter:
       bones: []
       spriteID: b3f3266858605c14ea3d17adfa30a59d
       internalID: -1715207997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Terrain_and_Props_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 528
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a49e94b50656544a90aaf3e00b891c9
+      internalID: -28712389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Terrain_and_Props_6
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 528
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fed7c6814ee55ee44ae8f9d0b4c33d30
+      internalID: 1890416896
       vertices: []
       indices: 
       edges: []

@@ -131,7 +131,6 @@ public class PlayerMovement : MonoBehaviour
             isJumpPressed = false;
         }
 
-
         //Methods
         Vector2 dir = new Vector2(moveDirection, y);
         if (!cantMove && !isDashing)
@@ -169,6 +168,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (ledgeDetected && canGrabLedge  )
         {
+            rb.velocity = Vector2.zero;
             canGrabLedge = false;
             isClimbingLedge = true;
             cantMove = true;
@@ -245,7 +245,6 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-
     private void WallJump()
     {
          isJumping = true;
@@ -304,7 +303,7 @@ public class PlayerMovement : MonoBehaviour
         jumpParticle.Play();
         isJumpPressed = true;
         isJumping = true;
-        rb.velocity += dir * JumpForce;
+        rb.velocity = dir.normalized * JumpForce;
     }
 
     private void WallSlide()
