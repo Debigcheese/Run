@@ -123,6 +123,17 @@ public class MeleeWeapon : MonoBehaviour
         isMeleeAttacking = false;
         playerAttack.isAttacking = false;
         playerAttack.canAttack = true;
+        StartCoroutine(ReturnAttackCounter());
+    }
+
+    IEnumerator ReturnAttackCounter()
+    {
+        yield return new WaitForSeconds(.5f);
+        if (!playerAttack.isAttacking)
+        {
+            attackCounter = 1f;
+        }
+        
     }
 
     private void OnDrawGizmosSelected()

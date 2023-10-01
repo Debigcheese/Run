@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Space]
     [Header("Booleans")]
     public bool isMoving;
+    public bool isJumpPressed;
     public bool isJumping;
     public bool isFalling;
     public bool isWallSliding;
@@ -107,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
             playerAttack.canAttackFromKnockback = false;
             cantMove = true;
         }
+
  
         //Animation
         if (coll.onGround)
@@ -117,15 +119,16 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
         }
 
-        if (rb.velocity.y > 0)
+        if (rb.velocity.y > 0 && !coll.onGround && isJumpPressed)
         {
             isJumping = true;
             isWallSliding = false;
         }
-        else if (rb.velocity.y < 0 && !isWallSliding)
+        else if (rb.velocity.y < 0 && !isWallSliding && !coll.onGround)
         {
             isWallSliding = false;
             isFalling = true;
+            isJumpPressed = false;
         }
 
 
@@ -299,12 +302,14 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(Vector2 dir)
     {
         jumpParticle.Play();
+        isJumpPressed = true;
         isJumping = true;
         rb.velocity += dir * JumpForce;
     }
 
     private void WallSlide()
     {
+        isJumpPressed = false;
         isJumping = false;
         isFalling = false;
         isWallSliding = true;

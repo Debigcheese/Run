@@ -60,6 +60,7 @@ public class EnemyHp : MonoBehaviour
             rectHealthbar.localScale = new Vector2(-1* Mathf.Abs(rectHealthbar.localScale.x), rectHealthbar.localScale.y);
             rectEaseHealthbar.localScale = new Vector2(-1 * Mathf.Abs(rectEaseHealthbar.localScale.x), rectEaseHealthbar.localScale.y);
         }
+
         else
         {
             rectHealthbar.localScale = new Vector2(1 * Mathf.Abs(rectHealthbar.localScale.x), rectHealthbar.localScale.y);
