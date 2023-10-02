@@ -71,7 +71,7 @@ public class FallingBlock : MonoBehaviour
 
         yield return new WaitForSeconds(timeToMakeNewBlock);
         startFallingAnim = false;
-        Instantiate(fallingBlock, startPos, Quaternion.identity);
+        Instantiate(fallingBlock, startPos, Quaternion.identity, transform.parent);
         Destroy(this.gameObject);
     }
 }

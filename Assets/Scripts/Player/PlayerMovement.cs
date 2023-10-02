@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveDirection = 0f;
     private float y = 0f;
     private float originalSpeed;
-    private float originalGravity;
+    public float originalGravity;
 
     [Header("BaseStats")]
     public float speed = 10;
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isClimbingLedge;
     public bool isDashing;
     public bool isFacingLeft;
-    private bool cantMove;
+    public bool cantMove;
 
     [Space]
     [Header("KnockBack")]
@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public float KBCounter;
     public float KBTotalTime;
     public bool KnockFromRight;
+    public bool cantMoveFromKnockback;
 
     [Space]
     [Header("WallJumping")]
@@ -83,15 +84,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        moveDirection = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-        isMoving = moveDirection != 0;
 
         //Get knockback
         if(KBCounter <= 0)
         {
             playerAttack.canAttackFromKnockback = true;
-            cantMove = false;
+            cantMoveFromKnockback = false;
         }
         else
         {
@@ -106,9 +104,8 @@ public class PlayerMovement : MonoBehaviour
             KBCounter -= Time.deltaTime;
 
             playerAttack.canAttackFromKnockback = false;
-            cantMove = true;
+            cantMoveFromKnockback = true;
         }
-
  
         //Animation
         if (coll.onGround)
@@ -132,10 +129,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Methods
-        Vector2 dir = new Vector2(moveDirection, y);
-        if (!cantMove && !isDashing)
+       
+        if (!cantMove && !isDashing && !cantMoveFromKnockback)
         {
-            
+            moveDirection = Input.GetAxis("Horizontal");
+            y = Input.GetAxis("Vertical");
+            isMoving = moveDirection != 0;
+
+            Vector2 dir = new Vector2(moveDirection, y);
             Walk(dir);
 
             if (coll.onGround && Input.GetButtonDown("Jump"))
@@ -152,11 +153,10 @@ public class PlayerMovement : MonoBehaviour
                 WallSlide();
             }
 
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing && canDash && isMoving)
-        {
-            Dash(dir);
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
+            {
+                Dash(dir);
+            }
         }
 
         CheckForLedge();
@@ -210,7 +210,7 @@ public class PlayerMovement : MonoBehaviour
         canGrabLedge = true;
     }
 
-    private void Dash(Vector2 dir)
+    public void Dash(Vector2 dir)
     {
         
         canDash = false;
