@@ -6,7 +6,7 @@ public class FallingBlock : MonoBehaviour
 {
     private Animator anim;
     private Rigidbody2D rb;
-    private Collider2D[] blockCollider;
+    private Collider2D blockCollider;
     public GameObject fallingBlock;
     private Vector3 startPos;
     public bool startFallingAnim;
@@ -23,11 +23,8 @@ public class FallingBlock : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         startPos = transform.position;
-        blockCollider = GetComponents<Collider2D>();
-        foreach (Collider2D collider in blockCollider)
-        {
-            collider.enabled = true;
-        }
+        blockCollider = GetComponent<Collider2D>();
+        blockCollider.enabled = true;
     }
 
     // Update is called once per frame
@@ -63,12 +60,7 @@ public class FallingBlock : MonoBehaviour
     private IEnumerator MakeNewBlock()
     {
         yield return new WaitForSeconds(2f);
-
-        foreach (Collider2D collider in blockCollider)
-        {
-            collider.enabled = false;
-        }
-
+        blockCollider.enabled = false;
         yield return new WaitForSeconds(timeToMakeNewBlock);
         startFallingAnim = false;
         Instantiate(fallingBlock, startPos, Quaternion.identity, transform.parent);

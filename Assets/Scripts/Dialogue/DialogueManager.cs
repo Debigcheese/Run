@@ -39,7 +39,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (isDialogue && stopCharacterMovement)
         {
-            playerAttack.canAttack = false;
+            playerAttack.dialogueStopAttack = true;
             playerMovement.cantMove = true;
 
             rb.velocity = Vector2.zero;
@@ -57,21 +57,23 @@ public class DialogueManager : MonoBehaviour
 
         if (enableDash)
         {
+
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                playerMovement.enableDashUponCollision = true;
                 playerMovement.cantMove = false;
                 isDialogue = false;
                 anim.SetBool("isOpen", false);
                 finishFrogAnim = true;
-                playerAttack.canAttack = true;
+                playerAttack.dialogueStopAttack = false;
 
                 rb.gravityScale = playerMovement.originalGravity;
-                StartCoroutine(goDash());
+                StartCoroutine(GoDash());
                 enableDash = false;
             }
         }
     }
-    IEnumerator goDash()
+    IEnumerator GoDash()
     {
         yield return new WaitForSeconds(.1f);
         playerMovement.Dash(new Vector2(1f, 1f));
@@ -109,6 +111,10 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
+        if(freezeGravity && sentences.Count == 1)
+        {
+            EndDialogue();
+        }
 
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
@@ -125,7 +131,7 @@ public class DialogueManager : MonoBehaviour
             {
                 frogSound.Play();
             }
-            yield return new WaitForSeconds(.05f);
+            yield return new WaitForSeconds(.02f);
         }
     }
 
@@ -136,7 +142,7 @@ public class DialogueManager : MonoBehaviour
             isDialogue = false;
             anim.SetBool("isOpen", false);
             finishFrogAnim = true;
-            playerAttack.canAttack = true;
+            playerAttack.dialogueStopAttack = false;
             playerMovement.cantMove = false;
         }
         if (freezeGravity)

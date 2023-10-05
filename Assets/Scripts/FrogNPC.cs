@@ -22,7 +22,7 @@ public class FrogNPC : MonoBehaviour
         if (dialogueManager.finishFrogAnim)
         {
             
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             spriteRenderer.flipX = true;
             frogJump = true;
         }

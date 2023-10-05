@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Pathfinding")]
     public Transform target;
+    private Vector3 targetPos;
     public float detectionRadius = 50f;
     public float pathUpdateSeconds = 0.5f;
 
@@ -20,12 +21,14 @@ public class EnemyAI : MonoBehaviour
     public float jumpCheckOffset = 0.1f;
 
     [Header("Custom Behavior")]
+    public bool waveSpawnerEnemies = false;
     public bool followEnabled = true;
     public bool jumpEnabled = true, isJumping, isInAir;
     public bool directionLookEnabled = true;
     public bool canMove = true;
-    public bool isMoving;
 
+    [Space]
+    public bool isMoving;
     public bool lookingRight;
     public bool detected = false;
     public GameObject DetectionSymbolPopup;
@@ -43,10 +46,10 @@ public class EnemyAI : MonoBehaviour
     public void Start()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
-        target = playerMovement.GetComponent<Transform>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         anim = transform.Find("EnemyDetectionAnim").GetComponent<Animator>();
+        target = playerMovement.GetComponent<Transform>();
         isJumping = false;
         isInAir = false;
         isOnCoolDown = false;
@@ -57,10 +60,25 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (TargetInDistance() && followEnabled)
+
+        targetPos = target.position;
+        if (TargetInDistance() && followEnabled && !waveSpawnerEnemies)
         {
             detected = true;
             DetectionSymbolPopup.SetActive(true);
+            PathFollow();
+        }
+        else
+        {
+            DetectionSymbolPopup.SetActive(false);
+            isMoving = false;
+            detected = false;
+        }
+
+        if (waveSpawnerEnemies && followEnabled)
+        {
+            detected = true;
+            DetectionSymbolPopup.SetActive(false);
             PathFollow();
         }
         else
@@ -77,7 +95,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (followEnabled && TargetInDistance() && seeker.IsDone())
         {
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+            seeker.StartPath(rb.position, targetPos, OnPathComplete);
         }
     }
 

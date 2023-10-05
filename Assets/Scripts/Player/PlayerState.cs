@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerState : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class PlayerState : MonoBehaviour
     public int tempCrystalAmount;
     public int justCollected;
     public int previousCollected;
-
+    public TextMeshProUGUI crystalText;
     public bool canPickup = true;
 
     [Space]
@@ -55,6 +56,7 @@ public class PlayerState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y, startPosition.transform.position.z );
         pMovement = GetComponent<PlayerMovement>();
         pAttack = GetComponent<PlayerAttack>();
         damageFlash = GetComponent<DamageFlash>();
@@ -109,6 +111,8 @@ public class PlayerState : MonoBehaviour
         {
             currentMana = maxMana;
         }
+
+        crystalText.text = totalCrystalAmount.ToString();
   
     }
 

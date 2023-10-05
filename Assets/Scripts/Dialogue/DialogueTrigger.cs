@@ -12,7 +12,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void TriggerDialogue()
     {
-        FindAnyObjectByType<DialogueManager>().StartDialogue(dialogue);
+        GetComponentInChildren<DialogueManager>().StartDialogue(dialogue);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

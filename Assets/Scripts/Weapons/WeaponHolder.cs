@@ -44,7 +44,7 @@ public class WeaponHolder : MonoBehaviour
             weapons[i].SetActive(false);
         }
         currentWeapon = weapons[0];
-        secondWeapon = weapons[1];
+        secondWeapon = weapons[0];
         currentWeapon.SetActive(true);
 
         canvas.SetActive(true);

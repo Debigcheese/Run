@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -53,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.3f;
     public float dashCooldown = 5f;
     private bool canDash = true;
+    public bool enableDashUponCollision;
+    public Image dashCDImage;
+    public GameObject Abilitybackground;
+    private float dashTimer;
 
     [Space]
     [Header("LedgeClimbing")]
@@ -127,6 +132,22 @@ public class PlayerMovement : MonoBehaviour
             isFalling = true;
             isJumpPressed = false;
         }
+        if(dashCDImage.fillAmount != 0)
+        {
+            dashTimer += Time.deltaTime;
+            float fillPercentage = 1f- (dashTimer / (dashCooldown + dashDuration));
+            dashCDImage.fillAmount = fillPercentage;
+            if(dashCDImage.fillAmount == 0)
+            {
+                dashTimer = 0;
+            }
+        }
+
+        if (enableDashUponCollision)
+        {
+            Abilitybackground.SetActive(true);
+        }
+        
 
         //Methods
        
@@ -153,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
                 WallSlide();
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving && enableDashUponCollision)
             {
                 Dash(dir);
             }
@@ -212,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash(Vector2 dir)
     {
-        
+        dashCDImage.fillAmount = 1f;
         canDash = false;
         isDashing = true;
         if(rb.velocity.x > 0)

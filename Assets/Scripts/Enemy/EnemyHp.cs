@@ -7,6 +7,7 @@ using TMPro;
 
 public class EnemyHp : MonoBehaviour
 {
+    private WaveSpawner waveSpawner;
     private PlayerAttack playerAttack;
     private EnemyAI enemyAi;
     private CrystalDropper crystalDropper;
@@ -34,6 +35,7 @@ public class EnemyHp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        waveSpawner = GetComponentInParent<WaveSpawner>();
         playerAttack = FindAnyObjectByType<PlayerAttack>();
         enemyAi = GetComponent<EnemyAI>();
         crystalDropper = GetComponentInChildren<CrystalDropper>();
@@ -96,7 +98,9 @@ public class EnemyHp : MonoBehaviour
 
     void Die()
     {
+        waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         crystalDropper.DropCrystal();
+        Destroy(this.gameObject);
     }
 
     protected void ShowDamagePopup(float damageAmount)
