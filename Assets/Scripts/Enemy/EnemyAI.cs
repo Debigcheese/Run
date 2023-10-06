@@ -80,6 +80,7 @@ public class EnemyAI : MonoBehaviour
             detected = true;
             DetectionSymbolPopup.SetActive(false);
             PathFollow();
+            detectionRadius = 40;
         }
         else
         {

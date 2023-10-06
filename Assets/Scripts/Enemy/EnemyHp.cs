@@ -98,7 +98,10 @@ public class EnemyHp : MonoBehaviour
 
     void Die()
     {
-        waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+        if (waveSpawner.spawnerActive)
+        {
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+        }
         crystalDropper.DropCrystal();
         Destroy(this.gameObject);
     }
