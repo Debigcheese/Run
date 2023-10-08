@@ -13,12 +13,14 @@ public class ParallaxBackground : MonoBehaviour
     private float textureUnitSizeX;
     private float textureUnitSizeY;
 
+    public bool inRangeActivate;
+
     // Start is called before the first frame update
     void Start()
     {
         cameraTransform = Camera.main.transform;
         lastCameraPosition = cameraTransform.position;
-        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+        Sprite sprite = GetComponentInChildren<SpriteRenderer>().sprite;
         Texture2D texture = sprite.texture;
         textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
         textureUnitSizeY = texture.height / sprite.pixelsPerUnit;
@@ -51,4 +53,6 @@ public class ParallaxBackground : MonoBehaviour
 
         }
     }
+
+
 }

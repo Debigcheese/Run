@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    private SpriteRenderer spriteRenderer;
     private PlayerMovement playerMovement;
     private PlayerState playerState;
     private EnemyAI enemyAI;
@@ -25,6 +26,8 @@ public class EnemyAttack : MonoBehaviour
         playerMovement = FindAnyObjectByType<PlayerMovement>();
         playerState = FindAnyObjectByType<PlayerState>();
         enemyAI = GetComponent<EnemyAI>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        
     }
 
     // Update is called once per frame
@@ -51,6 +54,8 @@ public class EnemyAttack : MonoBehaviour
     {
         if (inRange)
         {
+            spriteRenderer.sortingLayerName = "Foreground";
+            spriteRenderer.sortingOrder = 6;
             enemyAI.canMove = false;
             if (!isAttacking )
             {
@@ -68,6 +73,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void Attack()
     {
+
         if (inRange)
         {
             playerState.TakeDamage(attackDamage);

@@ -27,6 +27,11 @@ public class EnemyAI : MonoBehaviour
     public bool directionLookEnabled = true;
     public bool canMove = true;
 
+    [Header("Jump Behavior")]
+    public Transform jumpCheck;
+    public LayerMask GroundLayer;
+    public float jumpDetectionRadius = 10f;
+
     [Space]
     public bool isMoving;
     public bool lookingRight;
@@ -122,16 +127,12 @@ public class EnemyAI : MonoBehaviour
         Vector2 force = direction * speed;
 
         // Jump
-        if (jumpEnabled && isGrounded && !isInAir && !isOnCoolDown)
+        if (jumpEnabled && isGrounded && !isInAir && !isOnCoolDown && JumpCheck())
         {
-            if (direction.y > jumpNodeHeightRequirement)
-            {
                 if (isInAir) return;
                 isJumping = true;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 StartCoroutine(JumpCoolDown());
-
-            }
         }
         if (isGrounded)
         {
@@ -178,6 +179,11 @@ public class EnemyAI : MonoBehaviour
         return Vector2.Distance(transform.position, target.transform.position) < detectionRadius;
     }
 
+    private bool JumpCheck()
+    {
+        return Physics2D.OverlapCircle(jumpCheck.position, jumpDetectionRadius, GroundLayer);
+    }
+
     private void OnPathComplete(Path p)
     {
         if (!p.error)
@@ -199,5 +205,7 @@ public class EnemyAI : MonoBehaviour
         // Draws a sphere around the enemy to represent the detection radius
         Gizmos.color = new Color(1, 1, 1, 0.5f);
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.color = new Color(1, 1, 1, 0.5f);
+        Gizmos.DrawWireSphere(jumpCheck.position, jumpDetectionRadius);
     }
 }

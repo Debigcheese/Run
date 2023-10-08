@@ -8,6 +8,8 @@ TagManager:
   - FxTemporaire
   - Boundary
   - CineCamera
+  - Boundary_X
+  - Boundary_Y
   layers:
   - Default
   - TransparentFX

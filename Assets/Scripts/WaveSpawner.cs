@@ -11,11 +11,10 @@ public class WaveSpawner : MonoBehaviour
     public int currentWaveIndex = 0;
 
     public GameObject[] spawnPoints;
-    public int spawnPointMin = 0;
-    public int spawnPointMax = 1;
 
     public bool spawnerActive = false;
     private bool readyToCountDown = false;
+    private bool endSpawn = false;
 
     private Collider2D[] waveBoundaries;
     private bool boundaries = false;
@@ -23,17 +22,20 @@ public class WaveSpawner : MonoBehaviour
     [Space]
     [Header("Canvas")]
     public GameObject Canvas;
-    [SerializeField] private TextMeshProUGUI enemiesLeftText;
     [SerializeField] private TextMeshProUGUI WaveText;
     public TextMeshProUGUI nextWaveText;
+
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         countdown = 6f;
         waveBoundaries = GetComponentsInChildren<Collider2D>();
         Canvas.SetActive(false);
         nextWaveText.enabled = false;
+        spawnerActive = false;
     }
 
     // Update is called once per frame
@@ -46,18 +48,19 @@ public class WaveSpawner : MonoBehaviour
                 waveBoundaries[i].enabled = false;
             }
         }
-        if (currentWaveIndex >= waves.Length)
+        if (currentWaveIndex >= waves.Length && !endSpawn)
         {
             spawnerActive = false;
             boundaries = false;
             Canvas.SetActive(false);
             Debug.Log("done");
+            endSpawn = true;
             return;
         }
         if (spawnerActive && currentWaveIndex < waves.Length)
         {
             boundaries = true;
-            enemiesLeftText.text = "Enemies left: " + waves[currentWaveIndex].enemiesLeft.ToString();
+            //enemiesLeftText.text = "Enemies left: " + waves[currentWaveIndex].enemiesLeft.ToString();
 
             if (readyToCountDown == true)
             {
@@ -99,10 +102,10 @@ public class WaveSpawner : MonoBehaviour
             nextWaveText.enabled = true;
             for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
             {
-                
-                int random = Random.Range(spawnPointMin, spawnPointMax);
-                GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform);
+                int random = Random.Range(0, spawnPoints.Length);
+                GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform.position, Quaternion.identity, spawnPoints[random].transform);
                 enemy.GetComponent<EnemyAI>().waveSpawnerEnemies = true;
+                enemy.GetComponent<EnemyHp>().countWaveEnemies = true;
 
                 yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
                 
@@ -115,6 +118,7 @@ public class WaveSpawner : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            
             Collider2D collider = GetComponent<Collider2D>();
             collider.enabled = false;
             readyToCountDown = true;

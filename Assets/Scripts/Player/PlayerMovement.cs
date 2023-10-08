@@ -13,8 +13,12 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public float moveDirection = 0f;
     private float y = 0f;
+
+    [Header("RBOriginal")]
     private float originalSpeed;
     public float originalGravity;
+    private float originalDrag;
+    private float originalAngularDrag;
 
     [Header("BaseStats")]
     public float speed = 10;
@@ -79,19 +83,23 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        originalGravity = 3.5f;
-        originalSpeed = speed;
         damageFlash = GetComponent<DamageFlash>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collision>();
         playerAttack = GetComponent<PlayerAttack>();
+        originalAngularDrag = rb.angularDrag;
+        originalDrag = rb.drag;
+        originalGravity = rb.gravityScale;
+        originalSpeed = speed;
     }
+
 
     void Update()
     {
 
+
         //Get knockback
-        if(KBCounter <= 0)
+        if (KBCounter <= 0)
         {
             playerAttack.canAttackFromKnockback = true;
             cantMoveFromKnockback = false;
@@ -183,6 +191,27 @@ public class PlayerMovement : MonoBehaviour
         CheckForLedge();
         
         GetComponent<BetterJump>().enabled = true;
+    }
+
+    //inWater
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 4)
+        {
+            rb.drag = 6;
+            rb.angularDrag = 6;
+            rb.gravityScale = 0.6f;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 4)
+        {
+            rb.drag = originalDrag;
+            rb.angularDrag = originalAngularDrag;
+            rb.gravityScale = originalGravity;
+        }
     }
 
     private void CheckForLedge()

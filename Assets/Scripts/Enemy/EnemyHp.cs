@@ -14,6 +14,7 @@ public class EnemyHp : MonoBehaviour
     private DamageFlash damageFlash;
     public UnityEvent EnemyKnockback;
     private bool tookDamage;
+    public bool countWaveEnemies;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -98,7 +99,7 @@ public class EnemyHp : MonoBehaviour
 
     void Die()
     {
-        if (waveSpawner.spawnerActive)
+        if (countWaveEnemies)
         {
             waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         }

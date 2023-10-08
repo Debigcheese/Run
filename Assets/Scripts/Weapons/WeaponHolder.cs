@@ -77,7 +77,7 @@ public class WeaponHolder : MonoBehaviour
             }
         }
 
-
+        //swap weapons
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("Fire2")) && !isSwappingWeapons)
         {
             isSwappingWeapons = true;
