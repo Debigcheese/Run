@@ -6,10 +6,10 @@ TagManager:
   tags:
   - Enemy
   - FxTemporaire
-  - Boundary
   - CineCamera
   - Boundary_X
   - Boundary_Y
+  - CamBoundary
   layers:
   - Default
   - TransparentFX

@@ -251,8 +251,6 @@ MonoBehaviour:
     sentences:
     - Be careful sir
     - The path ahead is dangerous...
-    - That's why im here
-    - To assist you in your journey
     - Follow me.-
 --- !u!61 &5265311341080647083
 BoxCollider2D:
@@ -534,9 +532,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 416320679
-  m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: -533383830, guid: d45407d4333e97d40bcc293a9f89fc9e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
