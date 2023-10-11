@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 654757764468190574}
   - component: {fileID: 654757764468190575}
   - component: {fileID: 6622490846104249194}
+  - component: {fileID: 149474771}
   m_Layer: 10
   m_Name: RubyEssenceHigh
   m_TagString: Untagged
@@ -52,9 +53,8 @@ MonoBehaviour:
   textPrefab: {fileID: 1955720658241887224, guid: 658923effdd1d6045b3a1cdfbbe3b89a, type: 3}
   magnetize: 0
   stopMoving: 0
-  pickedUp: 0
   crystalValue: 140
-  firstCollected: 0
+  counting: 0
   crystalMs: 15
   stopMovingDelay: 0.6
 --- !u!50 &654757764468190574
@@ -125,6 +125,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &149474771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654757764468190577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6286a72277bda148a7aa64de0e26cba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 3
 --- !u!1 &6080365709454538543
 GameObject:
   m_ObjectHideFlags: 0

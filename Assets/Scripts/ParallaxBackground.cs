@@ -20,7 +20,6 @@ public class ParallaxBackground : MonoBehaviour
     void Start()
     {
         cameraTransform = Camera.main.transform;
-        lastCameraPosition = cameraTransform.position;
         Sprite sprite = GetComponentInChildren<SpriteRenderer>().sprite;
         Texture2D texture = sprite.texture;
         textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
@@ -68,6 +67,7 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (collision.CompareTag("CamBoundary"))
         {
+            lastCameraPosition = cameraTransform.position;
             inRangeActivate = true;
         }
     }

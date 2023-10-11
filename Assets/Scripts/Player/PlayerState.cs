@@ -6,13 +6,18 @@ using TMPro;
 
 public class PlayerState : MonoBehaviour
 {
-    private PlayerMovement pMovement;
-    private PlayerAttack pAttack;
+    private Collider2D coll;
+    private SpriteRenderer renderer;
+    private Rigidbody2D rb;
+
+    private PlayerMovement playerMovement;
+    private PlayerAttack playerAttack;
     private WeaponHolder weaponHolder;
     private DamageFlash damageFlash;
 
     [Header("Respawn")]
     [SerializeField] private GameObject startPosition;
+    [SerializeField] private GameObject respawnPosition;
 
     [Space]
     [Header("Health")]
@@ -21,7 +26,10 @@ public class PlayerState : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public bool isHurt;
+    public bool isDead;
     private float lerpSpeed = 0.014f;
+
+    public GameObject isDeadParticles;
 
     [Space]
     [Header("Stamina")]
@@ -38,10 +46,8 @@ public class PlayerState : MonoBehaviour
     [Header("Crystals")]
     public int totalCrystalAmount;
     public int tempCrystalAmount;
-    public int justCollected;
-    public int previousCollected;
+    public bool isCounting;
     public TextMeshProUGUI crystalText;
-    public bool canPickup = true;
 
     [Space]
     [Header("DamagePopup")]
@@ -56,13 +62,18 @@ public class PlayerState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y, startPosition.transform.position.z );
-        pMovement = GetComponent<PlayerMovement>();
-        pAttack = GetComponent<PlayerAttack>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerAttack = GetComponent<PlayerAttack>();
         damageFlash = GetComponent<DamageFlash>();
         weaponHolder = GetComponent<WeaponHolder>();
+
+        coll = GetComponent<Collider2D>();
+        renderer = GetComponentInChildren<SpriteRenderer>();
+        rb = GetComponentInChildren<Rigidbody2D>();
+
+        transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y, startPosition.transform.position.z);
+        
         totalCrystalAmount = 0;
-        justCollected = 0;
 
         currentHealth = maxHealth;
         HealthBar.maxValue = maxHealth;
@@ -113,6 +124,11 @@ public class PlayerState : MonoBehaviour
         }
 
         crystalText.text = totalCrystalAmount.ToString();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Respawn();
+        }
   
     }
 
@@ -126,7 +142,7 @@ public class PlayerState : MonoBehaviour
             PlayerDie();
         }
 
-        if (!pAttack.isAttacking && !pMovement.isWallSliding && !pMovement.isClimbingLedge)
+        if (!playerAttack.isAttacking && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge)
         {
             isHurt = true;
             StartCoroutine("IsHurtAnimStop");
@@ -143,7 +159,26 @@ public class PlayerState : MonoBehaviour
 
     public void PlayerDie()
     {
-        Debug.Log("playerDie");
+        isDead = true;
+        coll.enabled = false;
+        renderer.enabled = false;
+        playerMovement.cantMove = true;
+        playerAttack.dialogueStopAttack = true;
+        rb.simulated = false;
+        Instantiate(isDeadParticles, transform.position, Quaternion.identity, transform);
+        
+    }
+
+    public void Respawn()
+    {
+        isDead = false;
+        coll.enabled = true;
+        renderer.enabled = true;
+        playerMovement.cantMove = false;
+        playerAttack.dialogueStopAttack = false;
+        rb.simulated = true;
+        transform.position = respawnPosition.transform.position;
+        currentHealth = maxHealth;
     }
 
     public void ReduceStamina(float staminaToReduce)

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae57a60e25172e14f9c197eb59ae3517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxEffectMultiplier: {x: 0.66, y: 0.98, z: 0}
+  parallaxEffectMultiplier: {x: 0.78, y: 0.98, z: 0}
   infiniteHorizontal: 0
   infiniteVertical: 0
   permaActive: 1
@@ -90,9 +90,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 416320679
   m_SortingLayer: -1
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 83b4e9373d19ab24191f5b23da95fe24, type: 3}
-  m_Color: {r: 0.42083484, g: 0.46226418, b: 0.43222916, a: 1}
+  m_Color: {r: 0.20754719, g: 0.14587043, b: 0.16829835, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2

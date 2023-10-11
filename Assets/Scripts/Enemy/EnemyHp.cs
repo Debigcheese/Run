@@ -18,7 +18,8 @@ public class EnemyHp : MonoBehaviour
 
     [Header("Balancing")]
     public int maxHealth = 100;
-    int currentHealth;
+    private int currentHealth;
+    public int crystalDropAmount;
 
     [Header("EnemyHealthBar")]
     public Slider enemyHealthBar;
@@ -32,6 +33,10 @@ public class EnemyHp : MonoBehaviour
     public GameObject damagePopupPrefab;
     [SerializeField] private float maxOffsetDistanceX = 0.1f;
     [SerializeField] private float maxOffsetDistanceY = 0.2f;
+
+    [Space]
+    [Header("Particles")]
+    public ParticleSystem isDeadParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -103,7 +108,14 @@ public class EnemyHp : MonoBehaviour
         {
             waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         }
-        crystalDropper.DropCrystal();
+        crystalDropper.DropCrystal(crystalDropAmount);
+        Instantiate(isDeadParticles, transform.position, Quaternion.identity);
+        StartCoroutine(IsDeadDelay());
+    }
+
+    IEnumerator IsDeadDelay()
+    {
+        yield return new WaitForSeconds(.1f);
         Destroy(this.gameObject);
     }
 

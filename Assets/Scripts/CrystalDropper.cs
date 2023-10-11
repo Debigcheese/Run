@@ -5,13 +5,12 @@ using UnityEngine;
 public class CrystalDropper : MonoBehaviour
 {
     public GameObject[] crystalPrefabs;
-    public int crystalDropAmount;
     private int crystalLeftAmount;
 
     // Start is called before the first frame update
     void Start()
     {
-        crystalLeftAmount = crystalDropAmount;
+
     }
 
     // Update is called once per frame
@@ -20,8 +19,9 @@ public class CrystalDropper : MonoBehaviour
         
     }
 
-    public void DropCrystal()
+    public void DropCrystal(int crystalDropAmount)
     {
+        crystalLeftAmount = crystalDropAmount;
         while (crystalLeftAmount >= 840)
         {
             InstantiateCrystal(3);
@@ -40,11 +40,12 @@ public class CrystalDropper : MonoBehaviour
             crystalLeftAmount -= 14;
         }
         //max 13 crystals
-        while (crystalLeftAmount > 0)
+        while (crystalLeftAmount != 0)
         {
             InstantiateCrystal(0);
             crystalLeftAmount -= 1;
         }
+        
     }
 
     private void InstantiateCrystal(int crystalIndex)
