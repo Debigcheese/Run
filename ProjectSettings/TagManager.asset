@@ -10,6 +10,7 @@ TagManager:
   - Boundary_X
   - Boundary_Y
   - CamBoundary
+  - HealingFountain
   layers:
   - Default
   - TransparentFX

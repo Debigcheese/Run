@@ -27,7 +27,9 @@ public class PlayerState : MonoBehaviour
     public int currentHealth;
     public bool isHurt;
     public bool isDead;
+    public bool isRegeningHp;
     private float lerpSpeed = 0.014f;
+    private bool canRegen = true;
 
     [Space]
     [Header("BloodyScreen")]
@@ -110,6 +112,11 @@ public class PlayerState : MonoBehaviour
             easeHealthBar.value = Mathf.Lerp(easeHealthBar.value, currentHealth, lerpSpeed);
         }
 
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
         if (weaponHolder.meleeEquipped )
         {
             staminaBar.value = currentStamina;
@@ -117,7 +124,7 @@ public class PlayerState : MonoBehaviour
             staminaBar.gameObject.SetActive(true);
         }
 
-        if (currentStamina >= maxStamina)
+        if (currentStamina > maxStamina)
         {
             currentStamina = maxStamina;
         }
@@ -129,14 +136,13 @@ public class PlayerState : MonoBehaviour
             manaBar.gameObject.SetActive(true);
         }
 
-        if (currentMana >= maxMana)
+        if (currentMana > maxMana)
         {
             currentMana = maxMana;
         }
 
         if(currentHealth <= (0.18 * maxHealth))
         {
-            Debug.Log("lowhp");
             bloodyScreen.enabled = true;
 
             if(!waitColorChange)
@@ -159,7 +165,44 @@ public class PlayerState : MonoBehaviour
             PlayerDie();
             Respawn();
         }
-  
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HealingFountain"))
+        {
+            if (canRegen)
+            {
+                StartCoroutine(RegenHp());
+            }
+
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HealingFountain"))
+        {
+            isRegeningHp = false;
+            canRegen = true;
+        }
+    }
+
+    public IEnumerator RegenHp()
+    {
+        isRegeningHp = true;
+        canRegen = false;
+        yield return new WaitForSeconds(.4f);
+        if (currentHealth < maxHealth && isRegeningHp )
+        {
+            Debug.Log("works");
+            float tempCurrHp = currentHealth;
+            float tempMaxHp = maxHealth;
+            tempCurrHp += tempMaxHp * 0.1f;
+            currentHealth = Mathf.RoundToInt(tempCurrHp);
+            canRegen = true;
+        }
     }
 
     public IEnumerator ActivateBloodyScreen()
@@ -170,7 +213,6 @@ public class PlayerState : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = Mathf.SmoothStep(0, 1, elapsedTime / transitionDuration);
             bloodyScreen.color = Color.Lerp(originalColor, transparentColor, t);
-            Debug.Log(bloodyScreen.color);
             yield return null;
         }
 
