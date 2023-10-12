@@ -7,14 +7,20 @@ using TMPro;
 
 public class EnemyHp : MonoBehaviour
 {
+    private Rigidbody2D rb;
+    private SpriteRenderer sRenderer;
+    private Collider2D coll;
+    private Animator anim;
     private WaveSpawner waveSpawner;
     private PlayerAttack playerAttack;
+    private EnemyAttack enemyAttack;
     private EnemyAI enemyAi;
     private CrystalDropper crystalDropper;
     private DamageFlash damageFlash;
     public UnityEvent EnemyKnockback;
-    private bool tookDamage;
     public bool countWaveEnemies;
+    public bool isDead = false;
+    private bool tookDamage;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -34,17 +40,24 @@ public class EnemyHp : MonoBehaviour
     [SerializeField] private float maxOffsetDistanceX = 0.1f;
     [SerializeField] private float maxOffsetDistanceY = 0.2f;
 
-    [Space]
-    [Header("Particles")]
-    public ParticleSystem isDeadParticles;
+    //[Space]
+    //[Header("Particles")]
+    //public ParticleSystem isDeadParticles;
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         waveSpawner = GetComponentInParent<WaveSpawner>();
         playerAttack = FindAnyObjectByType<PlayerAttack>();
         enemyAi = GetComponent<EnemyAI>();
+        enemyAttack = GetComponent<EnemyAttack>();
         crystalDropper = GetComponentInChildren<CrystalDropper>();
+
+        sRenderer = GetComponentInChildren<SpriteRenderer>();
+        coll = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
+
         damageFlash = GetComponent<DamageFlash>();
         rectHealthbar = enemyHealthBar.GetComponent<RectTransform>();
         rectEaseHealthbar = easeHealthBar.GetComponent<RectTransform>();
@@ -75,6 +88,7 @@ public class EnemyHp : MonoBehaviour
             rectEaseHealthbar.localScale = new Vector2(1 * Mathf.Abs(rectEaseHealthbar.localScale.x), rectEaseHealthbar.localScale.y);
         }
         
+        anim.SetBool("isDead", isDead);
     }
 
     public void TakeDamage(int damageAmount)
@@ -86,7 +100,7 @@ public class EnemyHp : MonoBehaviour
             //play hurt animation
             if (currentHealth <= 0)
             {
-                Die();
+                StartCoroutine(Die());
             }
             EnemyKnockback.Invoke();
             damageFlash.CallDamageFlash();
@@ -102,20 +116,22 @@ public class EnemyHp : MonoBehaviour
         tookDamage = false;
     }
 
-    void Die()
+    private IEnumerator Die()
     {
         if (countWaveEnemies)
         {
             waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         }
         crystalDropper.DropCrystal(crystalDropAmount);
-        Instantiate(isDeadParticles, transform.position, Quaternion.identity);
-        StartCoroutine(IsDeadDelay());
-    }
 
-    IEnumerator IsDeadDelay()
-    {
-        yield return new WaitForSeconds(.1f);
+        isDead = true;
+        coll.enabled = false;
+        enemyAi.canMove = false;
+        enemyAttack.canAttack = false;
+        rb.simulated = false;
+
+        yield return new WaitForSeconds(.66f);
+        //Instantiate(isDeadParticles, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 

@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     private Vector3 targetPos;
     public float detectionRadius = 50f;
     public float pathUpdateSeconds = 0.5f;
+    private float originalDetectionRadius;
 
     [Header("Physics")]
     public float nextWaypointDistance = 3f;
@@ -36,7 +37,7 @@ public class EnemyAI : MonoBehaviour
     public bool isMoving;
     public bool lookingRight;
     public bool detected = false;
-    public GameObject DetectionSymbolPopup;
+    public GameObject enemyDetectionAnim;
 
     [SerializeField] Vector3 startOffset;
 
@@ -53,12 +54,13 @@ public class EnemyAI : MonoBehaviour
         playerMovement = FindObjectOfType<PlayerMovement>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-        anim = transform.Find("EnemyDetectionAnim").GetComponent<Animator>();
-        target = playerMovement.GetComponent<Transform>();
+        anim = enemyDetectionAnim.GetComponent<Animator>();
+        target = FindObjectOfType<PlayerMovement>().transform.GetComponent<Transform>();
         isJumping = false;
         isInAir = false;
         isOnCoolDown = false;
-        DetectionSymbolPopup.SetActive(false);
+        enemyDetectionAnim.SetActive(false);
+        originalDetectionRadius = detectionRadius;
 
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
@@ -69,13 +71,15 @@ public class EnemyAI : MonoBehaviour
         targetPos = target.position;
         if (TargetInDistance() && followEnabled && !waveSpawnerEnemies)
         {
+            detectionRadius = (originalDetectionRadius*1.2f);
             detected = true;
-            DetectionSymbolPopup.SetActive(true);
+            enemyDetectionAnim.SetActive(true);
             PathFollow();
         }
         else
         {
-            DetectionSymbolPopup.SetActive(false);
+            detectionRadius = originalDetectionRadius;
+            enemyDetectionAnim.SetActive(false);
             isMoving = false;
             detected = false;
         }
@@ -83,16 +87,11 @@ public class EnemyAI : MonoBehaviour
         if (waveSpawnerEnemies && followEnabled)
         {
             detected = true;
-            DetectionSymbolPopup.SetActive(false);
+            enemyDetectionAnim.SetActive(false);
             PathFollow();
             detectionRadius = 40;
         }
-        else
-        {
-            DetectionSymbolPopup.SetActive(false);
-            isMoving = false;
-            detected = false;
-        }
+     
 
         anim.SetBool("Detected", detected);
     }
@@ -176,7 +175,7 @@ public class EnemyAI : MonoBehaviour
 
     private bool TargetInDistance()
     {
-        return Vector2.Distance(transform.position, target.transform.position) < detectionRadius;
+        return Vector2.Distance(transform.position, targetPos) < detectionRadius;
     }
 
     private bool JumpCheck()

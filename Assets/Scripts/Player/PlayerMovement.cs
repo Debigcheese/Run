@@ -10,13 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAttack playerAttack;
     private DamageFlash damageFlash;
 
-    [HideInInspector]
-    public float moveDirection = 0f;
+    [HideInInspector] public float moveDirection = 0f;
     private float y = 0f;
 
     [Header("RBOriginal")]
     private float originalSpeed;
-    public float originalGravity;
+    [HideInInspector] public float originalGravity;
     private float originalDrag;
     private float originalAngularDrag;
 
@@ -201,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 6;
             rb.angularDrag = 6;
             rb.gravityScale = 0.6f;
+            speed = originalSpeed * 0.7f;
         }
     }
 
@@ -211,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = originalDrag;
             rb.angularDrag = originalAngularDrag;
             rb.gravityScale = originalGravity;
+            speed = originalSpeed;
         }
     }
 

@@ -130,9 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1aff6b66c382f44ca39c1b4d4f46d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EKeyCap: {fileID: 1874312797}
   identifier: 1
   inRange: 0
+  EKeyCap: {fileID: 1874312797}
+  isActive: 0
 --- !u!61 &8178093882983055185
 BoxCollider2D:
   m_ObjectHideFlags: 0

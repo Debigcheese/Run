@@ -73,7 +73,6 @@ public class Crystal : MonoBehaviour
             renderer.enabled = false;
             crystalCollider.enabled = false;
             playerState.totalCrystalAmount += crystalValue;
-            Debug.Log(playerState.totalCrystalAmount);
             playerState.tempCrystalAmount += crystalValue;
             if (!playerState.isCounting)
             {

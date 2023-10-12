@@ -7,7 +7,7 @@ using TMPro;
 public class PlayerState : MonoBehaviour
 {
     private Collider2D coll;
-    private SpriteRenderer renderer;
+    private SpriteRenderer sRenderer;
     private Rigidbody2D rb;
 
     private PlayerMovement playerMovement;
@@ -29,7 +29,13 @@ public class PlayerState : MonoBehaviour
     public bool isDead;
     private float lerpSpeed = 0.014f;
 
-    public GameObject isDeadParticles;
+    [Space]
+    [Header("BloodyScreen")]
+    public Image bloodyScreen;
+    public float transitionDuration = 1f;
+    private Color originalColor;
+    private Color transparentColor;
+    private bool waitColorChange;
 
     [Space]
     [Header("Stamina")]
@@ -56,8 +62,8 @@ public class PlayerState : MonoBehaviour
     [SerializeField] private float maxOffsetDistanceY = 0.2f;
 
     [Space]
-    [Header("Crosshair")]
-    public GameObject mageCrosshair;
+    [Header("Particles")]
+    public GameObject isDeadParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -68,7 +74,7 @@ public class PlayerState : MonoBehaviour
         weaponHolder = GetComponent<WeaponHolder>();
 
         coll = GetComponent<Collider2D>();
-        renderer = GetComponentInChildren<SpriteRenderer>();
+        sRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponentInChildren<Rigidbody2D>();
 
         transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y, startPosition.transform.position.z);
@@ -78,6 +84,11 @@ public class PlayerState : MonoBehaviour
         currentHealth = maxHealth;
         HealthBar.maxValue = maxHealth;
         easeHealthBar.value = HealthBar.value;
+
+        originalColor = bloodyScreen.color;
+        transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
+        bloodyScreen.color = transparentColor;
+        bloodyScreen.enabled = false;
 
         manaBar.maxValue = maxMana;
         currentMana = maxMana;
@@ -123,13 +134,59 @@ public class PlayerState : MonoBehaviour
             currentMana = maxMana;
         }
 
+        if(currentHealth <= (0.18 * maxHealth))
+        {
+            Debug.Log("lowhp");
+            bloodyScreen.enabled = true;
+
+            if(!waitColorChange)
+            {
+                StartCoroutine(ActivateBloodyScreen());
+                waitColorChange = true;
+            }
+
+        }
+        else
+        {
+            bloodyScreen.enabled = false;
+            bloodyScreen.color = transparentColor;
+        }
+
         crystalText.text = totalCrystalAmount.ToString();
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            PlayerDie();
             Respawn();
         }
   
+    }
+
+    public IEnumerator ActivateBloodyScreen()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.SmoothStep(0, 1, elapsedTime / transitionDuration);
+            bloodyScreen.color = Color.Lerp(originalColor, transparentColor, t);
+            Debug.Log(bloodyScreen.color);
+            yield return null;
+        }
+
+        // Pause for a moment with the target alpha.
+        yield return new WaitForSeconds(.5f);
+
+        // Reverse the transition.
+        elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.SmoothStep(0, 1, elapsedTime / transitionDuration);
+            bloodyScreen.color = Color.Lerp(transparentColor, originalColor, t);
+            yield return null;
+        }
+        waitColorChange = false;
     }
 
     public void TakeDamage(int damageAmount)
@@ -137,7 +194,7 @@ public class PlayerState : MonoBehaviour
         currentHealth -= damageAmount;
         damageFlash.CallDamageFlash();
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             PlayerDie();
         }
@@ -146,7 +203,6 @@ public class PlayerState : MonoBehaviour
         {
             isHurt = true;
             StartCoroutine("IsHurtAnimStop");
-            Debug.Log("ishurt");
         }
         ShowDamagePopup(damageAmount);
     }
@@ -161,9 +217,10 @@ public class PlayerState : MonoBehaviour
     {
         isDead = true;
         coll.enabled = false;
-        renderer.enabled = false;
+        sRenderer.enabled = false;
         playerMovement.cantMove = true;
         playerAttack.dialogueStopAttack = true;
+        playerAttack.isAttacking = false;
         rb.simulated = false;
         Instantiate(isDeadParticles, transform.position, Quaternion.identity, transform);
         
@@ -173,7 +230,7 @@ public class PlayerState : MonoBehaviour
     {
         isDead = false;
         coll.enabled = true;
-        renderer.enabled = true;
+        sRenderer.enabled = true;
         playerMovement.cantMove = false;
         playerAttack.dialogueStopAttack = false;
         rb.simulated = true;

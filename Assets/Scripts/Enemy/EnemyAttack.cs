@@ -13,6 +13,7 @@ public class EnemyAttack : MonoBehaviour
     [Header("Booleans")]
     public bool isAttacking;
     public bool inRange;
+    public bool canAttack;
 
     [Header("Balancing")]
     public int attackDamage;
@@ -27,6 +28,7 @@ public class EnemyAttack : MonoBehaviour
         playerState = FindAnyObjectByType<PlayerState>();
         enemyAI = GetComponent<EnemyAI>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        canAttack = true;
         
     }
 
@@ -38,7 +40,7 @@ public class EnemyAttack : MonoBehaviour
         Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
         foreach (Collider2D hitplayer in hitPlayers) 
         {
-            if (hitplayer.CompareTag("Player") && hitplayer != null)
+            if (hitplayer.CompareTag("Player") && hitplayer != null && canAttack)
             {
                 inRange = true;
                 break;
@@ -55,7 +57,7 @@ public class EnemyAttack : MonoBehaviour
         if (inRange)
         {
             spriteRenderer.sortingLayerName = "Foreground";
-            spriteRenderer.sortingOrder = 6;
+            spriteRenderer.sortingOrder = 4;
             enemyAI.canMove = false;
             if (!isAttacking )
             {

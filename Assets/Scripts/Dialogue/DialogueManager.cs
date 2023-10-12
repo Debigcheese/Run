@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     private Animator anim;
     public bool isDialogue;
     public bool finishFrogAnim = false;
+    public bool dialogueFinished = false;
 
     public AudioSource frogSound;
 
@@ -131,7 +132,7 @@ public class DialogueManager : MonoBehaviour
             {
                 frogSound.Play();
             }
-            yield return new WaitForSeconds(.02f);
+            yield return new WaitForSeconds(.015f);
         }
     }
 
@@ -144,6 +145,7 @@ public class DialogueManager : MonoBehaviour
             finishFrogAnim = true;
             playerAttack.dialogueStopAttack = false;
             playerMovement.cantMove = false;
+            dialogueFinished = true;
         }
         if (freezeGravity)
         {

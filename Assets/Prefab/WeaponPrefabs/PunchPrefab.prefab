@@ -190,7 +190,7 @@ MonoBehaviour:
   attackCounter: 1
   isMeleeAttacking: 0
   minDmg: 1
-  maxDmgMinusOne: 5
+  maxDmgMinusOne: 4
   attackRange: 0.5
   attackSpeed: 0.45
   staminaPerAttack: 25

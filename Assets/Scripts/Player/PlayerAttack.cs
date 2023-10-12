@@ -6,6 +6,7 @@ public class PlayerAttack : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
+    private WeaponHolder weaponHolder;
     public bool isAttacking = false;
     public float AttackMoveSpeed;
     public bool checkMousePositionX;
@@ -25,6 +26,7 @@ public class PlayerAttack : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
+        weaponHolder = GetComponent<WeaponHolder>();
     }
 
     // Update is called once per frame
@@ -35,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack && !stopAttacking && !dialogueStopAttack)
         {
             float randomValue = Random.Range(0f, 100f);
-            if(randomValue <= critChance)
+            if (randomValue <= critChance)
             {
                 critAttack = true;
             }
@@ -44,12 +46,29 @@ public class PlayerAttack : MonoBehaviour
                 critAttack = false;
             }
             isAttacking = true;
-            if (mousePosition.x > transform.position.x && playerMovement.isFacingLeft || mousePosition.x < transform.position.x && !playerMovement.isFacingLeft )
+
+            if (mousePosition.x > transform.position.x && playerMovement.isFacingLeft || mousePosition.x < transform.position.x && !playerMovement.isFacingLeft)
             {
                 stopFlip = true;
                 playerMovement.Flip();
             }
+
         }
+
+        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack && !stopAttacking && !dialogueStopAttack)
+        {
+            float randomValue = Random.Range(0f, 100f);
+            if (randomValue <= critChance)
+            {
+                critAttack = true;
+            }
+            else
+            {
+                critAttack = false;
+            }
+            isAttacking = true;
+        }
+
         //cant attack when ledgeclimb,wallslide,walljump,hurt
         if (playerMovement.isClimbingLedge || playerMovement.isWallSliding || playerMovement.isWallJumping)
         {
