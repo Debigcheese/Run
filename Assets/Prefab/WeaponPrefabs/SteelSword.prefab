@@ -104,7 +104,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -189,10 +189,10 @@ MonoBehaviour:
   attackPoint: {fileID: 5767340733904343670}
   attackCounter: 1
   isMeleeAttacking: 0
-  minDmg: 3
-  maxDmgMinusOne: 8
+  minDmg: 4
+  maxDmgMinusOne: 11
   attackRange: 1
   attackSpeed: 0.45
-  staminaPerAttack: 40
+  staminaPerAttack: 24
   firstSwingDmgDelay: 0.42
   SecondSwingDmgDelay: 0.18

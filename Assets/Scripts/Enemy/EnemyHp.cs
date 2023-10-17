@@ -21,10 +21,11 @@ public class EnemyHp : MonoBehaviour
     public bool countWaveEnemies;
     public bool isDead = false;
     private bool tookDamage;
+    public bool dontInstaKill = false;
 
     [Header("Balancing")]
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
     public int crystalDropAmount;
 
     [Header("EnemyHealthBar")]
@@ -98,7 +99,7 @@ public class EnemyHp : MonoBehaviour
             tookDamage = true;
             currentHealth -= damageAmount;
             //play hurt animation
-            if (currentHealth <= 0)
+            if (currentHealth <= 0 && !dontInstaKill)
             {
                 StartCoroutine(Die());
             }

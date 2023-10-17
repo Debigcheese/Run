@@ -29,9 +29,11 @@ public class PickupWeapon : MonoBehaviour
         anim.SetBool("isActive", isActive);
         if(Input.GetKeyDown(KeyCode.E) && inRange && !playerAttack.isAttacking)
         {
-            weaponholder.currentWeapon.SetActive(false);
-            weaponholder.currentWeapon = weaponholder.weapons[identifier];
-            weaponholder.currentWeapon.SetActive(true);
+            weaponholder.secondWeapon.SetActive(false);
+            weaponholder.secondWeapon = weaponholder.weapons[identifier];
+            weaponholder.secondWeapon.SetActive(false);
+            PlayerPrefs.SetInt("SecondWeapon", identifier);
+            PlayerPrefs.Save();
             Destroy(gameObject);
         }
 

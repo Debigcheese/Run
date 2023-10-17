@@ -17,13 +17,15 @@ public class DialogueManager : MonoBehaviour
     public bool isDialogue;
     public bool finishFrogAnim = false;
     public bool dialogueFinished = false;
+    public bool startSentence = false;
 
     public AudioSource frogSound;
 
     [Header("Booleans")]
     public bool stopCharacterMovement;
     public bool freezeGravity;
-    private bool enableDash;
+    public bool enableDash;
+    public bool enableSwitchWeapons;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,11 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space) && isDialogue == true)
+        {
+            DisplayNextSentence();
+        }
+
         if (isDialogue && stopCharacterMovement)
         {
             playerAttack.dialogueStopAttack = true;
@@ -74,6 +81,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
+
     IEnumerator GoDash()
     {
         yield return new WaitForSeconds(.1f);
@@ -116,7 +124,6 @@ public class DialogueManager : MonoBehaviour
         {
             EndDialogue();
         }
-
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
@@ -124,6 +131,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence (string sentence)
     {
+        startSentence = true;
         dialogueText.text = "";
         foreach(char letter in sentence.ToCharArray())
         {
@@ -134,10 +142,13 @@ public class DialogueManager : MonoBehaviour
             }
             yield return new WaitForSeconds(.015f);
         }
+        startSentence = false;
+
     }
 
     public void EndDialogue()
     {
+
         if (!freezeGravity)
         {
             isDialogue = false;
@@ -146,11 +157,18 @@ public class DialogueManager : MonoBehaviour
             playerAttack.dialogueStopAttack = false;
             playerMovement.cantMove = false;
             dialogueFinished = true;
+
+            if (enableSwitchWeapons)
+            {
+                FindObjectOfType<WeaponHolder>().showSecondWeaponUI.SetActive(true);
+                PlayerPrefs.SetInt("ShowSecondWeaponUI", 1);
+                PlayerPrefs.Save();
+            }
         }
         if (freezeGravity)
         {
             enableDash = true;
-            
+
         }
     }
 }

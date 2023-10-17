@@ -56,8 +56,6 @@ public class EnemyAttack : MonoBehaviour
     {
         if (inRange)
         {
-            spriteRenderer.sortingLayerName = "Foreground";
-            spriteRenderer.sortingOrder = 4;
             enemyAI.canMove = false;
             if (!isAttacking )
             {

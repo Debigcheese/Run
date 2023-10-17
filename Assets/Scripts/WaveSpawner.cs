@@ -5,7 +5,11 @@ using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
+    private PlayerState playerState;
     [SerializeField] private float countdown;
+    public GameObject startButton;
+    public GameObject showWaveChest;
+    public bool canPressWaveBtn;
 
     public Wave[] waves;
     public int currentWaveIndex = 0;
@@ -17,50 +21,81 @@ public class WaveSpawner : MonoBehaviour
     private bool endSpawn = false;
 
     private Collider2D[] waveBoundaries;
-    private bool boundaries = false;
+    private string boundaryEndString = "BoundaryEnd";
+    private string boundaryStartString = "BoundaryStart";
+    private string doorBoundary = "DoorSprite";
 
     [Space]
     [Header("Canvas")]
     public GameObject Canvas;
     [SerializeField] private TextMeshProUGUI WaveText;
-    public TextMeshProUGUI nextWaveText;
+    public GameObject wavesStarting;
+    public GameObject nextWaveText;
+    public GameObject wavesClearedText;
 
-    private Animator anim;
+    public Animator buttonAnim;
+    public Animator doorAnim;
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponentInChildren<Animator>();
-        countdown = 6f;
+        playerState = FindObjectOfType<PlayerState>();
         waveBoundaries = GetComponentsInChildren<Collider2D>();
         Canvas.SetActive(false);
-        nextWaveText.enabled = false;
+        nextWaveText.SetActive(false);
+        wavesStarting.SetActive(false);
         spawnerActive = false;
+        wavesClearedText.SetActive(false);
+        startButton.transform.GetChild(0).gameObject.SetActive(false);
+        showWaveChest.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!spawnerActive && !boundaries)
+        WaveText.text = "Wave: " + (currentWaveIndex + 1).ToString() + " / " + waves.Length.ToString();
+
+        //ending boundary on when spawner not active
+        if (!spawnerActive && !endSpawn)
         {
-            for (int i = 1; i < waveBoundaries.Length; i++)
-            {
-                waveBoundaries[i].enabled = false;
-            }
+            IterateColliders(false, true, true);
         }
+
+        //finish
         if (currentWaveIndex >= waves.Length && !endSpawn)
         {
-            spawnerActive = false;
-            boundaries = false;
-            Canvas.SetActive(false);
-            Debug.Log("done");
+            IterateColliders(false, false, false);
+
             endSpawn = true;
+            EndSpawner();
+            wavesClearedText.SetActive(true);
+            showWaveChest.SetActive(true);
+            showWaveChest.GetComponent<Animator>().SetBool("showWaveChest", true);
+            doorAnim.SetBool("WaveDoorOpen", true);
+            StartCoroutine(TimerForWaveChest());
             return;
         }
+
+        //Spawner start button pressed
+        if (canPressWaveBtn && Input.GetKeyDown(KeyCode.E))
+        {
+            buttonAnim.SetBool("isPressed", true);
+            GetComponent<Collider2D>().enabled = false;
+            readyToCountDown = true;
+            playerState.isRespawnForSpawner = false;
+            startButton.transform.GetChild(0).gameObject.SetActive(false);
+            for (int i = 0; i < waves.Length; i++)
+            {
+                waves[i].enemiesLeft = waves[i].enemies.Length;
+            }
+            spawnerActive = true;
+        }
+
+        //spawner start
         if (spawnerActive && currentWaveIndex < waves.Length)
         {
-            boundaries = true;
-            //enemiesLeftText.text = "Enemies left: " + waves[currentWaveIndex].enemiesLeft.ToString();
+            Canvas.SetActive(true);
 
             if (readyToCountDown == true)
             {
@@ -71,8 +106,11 @@ public class WaveSpawner : MonoBehaviour
             {
                 readyToCountDown = false;
                 countdown = waves[currentWaveIndex].timeToNextWave;
-                StartCoroutine(SpawnWave());
-                WaveText.text = "Wave: " + (currentWaveIndex+1).ToString() + " / " + waves.Length.ToString();
+                if(currentWaveIndex < waves.Length)
+                {
+                    StartCoroutine(SpawnWave());
+                }
+
             }
             if (waves[currentWaveIndex].enemiesLeft == 0)
             {
@@ -80,54 +118,120 @@ public class WaveSpawner : MonoBehaviour
                 currentWaveIndex++;
             }
 
-            for (int i = 1; i < waveBoundaries.Length; i++)
-            {
-                if (boundaries)
-                {
-                    waveBoundaries[i].enabled = true;
-                }
-                
-            }
-            Canvas.SetActive(true);
-            
-        }
+            IterateColliders(true, true, true);
 
-        
+            //player dies (restart spawner)
+            if (playerState.isRespawnForSpawner)
+            { 
+                foreach(GameObject spawnpoint in spawnPoints)
+                {
+                    GameObject[] childObjects = new GameObject[spawnpoint.transform.childCount];
+                    for(int i = 0; i < spawnpoint.transform.childCount; i++)
+                    {
+                        childObjects[i] = spawnpoint.transform.GetChild(i).gameObject;
+                    }
+
+                    foreach (GameObject childObject in childObjects)
+                    {
+                        Destroy(childObject);
+                    }
+                }
+
+                startButton.transform.GetChild(0).gameObject.SetActive(false);
+                buttonAnim.SetBool("isPressed", false);
+                GetComponent<Collider2D>().enabled = true;
+
+                countdown = 0;
+                currentWaveIndex = 0;
+                readyToCountDown = false;
+                wavesClearedText.SetActive(false);
+                EndSpawner();
+
+            }
+        } 
     }
 
     private IEnumerator SpawnWave()
     {
         if(currentWaveIndex < waves.Length)
         {
-            nextWaveText.enabled = true;
+            if(currentWaveIndex == 0)
+            {
+                wavesStarting.SetActive(true);
+            }
+            else
+            {
+                nextWaveText.SetActive(true);
+            }
+            WaveText.enabled = true;
+
             for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
             {
-                int random = Random.Range(0, spawnPoints.Length);
-                GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform.position, Quaternion.identity, spawnPoints[random].transform);
-                enemy.GetComponent<EnemyAI>().waveSpawnerEnemies = true;
-                enemy.GetComponent<EnemyHp>().countWaveEnemies = true;
+                if (!playerState.isRespawnForSpawner)
+                {
+                    int random = Random.Range(0, spawnPoints.Length);
+                    GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform.position, Quaternion.identity, spawnPoints[random].transform);
+                    enemy.GetComponent<EnemyAI>().waveSpawnerEnemies = true;
+                    enemy.GetComponent<EnemyHp>().countWaveEnemies = true;
 
-                yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
-                
+                    yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
+                }
             }
-            nextWaveText.enabled = false;
+            wavesStarting.SetActive(false);
+            nextWaveText.SetActive(false);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void IterateColliders(bool start, bool end, bool door)
+    {
+        foreach (Collider2D childCollider in waveBoundaries)
+        {
+            if (childCollider.name == boundaryStartString)
+            {
+                childCollider.enabled = start;
+            }
+            if (childCollider.name == boundaryEndString)
+            {
+                childCollider.enabled = end;
+            }
+            if (childCollider.name == doorBoundary)
+            {
+                childCollider.enabled = door;
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            
-            Collider2D collider = GetComponent<Collider2D>();
-            collider.enabled = false;
-            readyToCountDown = true;
-            for (int i = 0; i < waves.Length; i++)
-            {
-                waves[i].enemiesLeft = waves[i].enemies.Length;
-            }
-            spawnerActive = true;
+            startButton.transform.GetChild(0).gameObject.SetActive(true);
+            canPressWaveBtn = true;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            startButton.transform.GetChild(0).gameObject.SetActive(false);
+            canPressWaveBtn = false;
+        }
+    }
+
+    private void EndSpawner()
+    {
+        nextWaveText.SetActive(false);
+        wavesStarting.SetActive(false);
+        WaveText.enabled = false;
+        spawnerActive = false;
+    }
+
+    IEnumerator TimerForWaveChest()
+    {
+        yield return new WaitForSeconds(2f);
+        showWaveChest.GetComponent<Animator>().SetBool("showWaveChest", false);
+        showWaveChest.GetComponent<Collider2D>().enabled = true;
     }
 
     [System.Serializable]

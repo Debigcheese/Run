@@ -1042,14 +1042,15 @@ MonoBehaviour:
         m_CallState: 2
   countWaveEnemies: 0
   isDead: 0
-  maxHealth: 9
+  dontInstaKill: 0
+  maxHealth: 5
+  currentHealth: 0
   crystalDropAmount: 3
   enemyHealthBar: {fileID: 1493928006253107914}
   easeHealthBar: {fileID: 1493928005636558501}
   damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}
   maxOffsetDistanceX: 0.1
   maxOffsetDistanceY: 0.2
-  isDeadParticles: {fileID: 1687471748163445042, guid: 920f8977e014be74387dd0ba0f83b3aa, type: 3}
 --- !u!114 &5938948310583286302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,14 +1139,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 130
+  m_Mass: 40
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 4
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &6192187873320927801
 CapsuleCollider2D:
@@ -1311,7 +1312,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 467003048, guid: 0ff9a41e62069b1479673e5341954b86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1

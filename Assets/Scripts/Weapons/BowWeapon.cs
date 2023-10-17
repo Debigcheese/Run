@@ -20,13 +20,12 @@ public class BowWeapon : MonoBehaviour
     public bool canDisableBowCharge = false;
     private float timer = 0f;
     private float disableBowChargeTimer = 3;
-    private bool isFlipped;
 
     [Space]
     [Header("Balancing")]
     [SerializeField] private int minDmg = 2;
     [SerializeField] private int maxDmgMinusOne = 5;
-    public float staminaPerProjectile = 70;
+    public float staminaPerCharge = 70;
     public bool doubleProjectile = false;
     private float timeElapsed = 0.4f;
     private float damageMultiplier = 1.0f;
@@ -58,36 +57,22 @@ public class BowWeapon : MonoBehaviour
             damageMultiplier = 1;
         }
 
-        //needs fixing
-        if (doubleProjectile)
+        if (playerState.currentStamina < staminaPerCharge)
         {
-            if (playerState.currentStamina < (staminaPerProjectile+staminaPerProjectile))
-            {
-                playerAttack.stopAttacking = true;
-            }
+            playerAttack.stopAttacking = true;
         }
-        else if(!doubleProjectile)
-        {
-            if(playerState.currentStamina < staminaPerProjectile)
-            {
-                playerAttack.stopAttacking = true;
-            }
-        }
-        
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if (playerAttack.isAttacking)
         {
-            if(mousePos.x > playerMovement.transform.position.x && !isFlipped )
+            if (mousePos.x > playerMovement.transform.position.x && playerMovement.isFacingLeft)
             {
                 playerMovement.Flip();
-                isFlipped = true;
             }
-            else if(mousePos.x < playerMovement.transform.position.x && isFlipped)
+            else if (mousePos.x < playerMovement.transform.position.x && !playerMovement.isFacingLeft)
             {
                 playerMovement.Flip();
-                isFlipped = false;
             }
         }
 
@@ -110,17 +95,7 @@ public class BowWeapon : MonoBehaviour
 
         if (playerAttack.isAttacking && playerAttack.canAttack && !playerAttack.stopAttacking )
         {
-
             BowCharge();
-
-            if (mousePos.x > playerMovement.transform.position.x && playerMovement.isFacingLeft)
-            {
-                playerMovement.Flip();
-            }
-            if (mousePos.x > playerMovement.transform.position.x && playerMovement.isFacingLeft )
-            {
-                playerMovement.Flip();
-            }
         }
 
         if (playerAttack.isAttacking)
@@ -153,6 +128,7 @@ public class BowWeapon : MonoBehaviour
         playerAttack.canAttack = false;
         playerAttack.isAttacking = true;
         bowCharge = true;
+        playerState.ReduceStamina(staminaPerCharge);
     }
 
     public void BowShoot(float damageMultiplier)
@@ -181,7 +157,7 @@ public class BowWeapon : MonoBehaviour
         {
             StartCoroutine(DoubleProjectile(mousePos, damageMultiplier));
         }
-        playerState.ReduceStamina(staminaPerProjectile);
+
         StartCoroutine(FinishAnimation());
     }
 
@@ -206,7 +182,6 @@ public class BowWeapon : MonoBehaviour
         projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(mousePos);
         projectile.SetArrowDamageMultipler(damageMultiplier);
-        playerState.ReduceStamina(staminaPerProjectile);
     }
 
     public IEnumerator FinishAnimation()

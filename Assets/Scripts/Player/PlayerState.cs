@@ -16,8 +16,8 @@ public class PlayerState : MonoBehaviour
     private DamageFlash damageFlash;
 
     [Header("Respawn")]
-    [SerializeField] private GameObject startPosition;
-    [SerializeField] private GameObject respawnPosition;
+    public GameObject respawnPosition;
+    public bool isRespawnForSpawner;
 
     [Space]
     [Header("Health")]
@@ -35,6 +35,8 @@ public class PlayerState : MonoBehaviour
     [Header("BloodyScreen")]
     public Image bloodyScreen;
     public float transitionDuration = 1f;
+    public bool bloodyScreenActivateOnFeedback = false;
+    public float transitionDurationFeedback = 0.1f;
     private Color originalColor;
     private Color transparentColor;
     private bool waitColorChange;
@@ -66,6 +68,7 @@ public class PlayerState : MonoBehaviour
     [Space]
     [Header("Particles")]
     public GameObject isDeadParticles;
+    public GameObject isRegeningHpParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -74,14 +77,12 @@ public class PlayerState : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
         damageFlash = GetComponent<DamageFlash>();
         weaponHolder = GetComponent<WeaponHolder>();
-
         coll = GetComponent<Collider2D>();
         sRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponentInChildren<Rigidbody2D>();
 
-        transform.position = new Vector3(startPosition.transform.position.x, startPosition.transform.position.y, startPosition.transform.position.z);
-        
-        totalCrystalAmount = 0;
+        totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", totalCrystalAmount);
+        maxHealth = PlayerPrefs.GetInt("TotalHealth", maxHealth);
 
         currentHealth = maxHealth;
         HealthBar.maxValue = maxHealth;
@@ -90,13 +91,17 @@ public class PlayerState : MonoBehaviour
         originalColor = bloodyScreen.color;
         transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
         bloodyScreen.color = transparentColor;
-        bloodyScreen.enabled = false;
+        bloodyScreen.enabled = true;
 
         manaBar.maxValue = maxMana;
         currentMana = maxMana;
 
         staminaBar.maxValue = maxStamina;
         currentStamina = maxStamina;
+
+        transform.position = new Vector3(respawnPosition.transform.position.x, respawnPosition.transform.position.y, respawnPosition.transform.position.z);
+
+        isRegeningHpParticles.SetActive(false);
 
         InvokeRepeating("RefillMana", 0f, .3f);
         InvokeRepeating("RefillStamina", 0f, 0.02f);
@@ -105,6 +110,8 @@ public class PlayerState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerPrefs.SetInt("TotalCrystal", totalCrystalAmount);
+        PlayerPrefs.Save();
         HealthBar.value = currentHealth;
 
         if (HealthBar.value != easeHealthBar.value)
@@ -143,19 +150,17 @@ public class PlayerState : MonoBehaviour
 
         if(currentHealth <= (0.18 * maxHealth))
         {
-            bloodyScreen.enabled = true;
-
             if(!waitColorChange)
             {
                 StartCoroutine(ActivateBloodyScreen());
                 waitColorChange = true;
             }
-
         }
-        else
+
+        if (bloodyScreenActivateOnFeedback && (!(currentHealth <= (0.18 * maxHealth))))
         {
-            bloodyScreen.enabled = false;
-            bloodyScreen.color = transparentColor;
+            StartCoroutine(ActivateBloodyScreenOnFeedback());
+            bloodyScreenActivateOnFeedback = false;
         }
 
         crystalText.text = totalCrystalAmount.ToString();
@@ -165,7 +170,6 @@ public class PlayerState : MonoBehaviour
             PlayerDie();
             Respawn();
         }
-
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -176,7 +180,6 @@ public class PlayerState : MonoBehaviour
             {
                 StartCoroutine(RegenHp());
             }
-
         }
     }
 
@@ -186,23 +189,45 @@ public class PlayerState : MonoBehaviour
         {
             isRegeningHp = false;
             canRegen = true;
+            isRegeningHpParticles.SetActive(false);
         }
     }
 
     public IEnumerator RegenHp()
     {
+
         isRegeningHp = true;
         canRegen = false;
+        isRegeningHpParticles.SetActive(true);
         yield return new WaitForSeconds(.4f);
         if (currentHealth < maxHealth && isRegeningHp )
         {
-            Debug.Log("works");
             float tempCurrHp = currentHealth;
             float tempMaxHp = maxHealth;
             tempCurrHp += tempMaxHp * 0.1f;
             currentHealth = Mathf.RoundToInt(tempCurrHp);
             canRegen = true;
         }
+    }
+
+    public IEnumerator ActivateBloodyScreenOnFeedback()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.SmoothStep(0, 1, elapsedTime / transitionDuration);
+            bloodyScreen.color = Color.Lerp(originalColor, transparentColor, t);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(.15f);
+
+        // Reverse the transition.
+
+        waitColorChange = false;
+        bloodyScreen.color = transparentColor;
+        bloodyScreenActivateOnFeedback = false;
     }
 
     public IEnumerator ActivateBloodyScreen()
@@ -217,7 +242,7 @@ public class PlayerState : MonoBehaviour
         }
 
         // Pause for a moment with the target alpha.
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
 
         // Reverse the transition.
         elapsedTime = 0f;
@@ -235,7 +260,7 @@ public class PlayerState : MonoBehaviour
     {
         currentHealth -= damageAmount;
         damageFlash.CallDamageFlash();
-
+        bloodyScreenActivateOnFeedback = true;
         if (currentHealth <= 0)
         {
             PlayerDie();
@@ -270,6 +295,7 @@ public class PlayerState : MonoBehaviour
 
     public void Respawn()
     {
+        isRespawnForSpawner = true;
         isDead = false;
         coll.enabled = true;
         sRenderer.enabled = true;

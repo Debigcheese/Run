@@ -20,6 +20,7 @@ public class EnemyAI : MonoBehaviour
     public float jumpNodeHeightRequirement = 0.8f;
     public float jumpModifier = 0.3f;
     public float jumpCheckOffset = 0.1f;
+    private float minVelocity_Y = 8f;
 
     [Header("Custom Behavior")]
     public bool waveSpawnerEnemies = false;
@@ -48,6 +49,8 @@ public class EnemyAI : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     private bool isOnCoolDown;
+
+
 
     public void Start()
     {
@@ -91,7 +94,12 @@ public class EnemyAI : MonoBehaviour
             PathFollow();
             detectionRadius = 40;
         }
-     
+        
+        //minimum velocity_Y so enemies dont fall through map
+        if(rb.velocity.y <= -minVelocity_Y)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -minVelocity_Y);
+        }
 
         anim.SetBool("Detected", detected);
     }

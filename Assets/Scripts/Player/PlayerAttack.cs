@@ -15,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
     public bool canAttack = true;
     public bool stopAttacking = false;
     public bool dialogueStopAttack = false;
+    public float meleeAttackForce;
 
     [Header("CritAttack")]
     public bool critAttack;
@@ -52,22 +53,8 @@ public class PlayerAttack : MonoBehaviour
                 stopFlip = true;
                 playerMovement.Flip();
             }
-
         }
 
-        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack && !stopAttacking && !dialogueStopAttack)
-        {
-            float randomValue = Random.Range(0f, 100f);
-            if (randomValue <= critChance)
-            {
-                critAttack = true;
-            }
-            else
-            {
-                critAttack = false;
-            }
-            isAttacking = true;
-        }
 
         //cant attack when ledgeclimb,wallslide,walljump,hurt
         if (playerMovement.isClimbingLedge || playerMovement.isWallSliding || playerMovement.isWallJumping)

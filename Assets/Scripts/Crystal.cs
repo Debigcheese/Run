@@ -85,7 +85,7 @@ public class Crystal : MonoBehaviour
 
     IEnumerator WaitSeconds()
     {
-        yield return new WaitForSeconds(.7f);
+        yield return new WaitForSeconds(.9f);
         playerState.isCounting = false;
         if (!playerState.isCounting)
         {

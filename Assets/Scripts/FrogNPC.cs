@@ -7,6 +7,7 @@ public class FrogNPC : MonoBehaviour
     private Animator anim;
     private DialogueManager dialogueManager;
     public bool frogJump;
+    public bool frogTalk;
 
     // Start is called before the first frame update
     void Start()
@@ -19,12 +20,21 @@ public class FrogNPC : MonoBehaviour
     void Update()
     {
         anim.SetBool("FrogJump", frogJump);
+        anim.SetBool("FrogTalk", frogTalk);
+
         if (dialogueManager.finishFrogAnim)
         {
             
-            SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            spriteRenderer.flipX = true;
             frogJump = true;
+        }
+
+        if(dialogueManager.startSentence)
+        {
+            frogTalk = true;
+        }
+        else
+        {
+            frogTalk = false;
         }
     }
 }

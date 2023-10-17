@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDashing;
     public bool isFacingLeft;
     public bool cantMove;
+    public bool justFlipped;
 
     [Space]
     [Header("KnockBack")]
@@ -66,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("LedgeClimbing")]
     public bool ledgeDetected;
     private bool canGrabLedge = true;
-    private float ledgeClimbFinish = 0.5f;
+    public float ledgeClimbFinish = 0.5f;
     private Vector2 climbBegunPosition;
     private Vector2 climbOverPosition;
     public Vector2 offset1;
@@ -90,13 +91,12 @@ public class PlayerMovement : MonoBehaviour
         originalDrag = rb.drag;
         originalGravity = rb.gravityScale;
         originalSpeed = speed;
+        enableDashUponCollision = PlayerPrefs.GetInt("DashEnable") == 1;
     }
 
 
     void Update()
     {
-
-
         //Get knockback
         if (KBCounter <= 0)
         {
@@ -184,6 +184,8 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving && enableDashUponCollision)
             {
                 Dash(dir);
+                PlayerPrefs.SetInt("DashEnable", 1);
+                PlayerPrefs.Save();
             }
         }
 
@@ -217,7 +219,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckForLedge()
     {
-        if (ledgeDetected && canGrabLedge  )
+        if (ledgeDetected && canGrabLedge )
         {
             rb.velocity = Vector2.zero;
             canGrabLedge = false;
@@ -235,29 +237,20 @@ public class PlayerMovement : MonoBehaviour
                 climbBegunPosition = ledgePosition + offsetLeft1;
                 climbOverPosition = ledgePosition + offsetLeft2;
             }
-
+            rb.simulated = false;
+            transform.position = climbBegunPosition;
             StartCoroutine(LedgeClimbOver());
         }
 
-        if (isClimbingLedge)
-        {
-            rb.gravityScale = -1.7f;
-            transform.position = climbBegunPosition;
-        }
     }
 
     IEnumerator LedgeClimbOver()
     {
         yield return new WaitForSeconds(ledgeClimbFinish);
-        rb.gravityScale = originalGravity;
+        rb.simulated = true;
         isClimbingLedge = false;
         transform.position = climbOverPosition;
         cantMove = false;
-        Invoke("AllowLedgeGrab", 1f);
-    }
-
-    private void AllowLedgeGrab() 
-    {
         canGrabLedge = true;
     }
 
@@ -385,10 +378,33 @@ public class PlayerMovement : MonoBehaviour
 
     public void Flip()
     {
-            isFacingLeft = !isFacingLeft;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+        isFacingLeft = !isFacingLeft;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
+        StartCoroutine(JustFlippedChecker());
+    }
+
+    public void FinishLevelMovement()
+    {
+        cantMove = true;
+        playerAttack.dialogueStopAttack = true;
+        if (isFacingLeft)
+        {
+            rb.velocity = new Vector2(-speed, 0);
+        }
+        if (!isFacingLeft)
+        {
+            rb.velocity = new Vector2(speed, 0);
+        }
+
+    }
+
+    private IEnumerator JustFlippedChecker()
+    {
+        justFlipped = true;
+        yield return new WaitForSeconds(0.1f);
+        justFlipped = false;
     }
 }
 

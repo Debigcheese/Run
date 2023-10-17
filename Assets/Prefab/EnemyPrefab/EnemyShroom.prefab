@@ -211,7 +211,7 @@ MonoBehaviour:
   isAttacking: 0
   inRange: 0
   canAttack: 0
-  attackDamage: 4
+  attackDamage: 3
   attackSpeed: 1.2
   attackDmgDelay: 0.65
   attackRange: 1.1
@@ -232,7 +232,7 @@ MonoBehaviour:
   pathUpdateSeconds: 0.5
   nextWaypointDistance: 1
   speed: 1.5
-  jumpForce: 10
+  jumpForce: 14
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0.3
   jumpCheckOffset: 0.1
@@ -327,14 +327,15 @@ MonoBehaviour:
         m_CallState: 2
   countWaveEnemies: 0
   isDead: 0
-  maxHealth: 44
+  dontInstaKill: 0
+  maxHealth: 35
+  currentHealth: 0
   crystalDropAmount: 31
   enemyHealthBar: {fileID: 5974629013738183787}
   easeHealthBar: {fileID: 5974629012316325892}
   damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}
   maxOffsetDistanceX: 0.1
   maxOffsetDistanceY: 0.2
-  isDeadParticles: {fileID: 1687471748163445042, guid: 920f8977e014be74387dd0ba0f83b3aa, type: 3}
 --- !u!114 &1457540034455084223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,7 +574,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -988685252, guid: 3a67ba178639b724b8e5ebbdb5b26ffd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1

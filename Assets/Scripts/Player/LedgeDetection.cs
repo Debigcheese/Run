@@ -41,6 +41,7 @@ public class LedgeDetection : MonoBehaviour
             canDetect = true;
         }
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, radius);
