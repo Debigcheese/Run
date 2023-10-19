@@ -81,7 +81,7 @@ public class PlayerState : MonoBehaviour
         sRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponentInChildren<Rigidbody2D>();
 
-        totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", totalCrystalAmount);
+        totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
         maxHealth = PlayerPrefs.GetInt("TotalHealth", maxHealth);
 
         currentHealth = maxHealth;

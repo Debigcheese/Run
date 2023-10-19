@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishLevel : MonoBehaviour
 {
     private Animator anim;
     private PlayerMovement playerMovement;
+    private int LevelSelectIndex = 1;
+    public int LevelUnlocked;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+
+        anim.SetBool("TransitionEnd", true);
+        StartCoroutine(EndTransition());
     }
 
     // Update is called once per frame
@@ -26,15 +32,23 @@ public class FinishLevel : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerMovement.FinishLevelMovement();
-            anim.SetBool("StartTransition", true);
+            anim.SetBool("TransitionStart", true);
+            StartCoroutine(LoadNextLevel());
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    IEnumerator LoadNextLevel()
     {
-        if (collision.CompareTag("Player"))
-        {
-            anim.SetBool("StartTransition", false);
-        }
+        yield return new WaitForSeconds(1.5f);
+        PlayerPrefs.SetInt("LevelsUnlocked", LevelUnlocked);
+        SceneManager.LoadScene(LevelSelectIndex);
     }
+
+    IEnumerator EndTransition()
+    {
+        yield return new WaitForSeconds(1f);
+        anim.SetBool("TransitionEnd", false);
+    }
+
+
 }

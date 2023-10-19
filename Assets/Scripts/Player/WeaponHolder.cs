@@ -35,8 +35,8 @@ public class WeaponHolder : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
         playerMovement = GetComponentInParent<PlayerMovement>();
 
-        int currentWeaponIndex = PlayerPrefs.GetInt("CurrentWeapon", GetCurrentWeaponIndex());
-        int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon", GetSecondaryWeaponIndex());
+        int currentWeaponIndex = PlayerPrefs.GetInt("CurrentWeapon", 0);
+        int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon", 0);
 
         currentWeapon = weapons[currentWeaponIndex];
         secondWeapon = weapons[secondWeaponIndex];
