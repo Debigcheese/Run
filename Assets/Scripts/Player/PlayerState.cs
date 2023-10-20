@@ -102,9 +102,9 @@ public class PlayerState : MonoBehaviour
         transform.position = new Vector3(respawnPosition.transform.position.x, respawnPosition.transform.position.y, respawnPosition.transform.position.z);
 
         isRegeningHpParticles.SetActive(false);
-
-        InvokeRepeating("RefillMana", 0f, .3f);
-        InvokeRepeating("RefillStamina", 0f, 0.02f);
+        
+        InvokeRepeating("RefillMana", 0f, PlayerPrefs.GetFloat("ManaRegen", .25f));
+        InvokeRepeating("RefillStamina", 0f, PlayerPrefs.GetFloat("StaminaRegen", 0.035f));
     }
 
     // Update is called once per frame

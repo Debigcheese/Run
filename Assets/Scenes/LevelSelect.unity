@@ -321,15 +321,8 @@ MonoBehaviour:
   - {fileID: 1870431459}
   - {fileID: 1313321036}
   - {fileID: 989673011}
-  LevelImages:
-  - {fileID: 41261473}
-  - {fileID: 1897791369}
-  - {fileID: 684559807}
-  - {fileID: 2068996188}
-  - {fileID: 1626683385}
   transitionImage: {fileID: 703917117}
   transitionDuration: 1
-  totalLevels: 0
   levelsUnlocked: 0
 --- !u!4 &76720402
 Transform:
@@ -3518,7 +3511,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 76720401}
         m_TargetAssemblyTypeName: LevelSelect, Assembly-CSharp
-        m_MethodName: SelectLevel2
+        m_MethodName: OpenShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

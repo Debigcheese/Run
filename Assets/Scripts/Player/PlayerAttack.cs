@@ -19,8 +19,8 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("CritAttack")]
     public bool critAttack;
-    public float critChance = 4f;
-    public float critDamageMultiplier = 2f;
+    public float critChance;
+    public float critDamageMultiplier;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +28,9 @@ public class PlayerAttack : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
         weaponHolder = GetComponent<WeaponHolder>();
+
+        critChance = PlayerPrefs.GetFloat("CritChance", 4f);
+        critDamageMultiplier = PlayerPrefs.GetFloat("CritDamage", 2f);
     }
 
     // Update is called once per frame

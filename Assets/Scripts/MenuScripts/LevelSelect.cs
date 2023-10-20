@@ -58,7 +58,10 @@ public class LevelSelect : MonoBehaviour
     {
         if(levelsUnlocked >= level)
         {
-            letterAnim[level-3].SetBool("LetterOpen", true);
+            if(level != 2)
+            {
+                letterAnim[level - 3].SetBool("LetterOpen", true);
+            }
             transitionImage.SetActive(true);
             transitionAnim.SetBool("TransitionStart", true);
             yield return new WaitForSeconds(transitionDuration);
@@ -79,6 +82,11 @@ public class LevelSelect : MonoBehaviour
         yield return new WaitForSeconds(1f);
         transitionAnim.SetBool("TransitionEnd", false);
         transitionImage.SetActive(false);
+    }
+
+    public void OpenShop()
+    {
+        StartCoroutine(LoadScene(2));
     }
 
     public void SelectLevel1()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class TransitionScript : MonoBehaviour
 {
     public Animator transitionAnim;
     public GameObject transitionImage;
@@ -25,15 +25,14 @@ public class MainMenu : MonoBehaviour
 
     public void LoadLevelSelecter()
     {
-        StartCoroutine(LoadScene(1));
+        StartCoroutine(TransitionStart());
     }
 
-    public IEnumerator LoadScene(int level)
+    public IEnumerator TransitionStart()
     {
         transitionImage.SetActive(true);
         transitionAnim.SetBool("TransitionStart", true);
         yield return new WaitForSeconds(transitionDuration);
-        SceneManager.LoadScene(level);
 
     }
 
