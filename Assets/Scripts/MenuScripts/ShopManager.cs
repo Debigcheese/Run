@@ -12,7 +12,11 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < panels.Length; i++)
+        {
+            panels[i].SetActive(false);
+        }
+        panels[0].SetActive(true);
     }
 
     // Update is called once per frame

@@ -61,43 +61,79 @@ public class StatManagerScript : MonoBehaviour
     {
         StatsDisplayText[0].text = "HealthPoints: " + PlayerPrefs.GetInt("TotalHealth", 37).ToString();
         StatsDisplayText[3].text = "Crit chance: " + PlayerPrefs.GetFloat("CritChance", 4).ToString() + "%";
-        StatsDisplayText[4].text = "Crit damage: " + PlayerPrefs.GetFloat("CritDamage", 2).ToString() + "00%";
 
         for (int i = 0; i< StatsDisplayText.Length; i++)
         {
-            float x = 25;
-            float y = 35;
-            StatsDisplayText[1].text = "Mana regeneration: ";
-            StatsDisplayText[2].text = "Stamina regeneration: ";
+            int manaRegen = 25;
+            int staminaRegen = 35;
+            StatsDisplayText[1].text = "Mana regen: ";
+            StatsDisplayText[2].text = "Stamina regen: ";
 
             if (currentregenLevel == 0)
             {
-                StatsDisplayText[1].text += x * 1.08 + "%";
-                StatsDisplayText[2].text += y * 1.08 + "%";
+                StatsDisplayText[1].text += manaRegen + "%";
+                StatsDisplayText[2].text += staminaRegen + "%";
             }
             if (currentregenLevel == 1)
             {
-                StatsDisplayText[1].text += x * 1.16 + "%";
-                StatsDisplayText[2].text += y * 1.16 + "%";
+                StatsDisplayText[1].text += manaRegen + 8 + "%";
+                StatsDisplayText[2].text += staminaRegen + 8 + "%";
             }
             if (currentregenLevel == 2)
             {
-                StatsDisplayText[1].text += x * 1.24 + "%";
-                StatsDisplayText[2].text += y * 1.24 + "%";
+                StatsDisplayText[1].text += manaRegen + 16 + "%";
+                StatsDisplayText[2].text += staminaRegen + 16 + "%";
             }
             if (currentregenLevel == 3)
             {
-                StatsDisplayText[1].text += x * 1.32 + "%";
-                StatsDisplayText[2].text += y * 1.32 + "%";
+                StatsDisplayText[1].text += manaRegen + 24 + "%";
+                StatsDisplayText[2].text += staminaRegen + 24 + "%";
             }
             if (currentregenLevel == 4)
             {
-                StatsDisplayText[1].text += x * 1.40 + "%";
-                StatsDisplayText[2].text += y * 1.40 + "%";
+                StatsDisplayText[1].text += manaRegen + 32 + "%";
+                StatsDisplayText[2].text += staminaRegen + 32 + "%";
+            }
+            if (currentregenLevel == 5)
+            {
+                StatsDisplayText[1].text += manaRegen + 40 + "%";
+                StatsDisplayText[2].text += staminaRegen + 40 + "%";
+            }
+        }
+
+        for (int i = 0; i < StatsDisplayText.Length; i++)
+        {
+            int critDamage = 100;
+            StatsDisplayText[4].text = "Crit damage: ";
+
+
+            if (currentcritLevel == 0)
+            {
+                StatsDisplayText[4].text += critDamage + "%";
+            }
+            if (currentcritLevel == 1)
+            {
+                StatsDisplayText[4].text += critDamage + 20 + "%";
+            }
+            if (currentcritLevel == 2)
+            {
+                StatsDisplayText[4].text += critDamage + 40 + "%";
+            }
+            if (currentcritLevel == 3)
+            {
+                StatsDisplayText[4].text += critDamage + 60 + "%";
+            }
+            if (currentcritLevel == 4)
+            {
+                StatsDisplayText[4].text += critDamage + 80 + "%";
+            }
+            if (currentcritLevel == 5)
+            {
+                StatsDisplayText[4].text += critDamage + 100 + "%";
             }
 
-
         }
+
 
         totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
 
@@ -119,8 +155,8 @@ public class StatManagerScript : MonoBehaviour
             }
 
         }
-        
-        for(int i = 0; i< hpBar.Length; i++)
+
+        for (int i = 0; i< hpBar.Length; i++)
         {
             hpBar[currenthealthLevel].enabled = true;
             regenBar[currentregenLevel].enabled = true;
@@ -148,6 +184,7 @@ public class StatManagerScript : MonoBehaviour
         }
 
         if (statSelected == 1)
+
         {
             statDescription.text = "Increases stamina and mana regeneration by +8%";
             TurnOffButtons(1, currentregenLevel);
@@ -155,7 +192,7 @@ public class StatManagerScript : MonoBehaviour
 
         if (statSelected == 2)
         {
-            statDescription.text = "increases crit chance by +3% and crit damage by +12%";
+            statDescription.text = "increases crit chance by +4% and crit damage by +20%";
             TurnOffButtons(2, currentcritLevel);
         }
     }
@@ -245,11 +282,11 @@ public class StatManagerScript : MonoBehaviour
         if (totalCrystalAmount >= UpgradeCost[currentcritLevel] && currentcritLevel != 5)
         {
             float CritChance = PlayerPrefs.GetFloat("CritChance", 4);
-            float newCritChance = CritChance + 3f;
+            float newCritChance = CritChance + 4f;
             PlayerPrefs.SetFloat("CritChance", newCritChance);
 
             float critDamage = PlayerPrefs.GetFloat("CritDamage", 2);
-            float newCritDamage = critDamage * 1.12f;
+            float newCritDamage = critDamage + .20f;
             PlayerPrefs.SetFloat("CritDamage", newCritDamage);
 
             PlayerPrefs.SetInt("TotalCrystal", totalCrystalAmount - UpgradeCost[currentcritLevel]);
