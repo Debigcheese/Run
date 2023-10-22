@@ -8,26 +8,47 @@ public class WeaponManager : MonoBehaviour
 {
     public int totalCrystalAmount;
     public int pageNumber;
+    public int pagesUnlocked = 0;
     public int buyButtonIndex;
+
+    public List<int> ownedWeapons = new List<int>();
+    private string ownedWeaponString;
     public Page[] pages;
 
+    //buttons
     public GameObject[] buyButton;
     public GameObject[] cantBuyButton;
-    public TextMeshProUGUI[] crystalCost;
+    public GameObject[] EquipButton;
+    public GameObject[] EquipAsSecondary;
+    public GameObject nextPageButton;
+    public GameObject previousPageButton;
+
+    //text
+    public TextMeshProUGUI[] buyText;
+    public TextMeshProUGUI[] equipText;
+    public TextMeshProUGUI[] equippedText;
+    public TextMeshProUGUI[] crystalCostText;
+
+    //images
+    public GameObject[] currentWeaponImages;
+    public GameObject[] secondWeaponImages;
 
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < buyButton.Length; i++)
+
+        ownedWeaponString = PlayerPrefs.GetString("OwnedWeapons", "0,1");
+        string[] indexStrings = ownedWeaponString.Split(",");
+        ownedWeapons = new List<int>();
+
+        foreach(string indexString in indexStrings)
         {
-            buyButton[i].SetActive(false);
-            cantBuyButton[i].SetActive(false);
+            int index;
+            if(int.TryParse(indexString, out index))
+            {
+                ownedWeapons.Add(index);
+            }
         }
-
-
-        totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
-        pageNumber = PlayerPrefs.GetInt("CurrentPage", 0);
-        PlayerPrefs.Save();
 
         for (int i = 0; i < pages.Length; i++)
         {
@@ -41,89 +62,183 @@ public class WeaponManager : MonoBehaviour
                 }
             }
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        for (int i = 0; i < crystalCost.Length; i++)
+        if(pageNumber == 0)
         {
-            if (pages[pageNumber] == pages[i])
+            previousPageButton.SetActive(false);
+        }
+        else
+        {
+            previousPageButton.SetActive(true);
+        }
+        if(pageNumber == pages.Length-1)
+        {
+            nextPageButton.SetActive(false);
+        }
+        else
+        {
+            nextPageButton.SetActive(true);
+        }
+
+        for (int pageIndex = 0; pageIndex < pages.Length; pageIndex++)
+        {
+            int[] weaponIndexes = pages[pageIndex].weaponIndex;
+            int count = 0;
+
+            for (int i = 0; i < weaponIndexes.Length; i++)
             {
-                crystalCost[0].text = pages[pageNumber].weaponCost[0].ToString();
-                crystalCost[1].text = pages[pageNumber].weaponCost[1].ToString();
-                crystalCost[2].text = pages[pageNumber].weaponCost[2].ToString();
+                int nextIndex = (i + 1) % weaponIndexes.Length;
+                int afterNextIndex = (i + 2) % weaponIndexes.Length;
 
-                if(totalCrystalAmount >= pages[pageNumber].weaponCost[0])
+                if (ownedWeapons.Contains(weaponIndexes[i]) && ownedWeapons.Contains(weaponIndexes[nextIndex]) ||
+                    ownedWeapons.Contains(weaponIndexes[nextIndex]) && ownedWeapons.Contains(weaponIndexes[afterNextIndex]) ||
+                    ownedWeapons.Contains(weaponIndexes[afterNextIndex]) && ownedWeapons.Contains(weaponIndexes[i]))
                 {
-                    buyButton[0].SetActive(true);
-                    cantBuyButton[0].SetActive(false);
-                }
-                else
-                {
-                    buyButton[0].SetActive(false);
-                    cantBuyButton[0].SetActive(true);
-                }
-
-                if (totalCrystalAmount >= pages[pageNumber].weaponCost[1])
-                {
-                    buyButton[1].SetActive(true);
-                    cantBuyButton[1].SetActive(false);
-                }
-                else
-                {
-                    buyButton[1].SetActive(false);
-                    cantBuyButton[1].SetActive(true);
-                }
-
-                if (totalCrystalAmount >= pages[pageNumber].weaponCost[2])
-                {
-                    buyButton[2].SetActive(true);
-                    cantBuyButton[2].SetActive(false);
-                }
-                else
-                {
-                    buyButton[2].SetActive(false);
-                    cantBuyButton[2].SetActive(true);
+                    count++;
+                    pagesUnlocked = pageIndex + count;
+                    break;
                 }
             }
         }
 
-    }
 
-    public void BuyButtonPressed1()
-    {
-        for(int i = 0; i < pages.Length; i++)
+        int currentWeaponIndex = PlayerPrefs.GetInt("CurrentWeapon");
+        int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon");
+
+        for (int i = 0; i < currentWeaponImages.Length; i++)
         {
-            if(pages[pageNumber] == pages[i])
+            if(currentWeaponIndex == i)
             {
-                
+                currentWeaponImages[i].SetActive(true);
+            }
+            else
+            {
+                currentWeaponImages[i].SetActive(false);
+            }
+            if (secondWeaponIndex == i)
+            {
+                secondWeaponImages[i].SetActive(true);
+            }
+            else
+            {
+                secondWeaponImages[i].SetActive(false);
+            }
+        }
 
+        pageNumber = PlayerPrefs.GetInt("CurrentPage", 0);
+        totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
 
+        for (int i = 0; i < buyButton.Length; i++)
+        {
+
+            crystalCostText[i].text = pages[pageNumber].weaponCost[i].ToString();
+
+            if (totalCrystalAmount >= pages[pageNumber].weaponCost[i] && !ownedWeapons.Contains(pages[pageNumber].weaponIndex[i]))
+            {
+                buyButton[i].SetActive(true);
+                cantBuyButton[i].SetActive(false);
+                EquipButton[i].SetActive(false);
+                EquipAsSecondary[i].SetActive(false);
+                buyText[i].enabled = true;
+                equipText[i].enabled = false;
+                equippedText[i].enabled = false;
+            }
+            else if (ownedWeapons.Contains(pages[pageNumber].weaponIndex[i]) )
+            {
+                if (currentWeaponIndex == pages[pageNumber].weaponIndex[i])
+                {
+                    buyButton[i].SetActive(false);
+                    cantBuyButton[i].SetActive(false);
+                    EquipButton[i].SetActive(false);
+                    EquipAsSecondary[i].SetActive(true);
+                    buyText[i].enabled = false;
+                    equipText[i].enabled = false;
+                    equippedText[i].enabled = true;
+                }
+                else if(secondWeaponIndex == pages[pageNumber].weaponIndex[i])
+                {
+                    buyButton[i].SetActive(false);
+                    cantBuyButton[i].SetActive(false);
+                    EquipButton[i].SetActive(false);
+                    EquipAsSecondary[i].SetActive(true);
+                    buyText[i].enabled = false;
+                    equipText[i].enabled = true;
+                    equippedText[i].enabled = false;
+                }
+                else
+                {
+                    buyButton[i].SetActive(false);
+                    cantBuyButton[i].SetActive(false);
+                    EquipButton[i].SetActive(true);
+                    EquipAsSecondary[i].SetActive(false);
+                    buyText[i].enabled = false;
+                    equipText[i].enabled = true;
+                    equippedText[i].enabled = false;
+                }
+            }
+            else
+            {
+                buyButton[i].SetActive(false);
+                EquipButton[i].SetActive(false);
+                cantBuyButton[i].SetActive(true);
+                EquipAsSecondary[i].SetActive(false);
+                buyText[i].enabled = true;
+                equipText[i].enabled = false;
+                equippedText[i].enabled = false;
             }
         }
     }
 
-    public void BuyButtonPressed2()
+    public void EquipWeapon(int btnIndex)
     {
-        for (int i = 0; i < pages.Length; i++)
+        for (int i = 0; i < buyButton.Length; i++)
         {
-            buyButtonIndex = 5 + pageNumber;
+            int weaponIndex = pages[pageNumber].weaponIndex[btnIndex];
+            PlayerPrefs.SetInt("CurrentWeapon", weaponIndex);
+            PlayerPrefs.Save();
         }
     }
 
-    public void BuyButtonPressed3()
+    public void SwapSecondary(int btnIndex)
     {
-        for (int i = 0; i < pages.Length; i++)
+        int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon");
+        PlayerPrefs.SetInt("SecondWeapon", PlayerPrefs.GetInt("CurrentWeapon"));
+        PlayerPrefs.SetInt("CurrentWeapon", secondWeaponIndex);
+        PlayerPrefs.Save();
+    }
+
+    public void BuyWeapon(int btnIndex)
+    {
+        if(totalCrystalAmount >= pages[pageNumber].weaponCost[btnIndex])
         {
-            buyButtonIndex = 10 + pageNumber;
+            if(ownedWeapons == null)
+            {
+                ownedWeapons = new List<int>();
+            }
+            if (!ownedWeapons.Contains(pages[pageNumber].weaponIndex[btnIndex]))
+            {
+                int weaponCost = pages[pageNumber].weaponCost[btnIndex];
+                PlayerPrefs.SetInt("TotalCrystal", totalCrystalAmount - weaponCost);
+
+                ownedWeapons.Add(pages[pageNumber].weaponIndex[btnIndex]);
+
+                ownedWeaponString = string.Join(",", ownedWeapons);
+                PlayerPrefs.SetString("OwnedWeapons", ownedWeaponString);
+                PlayerPrefs.Save();
+
+                Debug.Log(PlayerPrefs.GetString("OwnedWeapons"));
+            }
         }
     }
 
     public void NextPage()
     {
-        if(pageNumber != 5)
+        if(pageNumber < pages.Length-1 && pageNumber < pagesUnlocked )
         {
             pageNumber++;
             SwitchPage(pageNumber);
@@ -165,6 +280,7 @@ public class WeaponManager : MonoBehaviour
 public class Page
 {
     public GameObject[] WeaponTierPanels;
-
+    public int[] weaponIndex;
     public int[] weaponCost;
+
 }
