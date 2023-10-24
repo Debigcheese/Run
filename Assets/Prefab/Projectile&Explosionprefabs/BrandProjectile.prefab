@@ -168,6 +168,9 @@ MonoBehaviour:
   arrowProjectile: 0
   arrowGravity: 0.01
   arrowGravityDelay: 2
+  arrowCollidedWithEnemy:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!50 &7769927177956279336
 Rigidbody2D:
   serializedVersion: 4

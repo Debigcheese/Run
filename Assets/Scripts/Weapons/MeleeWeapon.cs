@@ -128,12 +128,12 @@ public class MeleeWeapon : MonoBehaviour
 
     IEnumerator ReturnAttackCounter()
     {
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(1.3f);
         if (!playerAttack.isAttacking)
         {
             attackCounter = 1f;
         }
-        
+
     }
 
     private void OnDrawGizmosSelected()

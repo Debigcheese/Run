@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 8004363115868312267}
   - component: {fileID: 833761673513226984}
   - component: {fileID: 1897865442}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MagicProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,8 +160,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   explosionPrefab: {fileID: 5197333710027601043, guid: 2e3af96fd3ba015409c767a846ef08bc, type: 3}
+  hitGroundDontExplode: 0
   force: 17
   radiusCollider: 2
+  rotationOff: 0
+  flipY: 0
+  arrowProjectile: 1
+  arrowGravity: 0.01
+  arrowGravityDelay: 2
+  arrowCollidedWithEnemy:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!50 &833761673513226984
 Rigidbody2D:
   serializedVersion: 4

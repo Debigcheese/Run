@@ -27,7 +27,14 @@ public class CheatScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            dialogueManager.enableDash = true;
+            PlayerPrefs.SetInt("EnableDash", 1);
+            PlayerPrefs.Save();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            PlayerPrefs.SetInt("ShowSecondWeaponUI",1 );
+            PlayerPrefs.Save();
         }
     }
 }

@@ -78,6 +78,8 @@ public class DialogueManager : MonoBehaviour
                 rb.gravityScale = playerMovement.originalGravity;
                 StartCoroutine(GoDash());
                 enableDash = false;
+                PlayerPrefs.SetInt("EnableDash", 1);
+                PlayerPrefs.Save();
             }
         }
     }

@@ -28,6 +28,8 @@ public class Projectile : MonoBehaviour
     public float arrowGravityDelay = 2f;
     private float timer;
     private float dmgMultiplier;
+    public bool arrowGoThroughEnemies;
+    public bool hitEnemy;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +37,8 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        Vector3 direction = (GetMousePosition() - transform.position).normalized;
-        Vector3 rotation = transform.position - GetMousePosition();
+        Vector2 direction = (GetMousePosition() - transform.position).normalized;
+        Vector2 rotation = transform.position - GetMousePosition();
 
         if (direction.x < 0 && flipY)
         {
@@ -91,13 +93,32 @@ public class Projectile : MonoBehaviour
             {
                 rb.gravityScale += arrowGravity * Time.deltaTime;
             }
-            if (arrowProjectile)
+            if (arrowProjectile && (!(hitGround || hitEnemy)))
             {
                 float rot = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
                 spriteRenderer.transform.rotation = Quaternion.Euler(0, 0, rot + rotationOff);
             }
 
         }
+
+        if(arrowProjectile && !arrowGoThroughEnemies && (hitGround || hitEnemy))
+        {
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.isTrigger = false;
+            int layer = LayerMask.NameToLayer("ArrowCollidedWithEnemy");
+            gameObject.layer = layer;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
+        if (rb.velocity.y > 0 && hitGround && arrowProjectile)
+        {
+            rb.simulated = false;
+        }
+        if (rb.velocity.y < 0 && hitGround && arrowProjectile && arrowGoThroughEnemies)
+        {
+            rb.simulated = false;
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -105,6 +126,7 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             HashSet<GameObject> hurtEnemies = new HashSet<GameObject>();
+
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, radiusCollider, enemyLayer);
 
             foreach(Collider2D enemy in hitEnemies)
@@ -113,10 +135,11 @@ public class Projectile : MonoBehaviour
                 {
                     enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
                     hurtEnemies.Add(enemy.gameObject);
+                    hitEnemy = true;
                 }
+                
             }
-  
-            BeforeExplosion();
+
         }
         else if (((1 << collision.gameObject.layer) & groundLayer) != 0)
         {
@@ -126,11 +149,15 @@ public class Projectile : MonoBehaviour
             {
                 enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
             }
+         
+            if (!arrowProjectile)
+            {
+                BeforeExplosion();
+            }
             // Destroy the projectile when it collides with the ground layer
-
-             BeforeExplosion();
-
         }
+
+
     }
 
     private void BeforeExplosion()
@@ -141,9 +168,10 @@ public class Projectile : MonoBehaviour
         renderer.enabled = false;
         rb.velocity = Vector2.zero;
 
+
         if(hitGroundDontExplode && hitGround)
         {
-            
+           
         }
         else
         {
@@ -196,7 +224,10 @@ public class Projectile : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, radiusCollider);
+
+         Gizmos.DrawWireSphere(transform.position, radiusCollider);
+        
+
     }
 
 

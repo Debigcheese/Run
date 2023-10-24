@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         originalDrag = rb.drag;
         originalGravity = rb.gravityScale;
         originalSpeed = speed;
-        enableDashUponCollision = PlayerPrefs.GetInt("DashEnable") == 1;
+        enableDashUponCollision = PlayerPrefs.GetInt("EnableDash") == 1;
     }
 
 
@@ -184,8 +184,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving && enableDashUponCollision)
             {
                 Dash(dir);
-                PlayerPrefs.SetInt("DashEnable", 1);
-                PlayerPrefs.Save();
+
             }
         }
 

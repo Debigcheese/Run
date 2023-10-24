@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 426529232219837230}
   - component: {fileID: 7020124564924273421}
   - component: {fileID: 7709709338105241863}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: DarkBowProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,6 +168,7 @@ MonoBehaviour:
   arrowProjectile: 1
   arrowGravity: 1.5
   arrowGravityDelay: 0.04
+  arrowGoThroughEnemies: 0
 --- !u!50 &7020124564924273421
 Rigidbody2D:
   serializedVersion: 4

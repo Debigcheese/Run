@@ -59,6 +59,12 @@ MonoBehaviour:
   radiusCollider: 1.6
   rotationOff: 0
   flipY: 0
+  arrowProjectile: 0
+  arrowGravity: 0.01
+  arrowGravityDelay: 2
+  arrowCollidedWithEnemy:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!50 &1804208836749109823
 Rigidbody2D:
   serializedVersion: 4
