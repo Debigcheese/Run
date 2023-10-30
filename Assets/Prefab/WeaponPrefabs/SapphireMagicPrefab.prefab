@@ -159,7 +159,7 @@ MonoBehaviour:
   canAttack: 1
   minDmg: 12
   maxDmgMinusOne: 18
-  attackCooldown: 0.4
+  attackCooldown: 0.45
   projectileDelay: 0.4
   manaPerProjectile: 30
 --- !u!1 &8840068980370417224
@@ -186,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8840068980370417224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.55, y: 0.12, z: 0}
+  m_LocalPosition: {x: 1.01, y: 0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
