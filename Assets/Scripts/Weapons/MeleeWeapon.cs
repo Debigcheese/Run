@@ -16,6 +16,8 @@ public class MeleeWeapon : MonoBehaviour
     [Header("Animation")]
     public float attackCounter = 1f;
     public bool isMeleeAttacking = false;
+    private bool returnAttackCounter;
+    private float attackCounterTimer =0f;
 
     [Space]
     [Header("Balancing")]
@@ -66,13 +68,26 @@ public class MeleeWeapon : MonoBehaviour
         {
             Attack();
         }
- 
+
+        if (!playerAttack.isAttacking && returnAttackCounter)
+        {
+            attackCounterTimer += Time.deltaTime;
+            float delay = 1.2f;
+            if(attackCounterTimer >= delay)
+            {
+                attackCounter = 1f;
+                attackCounterTimer = 0f;
+            }
+        }
+
         weaponAnimator.SetBool("meleeAttack", playerAttack.isAttacking);
         weaponAnimator.SetFloat("attackCounter", attackCounter);
     }
 
     public void Attack()
     {
+        attackCounterTimer = 0f;
+        returnAttackCounter = false;
         playerAttack.canAttack = false;
         playerState.ReduceStamina(staminaPerAttack);
         isMeleeAttacking = true;
@@ -107,6 +122,10 @@ public class MeleeWeapon : MonoBehaviour
         {
             totalDamage = attackDamage;
         }
+        if (playerAttack.rageEnabled)
+        {
+            totalDamage *= playerAttack.rageDamageMultiplier;
+        }
         int roundedDamage = Mathf.RoundToInt(totalDamage);
 
         foreach (GameObject enemy in damagedEnemies)
@@ -123,17 +142,7 @@ public class MeleeWeapon : MonoBehaviour
         isMeleeAttacking = false;
         playerAttack.isAttacking = false;
         playerAttack.canAttack = true;
-        StartCoroutine(ReturnAttackCounter());
-    }
-
-    IEnumerator ReturnAttackCounter()
-    {
-        yield return new WaitForSeconds(1.3f);
-        if (!playerAttack.isAttacking)
-        {
-            attackCounter = 1f;
-        }
-
+        returnAttackCounter = true;
     }
 
     private void OnDrawGizmosSelected()

@@ -1,0 +1,399 @@
+fileFormatVersion: 2
+guid: 6d7e1b463e8aace40b8ec2f1a7394893
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: OwlLastSword_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 228
+        width: 28
+        height: 44
+      alignment: 9
+      pivot: {x: 0.9278675, y: 0.5328112}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37c5d20b34670b043b8c4625439ebf6f
+      internalID: -879339521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_1
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 228
+        width: 36
+        height: 39
+      alignment: 9
+      pivot: {x: 0.9470141, y: 0.6003778}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bbff0ce5104f51429349e8f8709af76
+      internalID: 712428661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_2
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 228
+        width: 43
+        height: 36
+      alignment: 9
+      pivot: {x: 0.8098421, y: 0.65077716}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5099e03ffa92ec5438e3cb3569c7111c
+      internalID: -501814009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_3
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 228
+        width: 57
+        height: 43
+      alignment: 9
+      pivot: {x: 0.47708023, y: 0.54540944}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d4d0bb2b52578a4d86e70dbeb7fb47e
+      internalID: 1514524017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_4
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 224
+        width: 60
+        height: 37
+      alignment: 9
+      pivot: {x: 0.34021556, y: 0.74277514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 748edceeb67ebc742aee0bdffc8117aa
+      internalID: -690686171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_5
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 217
+        width: 59
+        height: 38
+      alignment: 9
+      pivot: {x: 0.35179785, y: 0.905004}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e56ef934cbc72fe4b9945e2416196f10
+      internalID: 272965236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_6
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 122
+        width: 57
+        height: 37
+      alignment: 9
+      pivot: {x: 0.3861143, y: 0.9072835}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 263a674bc5379374a960232fad63a54b
+      internalID: 947773630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_7
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 128
+        width: 62
+        height: 31
+      alignment: 9
+      pivot: {x: 0.35484633, y: 0.88459384}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c352980f37c406a40a46ed66ccbe6483
+      internalID: 1666320763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_8
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 127
+        width: 60
+        height: 44
+      alignment: 9
+      pivot: {x: 0.33738098, y: 0.6456268}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 421b7a076f470204eb47a8b55dcb4067
+      internalID: 31079137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_9
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 132
+        width: 56
+        height: 49
+      alignment: 9
+      pivot: {x: 0.37433895, y: 0.47870246}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe90def85aec01d41a8a1f8c4321d5a0
+      internalID: -311188841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_10
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 36
+        width: 38
+        height: 51
+      alignment: 9
+      pivot: {x: 0.54621685, y: 0.4617385}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ff029c1cec34354b9f4df961fae2478
+      internalID: -1146326270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OwlLastSword_11
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 36
+        width: 36
+        height: 37
+      alignment: 9
+      pivot: {x: 0.88813657, y: 0.6353775}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66bc8200472f52c41be7f2beaa5bf00c
+      internalID: -921132051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      OwlLastSword_0: -879339521
+      OwlLastSword_1: 712428661
+      OwlLastSword_10: -1146326270
+      OwlLastSword_11: -921132051
+      OwlLastSword_2: -501814009
+      OwlLastSword_3: 1514524017
+      OwlLastSword_4: -690686171
+      OwlLastSword_5: 272965236
+      OwlLastSword_6: 947773630
+      OwlLastSword_7: 1666320763
+      OwlLastSword_8: 31079137
+      OwlLastSword_9: -311188841
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1104362204623422834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1168497216712327058}
@@ -73,13 +73,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.0384616, y: 0.96153843}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -162,15 +162,15 @@ MonoBehaviour:
   explosionPrefab: {fileID: 7510996345560304740, guid: d9a6f9832a15eff43ab8fc79a80ba6d0, type: 3}
   hitGroundDontExplode: 0
   force: 17
-  radiusCollider: 1.6
-  rotationOff: 220
+  radiusCollider: 1.7
+  radiusColliderOffset: {x: 0.25, y: 0, z: 0}
+  rotationOff: 180
   flipY: 0
   arrowProjectile: 0
   arrowGravity: 0.01
   arrowGravityDelay: 2
-  arrowCollidedWithEnemy:
-    serializedVersion: 2
-    m_Bits: 8192
+  arrowGoThroughEnemies: 0
+  hitEnemy: 0
 --- !u!50 &7769927177956279336
 Rigidbody2D:
   serializedVersion: 4
@@ -205,6 +205,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.034550667, y: 0.0017719567}
+  m_Offset: {x: 0.22829819, y: 0.013091207}
   serializedVersion: 2
-  m_Radius: 0.38619643
+  m_Radius: 0.31842256

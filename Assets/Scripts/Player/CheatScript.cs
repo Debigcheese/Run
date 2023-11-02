@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class CheatScript : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
     private DialogueManager dialogueManager;
     private WeaponHolder weaponHolder;
     public int count;
+    public int count2 = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement = FindObjectOfType<PlayerMovement>();
         dialogueManager = FindObjectOfType<DialogueManager>();
         weaponHolder = GetComponent<WeaponHolder>();
     }
@@ -28,6 +31,8 @@ public class CheatScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F2))
         {
             PlayerPrefs.SetInt("EnableDash", 1);
+            playerMovement.Dash(new Vector2(1f, 1f));
+            playerMovement.enableDashUponCollision = true;
             PlayerPrefs.Save();
         }
 
@@ -35,6 +40,13 @@ public class CheatScript : MonoBehaviour
         {
             PlayerPrefs.SetInt("ShowSecondWeaponUI",1 );
             PlayerPrefs.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            count2++;
+            PlayerPrefs.SetInt("Ability", count2);
+            PlayerPrefs.Save();
+
         }
     }
 }

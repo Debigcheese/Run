@@ -148,6 +148,10 @@ public class BowWeapon : MonoBehaviour
         {
             totalDamage = randomDamage * damageMultiplier;
         }
+        if (playerAttack.rageEnabled)
+        {
+            totalDamage *= playerAttack.rageDamageMultiplier;
+        }
         int roundedDamage = Mathf.RoundToInt(totalDamage);
         projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(mousePos);
@@ -177,6 +181,10 @@ public class BowWeapon : MonoBehaviour
         else
         {
             totalDamage = randomDamage * damageMultiplier;
+        }
+        if (playerAttack.rageEnabled)
+        {
+            totalDamage *= playerAttack.rageDamageMultiplier;
         }
         int roundedDamage = Mathf.RoundToInt(totalDamage);
         projectile.SetDamage(roundedDamage);

@@ -91,6 +91,10 @@ public class MagicWeapon : MonoBehaviour
         {
             totalDamage = randomDamage;
         }
+        if (playerAttack.rageEnabled)
+        {
+            totalDamage *= playerAttack.rageDamageMultiplier;
+        }
         int roundedDamage = Mathf.RoundToInt(totalDamage);
         projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(storedMousePos);

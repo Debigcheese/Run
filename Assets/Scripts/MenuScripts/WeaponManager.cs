@@ -15,6 +15,7 @@ public class WeaponManager : MonoBehaviour
     private string ownedWeaponString;
     public Page[] pages;
 
+    public GameObject popUpPageWarning;
     //buttons
     public GameObject[] buyButton;
     public GameObject[] cantBuyButton;
@@ -36,7 +37,7 @@ public class WeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        popUpPageWarning.SetActive(false);
         ownedWeaponString = PlayerPrefs.GetString("OwnedWeapons", "0,1");
         string[] indexStrings = ownedWeaponString.Split(",");
         ownedWeapons = new List<int>();
@@ -236,6 +237,11 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    public void ReturnButton()
+    {
+        popUpPageWarning.SetActive(false);
+    }
+
     public void NextPage()
     {
         if(pageNumber < pages.Length-1 && pageNumber < pagesUnlocked )
@@ -244,6 +250,10 @@ public class WeaponManager : MonoBehaviour
             SwitchPage(pageNumber);
             PlayerPrefs.SetInt("CurrentPage", pageNumber);
             PlayerPrefs.Save();
+        }
+        else if (pageNumber < pages.Length - 1 && pageNumber >= pagesUnlocked)
+        {
+            popUpPageWarning.SetActive(true);
         }
     }
 

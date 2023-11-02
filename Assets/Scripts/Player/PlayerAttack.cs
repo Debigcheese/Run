@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerAttack : MonoBehaviour
     private Rigidbody2D rb;
     private WeaponHolder weaponHolder;
     public bool isAttacking = false;
+    [HideInInspector]
+    public float originalAttackMoveSpeed;
     public float AttackMoveSpeed;
     public bool checkMousePositionX;
     public bool stopFlip = false;
@@ -22,6 +25,16 @@ public class PlayerAttack : MonoBehaviour
     public float critChance;
     public float critDamageMultiplier;
 
+    [Header("VengeanceAbility")]
+    public bool rageEnabled = false;
+    public float rageDamageMultiplier = 1.2f;
+    public float rageDuration;
+    public float rageCooldown;
+    private bool checkRageCooldown;
+    private float vengeanceTimer = 0f;
+    public Image vengeanceCDImage;
+    public GameObject vengeanceIcon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         weaponHolder = GetComponent<WeaponHolder>();
 
+        originalAttackMoveSpeed = AttackMoveSpeed;
         critChance = PlayerPrefs.GetFloat("CritChance", 4f);
         critDamageMultiplier = PlayerPrefs.GetFloat("CritDamage", 2f);
     }
@@ -59,6 +73,33 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftShift) && PlayerPrefs.GetInt("Ability") == 2 && !checkRageCooldown)
+        {
+            rageEnabled = true;
+            checkRageCooldown = true;
+            vengeanceCDImage.fillAmount = 1f;
+            StartCoroutine(RageDuration());
+
+        }
+        if(PlayerPrefs.GetInt("Ability") == 2)
+        {
+            vengeanceIcon.SetActive(true);
+            if (!rageEnabled && checkRageCooldown)
+            {
+                vengeanceTimer += Time.deltaTime;
+                float fillPercentage = 1f - (vengeanceTimer / (rageCooldown));
+                vengeanceCDImage.fillAmount = fillPercentage;
+                if (vengeanceCDImage.fillAmount == 0)
+                {
+                    vengeanceTimer = 0;
+                }
+            }
+        }
+        else
+        {
+            vengeanceIcon.SetActive(false);
+        }
+        
 
         //cant attack when ledgeclimb,wallslide,walljump,hurt
         if (playerMovement.isClimbingLedge || playerMovement.isWallSliding || playerMovement.isWallJumping)
@@ -80,6 +121,19 @@ public class PlayerAttack : MonoBehaviour
             stopAttacking = false;
         }
 
+    }
+
+    private IEnumerator RageDuration()
+    {
+        yield return new WaitForSeconds(rageDuration);
+        rageEnabled = false;
+        StartCoroutine(RageCooldownTimer());
+    }
+
+    private IEnumerator RageCooldownTimer()
+    {
+        yield return new WaitForSeconds(rageCooldown);
+        checkRageCooldown = false;
     }
 
 }

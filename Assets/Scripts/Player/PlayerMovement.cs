@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private float y = 0f;
 
     [Header("RBOriginal")]
-    private float originalSpeed;
+    public float originalSpeed;
     [HideInInspector] public float originalGravity;
     private float originalDrag;
     private float originalAngularDrag;
@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash = true;
     public bool enableDashUponCollision;
     public Image dashCDImage;
+    public GameObject dashAbilityImage;
     public GameObject Abilitybackground;
     private float dashTimer;
 
@@ -154,6 +155,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Abilitybackground.SetActive(true);
         }
+        else
+        {
+            Abilitybackground.SetActive(false);
+        }
         
 
         //Methods
@@ -180,8 +185,16 @@ public class PlayerMovement : MonoBehaviour
                
                 WallSlide();
             }
-
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving && enableDashUponCollision)
+            int ability = PlayerPrefs.GetInt("Ability", 0);
+            if (ability == 0 && enableDashUponCollision)
+            {
+                dashAbilityImage.SetActive(true);
+            }
+            else
+            {
+                dashAbilityImage.SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving && enableDashUponCollision && ability == 0 )
             {
                 Dash(dir);
 

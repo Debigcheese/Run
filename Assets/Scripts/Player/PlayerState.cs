@@ -32,6 +32,18 @@ public class PlayerState : MonoBehaviour
     private bool canRegen = true;
 
     [Space]
+    [Header("GuardianAbility")]
+    public bool guardianEnabled;
+    public float guardianDamageReduction = .5f;
+    public float msReduction = 0.5f;
+    public bool checkGuardianCooldown;
+    public float guardianCooldown;
+    public float guardianDuration;
+    private float guardianTimer;
+    public GameObject GuardianIcon;
+    public Image GuardianCDImage;
+
+    [Space]
     [Header("BloodyScreen")]
     public Image bloodyScreen;
     public float transitionDuration = 1f;
@@ -124,6 +136,35 @@ public class PlayerState : MonoBehaviour
             currentHealth = maxHealth;
         }
 
+        if(Input.GetKeyDown(KeyCode.LeftShift) && PlayerPrefs.GetInt("Ability") == 1 && !checkGuardianCooldown)
+        {
+            playerMovement.speed *= msReduction;
+            playerAttack.AttackMoveSpeed *= msReduction;
+            guardianEnabled = true;
+            checkGuardianCooldown = true;
+            GuardianCDImage.fillAmount = 1f;
+            StartCoroutine(GuardianDuration());
+        }
+
+        if (PlayerPrefs.GetInt("Ability") == 1)
+        {
+            GuardianIcon.SetActive(true);
+            if (!guardianEnabled && checkGuardianCooldown)
+            {
+                guardianTimer += Time.deltaTime;
+                float fillPercentage = 1f - (guardianTimer / (guardianCooldown));
+                GuardianCDImage.fillAmount = fillPercentage;
+                if (GuardianCDImage.fillAmount == 0)
+                {
+                    guardianTimer = 0;
+                }
+            }
+        }
+        else
+        {
+            GuardianIcon.SetActive(false);
+        }
+
         if (weaponHolder.meleeEquipped )
         {
             staminaBar.value = currentStamina;
@@ -170,6 +211,21 @@ public class PlayerState : MonoBehaviour
             PlayerDie();
             Respawn();
         }
+    }
+
+    private IEnumerator GuardianDuration()
+    {
+        yield return new WaitForSeconds(guardianDuration);
+        playerMovement.speed = playerMovement.originalSpeed;
+        playerAttack.AttackMoveSpeed = playerAttack.originalAttackMoveSpeed;
+        guardianEnabled = false;
+        StartCoroutine(StartGuardianCooldown());
+    }
+
+    private IEnumerator StartGuardianCooldown()
+    {
+        yield return new WaitForSeconds(guardianCooldown);
+        checkGuardianCooldown = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -258,7 +314,18 @@ public class PlayerState : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        currentHealth -= damageAmount;
+        if (guardianEnabled)
+        {
+            float damage = damageAmount * guardianDamageReduction;
+            int roundedDamage = Mathf.RoundToInt(damage);
+            currentHealth -= roundedDamage;
+            ShowDamagePopup(roundedDamage);
+        }
+        else
+        {
+            currentHealth -= damageAmount;
+            ShowDamagePopup(damageAmount);
+        }
         damageFlash.CallDamageFlash();
         bloodyScreenActivateOnFeedback = true;
         if (currentHealth <= 0)
@@ -271,7 +338,8 @@ public class PlayerState : MonoBehaviour
             isHurt = true;
             StartCoroutine("IsHurtAnimStop");
         }
-        ShowDamagePopup(damageAmount);
+
+
     }
 
     private IEnumerator IsHurtAnimStop()

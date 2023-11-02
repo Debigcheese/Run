@@ -16,6 +16,7 @@ public class Projectile : MonoBehaviour
     [Header("balancing")]
     public float force;
     public float radiusCollider;
+    public Vector3 radiusColliderOffset = new Vector3();
     private int damage = 0;
 
     [Header("Rotation")]
@@ -126,8 +127,7 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             HashSet<GameObject> hurtEnemies = new HashSet<GameObject>();
-
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, radiusCollider, enemyLayer);
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + radiusColliderOffset, radiusCollider, enemyLayer);
 
             foreach(Collider2D enemy in hitEnemies)
             {
@@ -138,6 +138,10 @@ public class Projectile : MonoBehaviour
                     hitEnemy = true;
                 }
                 
+            }
+            if (!arrowProjectile)
+            {
+                BeforeExplosion();
             }
 
         }
@@ -225,7 +229,7 @@ public class Projectile : MonoBehaviour
     private void OnDrawGizmos()
     {
 
-         Gizmos.DrawWireSphere(transform.position, radiusCollider);
+         Gizmos.DrawWireSphere(transform.position + radiusColliderOffset, radiusCollider);
         
 
     }

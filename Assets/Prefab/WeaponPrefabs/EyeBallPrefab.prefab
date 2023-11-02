@@ -78,14 +78,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePoint: {fileID: 4415692050461924523}
-  magicProjectile: {fileID: 7127742449494675844, guid: a1170cf23e6787e4dacadb97b086f8e5, type: 3}
+  magicProjectile: {fileID: 5853016800023309886, guid: 70455063e13f746469fe84d7285ce77d, type: 3}
   attackCounter: 1
   isMagicAttacking: 0
   canAttack: 1
   minDmg: 12
   maxDmgMinusOne: 18
   attackCooldown: 0.7
-  projectileDelay: 0.65
+  projectileDelay: 0.6
   manaPerProjectile: 30
 --- !u!1 &7879810383373318626
 GameObject:

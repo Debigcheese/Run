@@ -100,7 +100,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        isDialogue = true;
+        isDialogue = true; 
         anim.SetBool("isOpen", true);
         nameText.text = dialogue.name;
         sentences.Clear();

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3316587769837000510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.41, y: 0.39, z: -0.17377251}
-  m_LocalScale: {x: 1.68, y: 1.68, z: 1.68}
+  m_LocalScale: {x: 0.46, y: 0.46, z: 0.46}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3558633794138533312}
@@ -53,10 +53,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  explosionPrefab: {fileID: 5197333710027601043, guid: 2e3af96fd3ba015409c767a846ef08bc, type: 3}
+  explosionPrefab: {fileID: 2377003033386128686, guid: 1b5399393a08a4e4d82233c1a780a81c, type: 3}
   hitGroundDontExplode: 0
   force: 17
-  radiusCollider: 0.8
+  radiusCollider: 1.8
+  radiusColliderOffset: {x: -0.03, y: 0, z: 0}
   rotationOff: 0
   flipY: 0
   arrowProjectile: 0
@@ -98,9 +99,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.007317233, y: -0.069173016}
+  m_Offset: {x: -0.21549618, y: -0.009689059}
   serializedVersion: 2
-  m_Radius: 0.19792725
+  m_Radius: 0.632482
 --- !u!1 &3558633794138533343
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,8 +175,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 658676590, guid: 83cb3aa1449fbd24b8df56c06d2e1ab1, type: 3}
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 1133232232, guid: ef30e5e2dc3e8bf44a6a767cbcecbdb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
