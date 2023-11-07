@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
     private WeaponHolder weaponHolder;
+    public Animator[] anim;
     public bool isAttacking = false;
     [HideInInspector]
     public float originalAttackMoveSpeed;
@@ -34,6 +35,8 @@ public class PlayerAttack : MonoBehaviour
     private float vengeanceTimer = 0f;
     public Image vengeanceCDImage;
     public GameObject vengeanceIcon;
+    public Color vengeanceColor;
+    public Color originalColor;
 
     // Start is called before the first frame update
     void Start()
@@ -121,6 +124,12 @@ public class PlayerAttack : MonoBehaviour
             stopAttacking = false;
         }
 
+        for(int i = 0; i< anim.Length; i++)
+        {
+            anim[i].SetBool("VengeanceActive", rageEnabled);
+        }
+
+        VengeanceChangeColor(GetComponentInChildren<SpriteRenderer>());
     }
 
     private IEnumerator RageDuration()
@@ -134,6 +143,22 @@ public class PlayerAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(rageCooldown);
         checkRageCooldown = false;
+    }
+
+    public void VengeanceChangeColor(SpriteRenderer sprite)
+    {
+        if (PlayerPrefs.GetInt("Ability") == 2)
+        {
+            if (rageEnabled)
+            {
+                sprite.color = vengeanceColor;
+            }
+            else
+            {
+                sprite.color = originalColor;
+            }
+        }
+        
     }
 
 }

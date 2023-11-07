@@ -8,20 +8,40 @@ public class ShopManager : MonoBehaviour
 {
     public GameObject[] panels;
     public TextMeshProUGUI crystalText;
+    public int equippedAbility;
+    public int[] abilityIndex;
+    public GameObject[] AbilitiesUI;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         for (int i = 0; i < panels.Length; i++)
         {
             panels[i].SetActive(false);
         }
         panels[0].SetActive(true);
+
+        equippedAbility = PlayerPrefs.GetInt("Ability", 0);
+
+        for (int i = 0; i < AbilitiesUI.Length; i++)
+        {
+            if (equippedAbility == abilityIndex[i])
+            {
+                AbilitiesUI[equippedAbility].SetActive(true);
+            }
+            else
+            {
+                AbilitiesUI[i].SetActive(false);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         crystalText.text = PlayerPrefs.GetInt("TotalCrystal", 0).ToString();
     }
 

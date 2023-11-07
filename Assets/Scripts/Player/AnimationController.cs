@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
-
     private Animator anim;
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
@@ -24,17 +23,25 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerMovement.isMoving)
+        if (playerMovement.isMoving && !playerState.guardianEnabled)
         {
             movement = 1f;
+        }
+        else if(playerMovement.isMoving && playerState.guardianEnabled)
+        {
+            movement = 2f;
         }
         else
         {
             movement = 0f;
         }
-        if (playerMovement.isJumping)
+        if (playerMovement.isJumping && !playerState.guardianEnabled)
         {
             jumpingLanding = 1f;
+        }
+        else if(playerMovement.isJumping && playerState.guardianEnabled)
+        {
+            jumpingLanding = 2f;
         }
         if (playerMovement.isFalling)
         {

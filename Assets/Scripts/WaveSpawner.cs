@@ -230,8 +230,12 @@ public class WaveSpawner : MonoBehaviour
     IEnumerator TimerForWaveChest()
     {
         yield return new WaitForSeconds(2f);
-        showWaveChest.GetComponent<Animator>().SetBool("showWaveChest", false);
-        showWaveChest.GetComponent<Collider2D>().enabled = true;
+        if(showWaveChest != null)
+        {
+            showWaveChest.GetComponent<Animator>().SetBool("showWaveChest", false);
+            showWaveChest.GetComponent<Collider2D>().enabled = true;
+        }
+
     }
 
     [System.Serializable]

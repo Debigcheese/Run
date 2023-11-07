@@ -26,19 +26,6 @@ public class AbilityManagerMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < crystalCost.Length; i++)
-        {
-            costText[i].text = crystalCost[i].ToString();
-            if(equippedAbility == abilityIndex[i])
-            {
-                AbilitiesUI[equippedAbility].SetActive(true);
-            }
-            else
-            {
-                AbilitiesUI[i].SetActive(false);
-            }
-
-        }
         
         equippedAbility = PlayerPrefs.GetInt("Ability", 0);
         ownedAbilitiesString = PlayerPrefs.GetString("OwnedAbilities", "0");
@@ -52,6 +39,11 @@ public class AbilityManagerMenu : MonoBehaviour
             {
                 ownedAbilities.Add(index);
             }
+        }
+
+        for (int i = 0; i < crystalCost.Length; i++)
+        {
+            costText[i].text = crystalCost[i].ToString();
         }
 
         UpdateButtonStates();

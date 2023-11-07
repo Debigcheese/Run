@@ -7,8 +7,8 @@ public class CheatScript : MonoBehaviour
     private PlayerMovement playerMovement;
     private DialogueManager dialogueManager;
     private WeaponHolder weaponHolder;
-    public int count;
-    public int count2 = 0;
+    public int weaponCount;
+    public int abilityCount2 = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +23,8 @@ public class CheatScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            count++;
-            weaponHolder.secondWeapon = weaponHolder.weapons[count];
+            weaponCount++;
+            weaponHolder.secondWeapon = weaponHolder.weapons[weaponCount];
 
         }
 
@@ -43,8 +43,8 @@ public class CheatScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            count2++;
-            PlayerPrefs.SetInt("Ability", count2);
+            abilityCount2++;
+            PlayerPrefs.SetInt("Ability", abilityCount2);
             PlayerPrefs.Save();
 
         }

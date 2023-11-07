@@ -41,6 +41,9 @@ public class MagicWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerAttack.VengeanceChangeColor(GetComponentInChildren<SpriteRenderer>());
+        playerState.GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
+
         if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
         {
             isMagicAttacking = false;

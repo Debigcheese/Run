@@ -9,11 +9,15 @@ public class DialogueManager : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
     private Rigidbody2D rb;
+    public Animator attackTutorialAnim;
     public GameObject Player;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     public Queue<string> sentences;
     private Animator anim;
+    public GameObject attackTutorialImage;
+    public bool showAttackTutorial;
+    private bool showAttackCheck;
     public bool isDialogue;
     public bool finishFrogAnim = false;
     public bool dialogueFinished = false;
@@ -35,6 +39,10 @@ public class DialogueManager : MonoBehaviour
         anim = GetComponentInParent<Animator>();
         sentences = new Queue<string>();
         rb = Player.GetComponent<Rigidbody2D>();
+        if (attackTutorialImage != null)
+        {
+            attackTutorialImage.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -100,7 +108,13 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        isDialogue = true; 
+        if(attackTutorialImage != null && attackTutorialAnim != null && !showAttackCheck)
+        {
+            showAttackCheck = true;
+            attackTutorialImage.SetActive(true);
+            attackTutorialAnim.SetBool("Show", true);
+        }
+        isDialogue = true;
         anim.SetBool("isOpen", true);
         nameText.text = dialogue.name;
         sentences.Clear();
@@ -150,7 +164,11 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-
+        if (attackTutorialImage != null && attackTutorialAnim != null)
+        {
+            attackTutorialAnim.SetBool("Show", false);
+            attackTutorialImage.SetActive(false);
+        }
         if (!freezeGravity)
         {
             isDialogue = false;

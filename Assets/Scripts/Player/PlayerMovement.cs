@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public float slideSpeed = 5;
     public float JumpForce = 50;
     [SerializeField] public Vector2 wallJumpingForce = new Vector2(6f, 15f);
+    public float startingMovementTimer = 3f;
 
     [Space]
     [Header("Booleans")]
@@ -81,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem jumpParticle;
     public ParticleSystem walljumprightParticle;
     public ParticleSystem walljumpleftParticle;
+    public ParticleSystem dashParticle;
 
     void Start()
     {
@@ -93,6 +95,9 @@ public class PlayerMovement : MonoBehaviour
         originalGravity = rb.gravityScale;
         originalSpeed = speed;
         enableDashUponCollision = PlayerPrefs.GetInt("EnableDash") == 1;
+
+        StartLevelMovement();
+
     }
 
 
@@ -268,6 +273,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash(Vector2 dir)
     {
+        dashParticle.Play();
         dashCDImage.fillAmount = 1f;
         canDash = false;
         isDashing = true;
@@ -397,10 +403,27 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(JustFlippedChecker());
     }
 
+    public void StartLevelMovement()
+    {
+        cantMove = true;
+        playerAttack.dialogueStopAttack = true;
+        rb.velocity = new Vector2(speed, 0);
+        isMoving = true;
+        StartCoroutine(StopStartingMovement());
+    }
+
+    private IEnumerator StopStartingMovement()
+    {
+        yield return new WaitForSeconds(startingMovementTimer);
+        cantMove = false;
+        playerAttack.dialogueStopAttack = false;
+    }
+
     public void FinishLevelMovement()
     {
         cantMove = true;
         playerAttack.dialogueStopAttack = true;
+        isMoving = true;
         if (isFacingLeft)
         {
             rb.velocity = new Vector2(-speed, 0);

@@ -14,6 +14,7 @@ public class PlayerState : MonoBehaviour
     private PlayerAttack playerAttack;
     private WeaponHolder weaponHolder;
     private DamageFlash damageFlash;
+    public Animator[] anim;
 
     [Header("Respawn")]
     public GameObject respawnPosition;
@@ -42,6 +43,8 @@ public class PlayerState : MonoBehaviour
     private float guardianTimer;
     public GameObject GuardianIcon;
     public Image GuardianCDImage;
+    public Color guardianColor;
+    public Color originalPlayerColor;
 
     [Space]
     [Header("BloodyScreen")]
@@ -136,10 +139,12 @@ public class PlayerState : MonoBehaviour
             currentHealth = maxHealth;
         }
 
+        //GUARDIAN
         if(Input.GetKeyDown(KeyCode.LeftShift) && PlayerPrefs.GetInt("Ability") == 1 && !checkGuardianCooldown)
         {
             playerMovement.speed *= msReduction;
             playerAttack.AttackMoveSpeed *= msReduction;
+            
             guardianEnabled = true;
             checkGuardianCooldown = true;
             GuardianCDImage.fillAmount = 1f;
@@ -164,6 +169,8 @@ public class PlayerState : MonoBehaviour
         {
             GuardianIcon.SetActive(false);
         }
+
+        GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
 
         if (weaponHolder.meleeEquipped )
         {
@@ -211,6 +218,13 @@ public class PlayerState : MonoBehaviour
             PlayerDie();
             Respawn();
         }
+
+        for(int i = 0; i<anim.Length; i++)
+        {
+            anim[i].SetBool("GuardianActive", guardianEnabled);
+        }
+        
+        
     }
 
     private IEnumerator GuardianDuration()
@@ -226,6 +240,22 @@ public class PlayerState : MonoBehaviour
     {
         yield return new WaitForSeconds(guardianCooldown);
         checkGuardianCooldown = false;
+    }
+
+    public void GuardianChangeColor(SpriteRenderer sprite)
+    {
+        if(PlayerPrefs.GetInt("Ability") == 1)
+        {
+            if (guardianEnabled)
+            {
+                sprite.color = guardianColor;
+            }
+            else
+            {
+                sprite.color = originalPlayerColor;
+            }
+        }
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -338,7 +368,6 @@ public class PlayerState : MonoBehaviour
             isHurt = true;
             StartCoroutine("IsHurtAnimStop");
         }
-
 
     }
 

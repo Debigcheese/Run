@@ -44,6 +44,9 @@ public class BowWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerAttack.VengeanceChangeColor(GetComponentInChildren<SpriteRenderer>());
+        playerState.GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
+
         //cancels bow
         if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
         {

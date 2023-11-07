@@ -6,6 +6,8 @@ public class DamageFlash : MonoBehaviour
 {
     [ColorUsage(true,true)]
     [SerializeField] private Color flashColor = Color.white;
+    [SerializeField] private Color DamageflashColor;
+    [SerializeField] private Color DashflashColor;
     [SerializeField] private float flashTime = 0.25f;
     [SerializeField] private AnimationCurve flashSpeedCurve;
     public bool dashFlashOn;
@@ -62,7 +64,6 @@ public class DamageFlash : MonoBehaviour
             SetFlashAmount(currentFlashAmount);
             yield return null;
         }
-        flashColor = Color.white;
     }
 
     private IEnumerator DamageFlasher()
@@ -86,12 +87,12 @@ public class DamageFlash : MonoBehaviour
         {
             if (dashFlashOn)
             {
-                flashColor = Color.cyan;
+                flashColor = DashflashColor;
                 materials[i].SetColor("_FlashColor", flashColor);
             }
             else
             {
-                flashColor = Color.white;
+                flashColor = DamageflashColor;
                 materials[i].SetColor("_FlashColor", flashColor);
             }
             

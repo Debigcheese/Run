@@ -134,27 +134,7 @@ public class StatManagerScript : MonoBehaviour
 
         }
 
-
         totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
-
-        for(int i = 0; i<BuyButton.Length; i++)
-        {
-            if (BuyButton[0].GetComponent<Button>().onClick.Equals(true) && statSelected == 0)
-            {
-                UpgradeHealth();
-            }
-
-            if (BuyButton[1].GetComponent<Button>().onClick.Equals(true) && statSelected == 1)
-            {
-                UpgradeRegen();
-            }
-
-            if (BuyButton[2].GetComponent<Button>().onClick.Equals(true) && statSelected == 2)
-            {
-                UpgradeCrit();
-            }
-
-        }
 
         for (int i = 0; i< hpBar.Length; i++)
         {
@@ -176,25 +156,6 @@ public class StatManagerScript : MonoBehaviour
             statCostText.text = UpgradeCost[currentcritLevel].ToString();
         }
 
-
-        if (statSelected == 0)
-        {
-            statDescription.text = "Increases max health by +50%";
-            TurnOffButtons(0, currenthealthLevel);
-        }
-
-        if (statSelected == 1)
-
-        {
-            statDescription.text = "Increases stamina and mana regeneration by +8%";
-            TurnOffButtons(1, currentregenLevel);
-        }
-
-        if (statSelected == 2)
-        {
-            statDescription.text = "increases crit chance by +4% and crit damage by +20%";
-            TurnOffButtons(2, currentcritLevel);
-        }
     }
 
     private void TurnOffButtons(int btnIndex, int currentLevel)
@@ -221,21 +182,46 @@ public class StatManagerScript : MonoBehaviour
         }
     }
 
+    private void PressStatButton()
+    {
+        if (statSelected == 0)
+        {
+            statDescription.text = "Increases max health by +50%";
+            TurnOffButtons(0, currenthealthLevel);
+        }
+
+        if (statSelected == 1)
+
+        {
+            statDescription.text = "Increases stamina and mana regeneration by +8%";
+            TurnOffButtons(1, currentregenLevel);
+        }
+
+        if (statSelected == 2)
+        {
+            statDescription.text = "increases crit chance by +4% and crit damage by +20%";
+            TurnOffButtons(2, currentcritLevel);
+        }
+    }
+
     public void PressHealthButton()
     {
         statSelected = 0;
+        PressStatButton();
         popUpWindow.SetActive(true);
     }
 
     public void PressRegenButton()
     {
         statSelected = 1;
+        PressStatButton();
         popUpWindow.SetActive(true);
     }
 
     public void PressCritButton()
     {
         statSelected = 2;
+        PressStatButton();
         popUpWindow.SetActive(true);
     }
 
