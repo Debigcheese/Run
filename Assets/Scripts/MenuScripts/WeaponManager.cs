@@ -16,6 +16,11 @@ public class WeaponManager : MonoBehaviour
     public Page[] pages;
 
     public GameObject popUpPageWarning;
+
+    public Color boughtColor;
+    public Color originalColor;
+    public GameObject[] crystalBox;
+
     //buttons
     public GameObject[] buyButton;
     public GameObject[] cantBuyButton;
@@ -69,7 +74,9 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(pageNumber == 0)
+        HideCrystalBoxes();
+
+        if (pageNumber == 0)
         {
             previousPageButton.SetActive(false);
         }
@@ -151,6 +158,8 @@ public class WeaponManager : MonoBehaviour
             }
             else if (ownedWeapons.Contains(pages[pageNumber].weaponIndex[i]) )
             {
+                pages[pageNumber].itemPanels[i].GetComponent<Image>().color = boughtColor;
+
                 if (currentWeaponIndex == pages[pageNumber].weaponIndex[i])
                 {
                     buyButton[i].SetActive(false);
@@ -284,6 +293,21 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    public void HideCrystalBoxes()
+    {
+        for(int i = 0; i < crystalBox.Length; i++)
+        {
+            if (!ownedWeapons.Contains(pages[pageNumber].weaponIndex[i]))
+            {
+                crystalBox[i].SetActive(true);
+            }
+            else
+            {
+                crystalBox[i].SetActive(false);
+            }
+        }
+    }
+
 }
 
 [System.Serializable]
@@ -292,5 +316,6 @@ public class Page
     public GameObject[] WeaponTierPanels;
     public int[] weaponIndex;
     public int[] weaponCost;
+    public GameObject[] itemPanels;
 
 }

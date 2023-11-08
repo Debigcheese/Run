@@ -110,7 +110,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.7777777, y: 2.7777777}
+  m_Size: {x: 3.125, y: 3.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
   minDmg: 4
   maxDmgMinusOne: 11
   attackRange: 1
-  attackSpeed: 0.45
+  attackSpeed: 0.54
   staminaPerAttack: 24
   firstSwingDmgDelay: 0.42
   SecondSwingDmgDelay: 0.18

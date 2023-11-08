@@ -14,6 +14,8 @@ public class LevelSelect : MonoBehaviour
     public float transitionDuration = 1.5f;
     public int levelsUnlocked;
     private int keyUnlocked;
+    public int crystalAmount;
+    public TextMeshProUGUI crystalText;
 
     // Start is called before the first frame update
     void Start()
@@ -44,13 +46,14 @@ public class LevelSelect : MonoBehaviour
                 letterAnim[i].SetBool("LetterLocked", true);
             }
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-   
 
+        crystalText.text = PlayerPrefs.GetInt("TotalCrystal", 0).ToString();
 
     }
 

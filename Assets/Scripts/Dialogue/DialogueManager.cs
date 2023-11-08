@@ -22,6 +22,8 @@ public class DialogueManager : MonoBehaviour
     public bool finishFrogAnim = false;
     public bool dialogueFinished = false;
     public bool startSentence = false;
+    [SerializeField] private bool canContinue = false;
+     private float continueTimer = 0f;
 
     public AudioSource frogSound;
 
@@ -48,9 +50,18 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isDialogue == true)
+        if (Input.GetKeyDown(KeyCode.Space) && isDialogue == true && canContinue)
         {
             DisplayNextSentence();
+        }
+
+        if (isDialogue)
+        {
+            continueTimer += Time.deltaTime;
+            if (continueTimer >= 1.5f)
+            {
+                canContinue = true;
+            }
         }
 
         if (isDialogue && stopCharacterMovement)
@@ -108,6 +119,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+
         if(attackTutorialImage != null && attackTutorialAnim != null && !showAttackCheck)
         {
             showAttackCheck = true;

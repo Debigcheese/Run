@@ -209,7 +209,7 @@ TextureImporter:
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -230,7 +230,7 @@ TextureImporter:
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -251,7 +251,7 @@ TextureImporter:
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -272,7 +272,7 @@ TextureImporter:
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -280,6 +280,90 @@ TextureImporter:
       bones: []
       spriteID: 936ecdefdbbe25549869c4b04ec3b4dd
       internalID: 512704729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White Effect Bullet Impact Explosion 32x32-export_8
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 94
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31452eec7e492b344a0ea193f253dac3
+      internalID: -1321279669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White Effect Bullet Impact Explosion 32x32-export_9
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 94
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3af6f3aeca0fcfb42be5bef00c21e262
+      internalID: 1516813561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White Effect Bullet Impact Explosion 32x32-export_10
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 94
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7066f27c61d5eb74eb494f141c50acb9
+      internalID: -586330838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White Effect Bullet Impact Explosion 32x32-export_11
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 94
+        width: 22
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f275308b7258c27418046d5696f26d0e
+      internalID: -1751428840
       vertices: []
       indices: 
       edges: []
@@ -297,12 +381,16 @@ TextureImporter:
     nameFileIdTable:
       White Effect Bullet Impact Explosion 32x32-export_0: -978662617
       White Effect Bullet Impact Explosion 32x32-export_1: -1606723972
+      White Effect Bullet Impact Explosion 32x32-export_10: -586330838
+      White Effect Bullet Impact Explosion 32x32-export_11: -1751428840
       White Effect Bullet Impact Explosion 32x32-export_2: -1874893999
       White Effect Bullet Impact Explosion 32x32-export_3: 639946685
       White Effect Bullet Impact Explosion 32x32-export_4: 658676590
       White Effect Bullet Impact Explosion 32x32-export_5: -1002036194
       White Effect Bullet Impact Explosion 32x32-export_6: -1068469850
       White Effect Bullet Impact Explosion 32x32-export_7: 512704729
+      White Effect Bullet Impact Explosion 32x32-export_8: -1321279669
+      White Effect Bullet Impact Explosion 32x32-export_9: 1516813561
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

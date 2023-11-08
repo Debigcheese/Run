@@ -55,7 +55,7 @@ MonoBehaviour:
   minDmg: 3
   maxDmgMinusOne: 9
   attackRange: 0.95
-  attackSpeed: 0.25
+  attackSpeed: 0.37
   staminaPerAttack: 20
   firstSwingDmgDelay: 0.35
   SecondSwingDmgDelay: 0.1

@@ -324,6 +324,8 @@ MonoBehaviour:
   transitionImage: {fileID: 703917117}
   transitionDuration: 1
   levelsUnlocked: 0
+  crystalAmount: 0
+  crystalText: {fileID: 1950354441}
 --- !u!4 &76720402
 Transform:
   m_ObjectHideFlags: 0
@@ -723,7 +725,7 @@ RectTransform:
   m_Children:
   - {fileID: 703917118}
   m_Father: {fileID: 1798745337}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -885,7 +887,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8c839944e077440b08f73bfa9929cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
+  startingCameraSize: 3
   cameraSize: 6.5
+  duration: 2
+  check: 0
 --- !u!1 &526456941
 GameObject:
   m_ObjectHideFlags: 0
@@ -3145,8 +3151,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 76720402}
-  - {fileID: 339475077}
   - {fileID: 2138082661}
+  - {fileID: 339475077}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3821,7 +3827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  m_Color: {r: 0.8773585, g: 0.8756987, b: 0.87322, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4162,14 +4168,14 @@ RectTransform:
   m_GameObject: {fileID: 2138082660}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 200903593}
   - {fileID: 1950354440}
   - {fileID: 1785922016}
   m_Father: {fileID: 1798745337}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -105,7 +105,7 @@ public class CameraBoundary : MonoBehaviour
 
     IEnumerator SetColliderSize()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(5f);
         if (mainCamera != null && boxCollider != null)
         {
             // Set the collider size to match the camera's orthographic size

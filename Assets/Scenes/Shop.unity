@@ -753,8 +753,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -2051551050, guid: 38c94d5c30404c84a8bd161deb16b6a6, type: 3}
-    m_PressedSprite: {fileID: 1172004926, guid: 38c94d5c30404c84a8bd161deb16b6a6, type: 3}
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -6956,7 +6956,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8c839944e077440b08f73bfa9929cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
+  startingCameraSize: 3
   cameraSize: 6.5
+  duration: 2
+  check: 0
 --- !u!114 &430919581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8398,8 +8402,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -2051551050, guid: 38c94d5c30404c84a8bd161deb16b6a6, type: 3}
-    m_PressedSprite: {fileID: 1172004926, guid: 38c94d5c30404c84a8bd161deb16b6a6, type: 3}
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -16212,7 +16216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1003545237
 Transform:
   m_ObjectHideFlags: 0
@@ -17511,7 +17515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1078188313
 Transform:
   m_ObjectHideFlags: 0
@@ -19362,7 +19366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1199471683
 Transform:
   m_ObjectHideFlags: 0
@@ -19417,23 +19421,49 @@ MonoBehaviour:
     - {fileID: 1718035061}
     weaponIndex: 01000000050000000a000000
     weaponCost: 000000004c00000065000000
+    itemPanels:
+    - {fileID: 512751240}
+    - {fileID: 1247065532}
+    - {fileID: 1619162507}
   - WeaponTierPanels:
     - {fileID: 1885194595}
     weaponIndex: 02000000060000000b000000
     weaponCost: b6000000d5000000ea000000
+    itemPanels:
+    - {fileID: 6997889}
+    - {fileID: 832800039}
+    - {fileID: 2127360948}
   - WeaponTierPanels:
     - {fileID: 1582033932}
     weaponIndex: 03000000070000000c000000
     weaponCost: 5901000072010000b3010000
+    itemPanels:
+    - {fileID: 991592484}
+    - {fileID: 2130321615}
+    - {fileID: 186622077}
   - WeaponTierPanels:
     - {fileID: 159234191}
     weaponIndex: 04000000080000000d000000
     weaponCost: f8020000200300001e030000
+    itemPanels:
+    - {fileID: 592952826}
+    - {fileID: 1329601385}
+    - {fileID: 1366704268}
   - WeaponTierPanels:
     - {fileID: 255324858}
     weaponIndex: 0f000000090000000e000000
     weaponCost: 5c0800009609000039090000
+    itemPanels:
+    - {fileID: 761443872}
+    - {fileID: 979170548}
+    - {fileID: 458671738}
   popUpPageWarning: {fileID: 1981538363}
+  boughtColor: {r: 0.77254903, g: 0.6784314, b: 0.6156863, a: 1}
+  originalColor: {r: 0.8, g: 0.75686276, b: 0.7294118, a: 0}
+  crystalBox:
+  - {fileID: 379876855}
+  - {fileID: 8030557}
+  - {fileID: 50738246}
   buyButton:
   - {fileID: 1722882200}
   - {fileID: 15732935}
@@ -26431,8 +26461,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -2051551050, guid: 38c94d5c30404c84a8bd161deb16b6a6, type: 3}
-    m_PressedSprite: {fileID: 1172004926, guid: 38c94d5c30404c84a8bd161deb16b6a6, type: 3}
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:

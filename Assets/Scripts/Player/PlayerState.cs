@@ -213,12 +213,6 @@ public class PlayerState : MonoBehaviour
 
         crystalText.text = totalCrystalAmount.ToString();
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PlayerDie();
-            Respawn();
-        }
-
         for(int i = 0; i<anim.Length; i++)
         {
             anim[i].SetBool("GuardianActive", guardianEnabled);
@@ -360,7 +354,7 @@ public class PlayerState : MonoBehaviour
         bloodyScreenActivateOnFeedback = true;
         if (currentHealth <= 0)
         {
-            PlayerDie();
+            StartCoroutine(PlayerDie());
         }
 
         if (!playerAttack.isAttacking && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge)
@@ -377,7 +371,12 @@ public class PlayerState : MonoBehaviour
         isHurt = false;
     }
 
-    public void PlayerDie()
+    public void StartPlayerDie()
+    {
+        StartCoroutine(PlayerDie());
+    }
+
+    private IEnumerator PlayerDie()
     {
         isDead = true;
         coll.enabled = false;
@@ -387,11 +386,15 @@ public class PlayerState : MonoBehaviour
         playerAttack.isAttacking = false;
         rb.simulated = false;
         Instantiate(isDeadParticles, transform.position, Quaternion.identity, transform);
-        
+        StartCoroutine(Respawn());
+        Time.timeScale = .4f;
+        yield return new WaitForSeconds(.8f);
+        Time.timeScale = 1f;
     }
 
-    public void Respawn()
+    public IEnumerator Respawn()
     {
+        yield return new WaitForSeconds(1.3f);
         isRespawnForSpawner = true;
         isDead = false;
         coll.enabled = true;
