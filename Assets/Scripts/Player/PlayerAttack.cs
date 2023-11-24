@@ -7,8 +7,8 @@ public class PlayerAttack : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
-    private WeaponHolder weaponHolder;
     public Animator[] anim;
+    public LayerMask enemyLayer;
     public bool isAttacking = false;
     [HideInInspector]
     public float originalAttackMoveSpeed;
@@ -33,6 +33,8 @@ public class PlayerAttack : MonoBehaviour
     public float rageCooldown;
     private bool checkRageCooldown;
     private float vengeanceTimer = 0f;
+    public int ExplosionDamage;
+    public float explosionRadius;
     public Image vengeanceCDImage;
     public GameObject vengeanceIcon;
     public Color vengeanceColor;
@@ -43,7 +45,6 @@ public class PlayerAttack : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
-        weaponHolder = GetComponent<WeaponHolder>();
 
         originalAttackMoveSpeed = AttackMoveSpeed;
         critChance = PlayerPrefs.GetFloat("CritChance", 4f);
@@ -81,6 +82,7 @@ public class PlayerAttack : MonoBehaviour
             rageEnabled = true;
             checkRageCooldown = true;
             vengeanceCDImage.fillAmount = 1f;
+            VengeanceExplosion();
             StartCoroutine(RageDuration());
 
         }
@@ -159,6 +161,20 @@ public class PlayerAttack : MonoBehaviour
             }
         }
         
+    }
+
+    public void VengeanceExplosion()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosionRadius, enemyLayer);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<EnemyHp>().TakeDamage(ExplosionDamage);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 
 }
