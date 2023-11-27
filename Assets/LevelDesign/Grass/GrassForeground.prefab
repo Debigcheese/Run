@@ -117,11 +117,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 140216590225460487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8a9155194eb3514eadcd910e7ea9ed4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cc53f8cc23bc7f498c6819ddf3c1d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 1
-  minSpeed: 0.4
 --- !u!61 &-1833864858621239401
 BoxCollider2D:
   m_ObjectHideFlags: 0

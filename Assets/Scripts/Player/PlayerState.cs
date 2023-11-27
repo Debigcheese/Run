@@ -139,16 +139,9 @@ public class PlayerState : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        //GUARDIAN
         if(Input.GetKeyDown(KeyCode.LeftShift) && PlayerPrefs.GetInt("Ability") == 1 && !checkGuardianCooldown)
         {
-            playerMovement.speed *= msReduction;
-            playerAttack.AttackMoveSpeed *= msReduction;
-            
-            guardianEnabled = true;
-            checkGuardianCooldown = true;
-            GuardianCDImage.fillAmount = 1f;
-            StartCoroutine(GuardianDuration());
+            ActivateGuardian();
         }
 
         if (PlayerPrefs.GetInt("Ability") == 1)
@@ -217,8 +210,17 @@ public class PlayerState : MonoBehaviour
         {
             anim[i].SetBool("GuardianActive", guardianEnabled);
         }
-        
-        
+    }
+
+    private void ActivateGuardian()
+    {
+        playerMovement.speed *= msReduction;
+        playerAttack.AttackMoveSpeed *= msReduction;
+
+        guardianEnabled = true;
+        checkGuardianCooldown = true;
+        GuardianCDImage.fillAmount = 1f;
+        StartCoroutine(GuardianDuration());
     }
 
     private IEnumerator GuardianDuration()

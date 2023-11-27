@@ -23,13 +23,20 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerMovement.isMoving && !playerState.guardianEnabled)
+        if (playerMovement.isMoving)
         {
-            movement = 1f;
-        }
-        else if(playerMovement.isMoving && playerState.guardianEnabled)
-        {
-            movement = 2f;
+            if (playerState.guardianEnabled)
+            {
+                movement = 2f;
+            }
+            else if (playerMovement.isInWater)
+            {
+                movement = 2f;
+            }
+            else
+            {
+                movement = 1f;
+            }
         }
         else
         {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 140216590225460482}
   - component: {fileID: 140216590225460481}
   - component: {fileID: 140216590225460480}
-  - component: {fileID: 1509026314}
+  - component: {fileID: 6451044729590739643}
   - component: {fileID: -1833864858621239401}
   m_Layer: 0
   m_Name: GrassBackgroundForEdges
@@ -108,7 +108,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1509026314
+--- !u!114 &6451044729590739643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,11 +117,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 140216590225460487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8a9155194eb3514eadcd910e7ea9ed4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cc53f8cc23bc7f498c6819ddf3c1d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 1
-  minSpeed: 0.4
 --- !u!61 &-1833864858621239401
 BoxCollider2D:
   m_ObjectHideFlags: 0

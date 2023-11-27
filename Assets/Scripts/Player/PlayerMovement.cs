@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isFacingLeft;
     public bool cantMove;
     public bool justFlipped;
+    public bool isInWater;
 
     [Space]
     [Header("KnockBack")]
@@ -216,6 +217,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == 4)
         {
+            isInWater = true;
             rb.drag = 6;
             rb.angularDrag = 6;
             rb.gravityScale = 0.6f;
@@ -227,6 +229,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == 4)
         {
+            isInWater = false;
             rb.drag = originalDrag;
             rb.angularDrag = originalAngularDrag;
             rb.gravityScale = originalGravity;

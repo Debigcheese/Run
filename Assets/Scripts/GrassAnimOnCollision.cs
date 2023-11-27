@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrassScript : MonoBehaviour
+public class GrassAnimOnCollision : MonoBehaviour
 {
     private Animator anim;
 
@@ -21,7 +21,7 @@ public class GrassScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") || collision.CompareTag("Enemy") || collision.IsTouchingLayers(4))
+        if (collision.CompareTag("Player") || collision.CompareTag("Enemy") || collision.gameObject.layer == 4)
         {
             anim.gameObject.GetComponent<Animator>().enabled = true;
         }
@@ -29,7 +29,7 @@ public class GrassScript : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") || collision.CompareTag("Enemy") || collision.CompareTag("Water"))
+        if (collision.CompareTag("Player") || collision.CompareTag("Enemy") || collision.gameObject.layer == 4)
         {
             anim.gameObject.GetComponent<Animator>().enabled = false;
         }
