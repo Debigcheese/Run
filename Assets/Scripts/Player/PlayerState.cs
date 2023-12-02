@@ -75,10 +75,15 @@ public class PlayerState : MonoBehaviour
     public TextMeshProUGUI crystalText;
 
     [Space]
-    [Header("DamagePopup")]
+    [Header("TextPopup")]
     public GameObject damagePopupPrefab;
     [SerializeField] private float maxOffsetDistanceX = 0.1f;
     [SerializeField] private float maxOffsetDistanceY = 0.2f;
+
+    [SerializeField] private GameObject lowManaPopupPrefab;
+    [SerializeField] private GameObject lowStaminaPopupPrefab;
+    public bool lowMana;
+    private bool lowEnergyTimer;
 
     [Space]
     [Header("Particles")]
@@ -210,6 +215,27 @@ public class PlayerState : MonoBehaviour
         {
             anim[i].SetBool("GuardianActive", guardianEnabled);
         }
+
+        if (Input.GetButtonDown("Fire1") && lowMana && !lowEnergyTimer && !playerAttack.isAttacking)
+        {
+
+            if (weaponHolder.meleeEquipped)
+            {
+                ShowLowManaPopup("Low stamina", lowStaminaPopupPrefab);
+            }
+            else if (weaponHolder.magicEquipped)
+            {
+                ShowLowManaPopup("Low mana", lowManaPopupPrefab);
+            }
+            lowEnergyTimer = true;
+            StartCoroutine(LowEnergyTimer());
+        }
+    }
+
+    private IEnumerator LowEnergyTimer()
+    {
+        yield return new WaitForSeconds(1f);
+        lowEnergyTimer = false;
     }
 
     private void ActivateGuardian()
@@ -449,5 +475,25 @@ public class PlayerState : MonoBehaviour
         // Pass a reference of the enemy object to the damage popup script
         damagePopupScript.ShowDamageAmount(damageAmount, gameObject);
     }
+
+    protected void ShowLowManaPopup(string text, GameObject popupPrefab)
+    {
+
+        // Generate random offset within maxOffsetDistance
+        float offsetX = Random.Range(-0, 0);
+        float offsetY = Random.Range(-0, 0);
+        Vector3 offset = new Vector3(offsetX, offsetY, 0f);
+        Vector3 startPosition = transform.position + offset;
+
+        // Instantiate the damage popup prefab with random offset
+        GameObject damagePopup = Instantiate(popupPrefab, startPosition, Quaternion.identity);
+
+        // Get the damage popup script
+        DamagePopup damagePopupScript = damagePopup.GetComponent<DamagePopup>();
+
+        // Pass a reference of the enemy object to the damage popup script
+        damagePopupScript.ShowLowMana(text, gameObject);
+    }
+
 
 }

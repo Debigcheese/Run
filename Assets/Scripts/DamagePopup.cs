@@ -62,4 +62,22 @@ public class DamagePopup : MonoBehaviour
         // Start the coroutine to destroy the damage popup after 1 second
         StartCoroutine(DestroyPopup());
     }
+
+    public void ShowLowMana(string damageAmount, GameObject targetObject)
+    {
+        // Generate a random angle within a wide range
+        float angle = Random.Range(45f, 135f); // Adjust the range as needed
+
+        // Convert the angle to radians
+        float radianAngle = angle * Mathf.Deg2Rad;
+
+        // Calculate the direction vector based on the angle
+        Vector3 direction = new Vector3(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle), 0f);
+
+        // Set the position of the damage popup relative to the target's position
+
+
+        // Start the coroutine to destroy the damage popup after 1 second
+        StartCoroutine(DestroyPopup());
+    }
 }

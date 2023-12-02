@@ -239,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckForLedge()
     {
-        if (ledgeDetected && canGrabLedge && Input.GetButton("Jump"))
+        if (ledgeDetected && canGrabLedge)
         {
             rb.velocity = Vector2.zero;
             canGrabLedge = false;

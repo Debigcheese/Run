@@ -9,34 +9,88 @@ public class SettingsScriptInGame : MonoBehaviour
 
     private bool checkIfEsc = false;
     private bool canRespawn = true;
+    public GameObject menuPanel;
     public GameObject settingsPanel;
-
+    public bool settingsInMenu = false;
 
     // Start is called before the first frame update
     void Start()
     {
         playerState = FindObjectOfType<PlayerState>();
+        menuPanel.SetActive(false);
         settingsPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !settingsInMenu)
         {
+            OpenMenu();
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && settingsInMenu)
+        {
+            OpenSettings();
+        }
+    }
+
+    public void OpenMenu()
+    {
+        if (checkIfEsc)
+        {
+            checkIfEsc = false;
+            Time.timeScale = 1f;
+            menuPanel.SetActive(false);
+        }
+        else
+        {
+            checkIfEsc = true;
+            Time.timeScale = 0f;
+            menuPanel.SetActive(true);
+        }
+    }
+
+    public void OpenSettingsInMainMenu()
+    {
+        settingsPanel.SetActive(true);
+    }
+
+    public void OpenSettings()
+    {
+        if (!settingsInMenu)
+        {
+            menuPanel.SetActive(false);
+            settingsPanel.SetActive(true);
+        }
+        else
+        {
+            settingsPanel.SetActive(true);
             if (checkIfEsc)
             {
-                checkIfEsc = false;
-                Time.timeScale = 1f;
-                settingsPanel.SetActive(false);
+                ReturnToMenu();
             }
-            else
-            {
-                checkIfEsc = true;
-                Time.timeScale = 0f;
-                settingsPanel.SetActive(true);
-            }
+            checkIfEsc = true;
         }
+
+    }
+
+    public void ReturnToMenu()
+    {
+        if (!settingsInMenu)
+        {
+            menuPanel.SetActive(true);
+            settingsPanel.SetActive(false);
+        }
+        else
+        {
+            StartCoroutine(CheckIfEsc());
+            settingsPanel.SetActive(false);
+        }
+    }
+    private IEnumerator CheckIfEsc()
+    {
+        yield return new WaitForSeconds(.05f);
+        checkIfEsc = false;
     }
 
     public void LeaveGame()
@@ -47,7 +101,7 @@ public class SettingsScriptInGame : MonoBehaviour
     {
         checkIfEsc = false;
         Time.timeScale = 1f;
-        settingsPanel.SetActive(false);
+        menuPanel.SetActive(false);
     }
 
     public void Respawn()
@@ -56,7 +110,7 @@ public class SettingsScriptInGame : MonoBehaviour
         {
             checkIfEsc = false;
             canRespawn = false;
-            settingsPanel.SetActive(false);
+            menuPanel.SetActive(false);
             Time.timeScale = 1f;
             playerState.StartPlayerDie();
             StartCoroutine(RespawnTimer());

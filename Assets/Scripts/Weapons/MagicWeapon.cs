@@ -54,10 +54,12 @@ public class MagicWeapon : MonoBehaviour
         if (playerState.currentMana < manaPerProjectile)
         {
             playerAttack.canAttack = false;
+            playerState.lowMana = true;
         }
         else if(!playerAttack.isAttacking)
         {
             playerAttack.canAttack = true;
+            playerState.lowMana = false;
         }
 
         if (playerAttack.isAttacking && playerAttack.canAttack && !isMagicAttacking)

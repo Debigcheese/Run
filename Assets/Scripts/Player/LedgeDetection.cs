@@ -4,24 +4,31 @@ using UnityEngine;
 
 public class LedgeDetection : MonoBehaviour
 {
+    public PlayerMovement playerMovement;
+    private Collision coll;
     [SerializeField] private float radius;
     public LayerMask layer;
-    public PlayerMovement playerMovement;
+
     public bool canDetect;
+
 
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
-        
+        coll = GetComponentInParent<Collision>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canDetect)
+        if (canDetect && coll.onWall)
         {
             playerMovement.ledgeDetected = Physics2D.OverlapCircle(transform.position, radius, layer);
+        }
+        else
+        {
+            playerMovement.ledgeDetected = false;
         }
     }
 

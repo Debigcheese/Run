@@ -129,7 +129,7 @@ public class Projectile : MonoBehaviour
             HashSet<GameObject> hurtEnemies = new HashSet<GameObject>();
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + radiusColliderOffset, radiusCollider, enemyLayer);
 
-            foreach(Collider2D enemy in hitEnemies)
+            foreach (Collider2D enemy in hitEnemies)
             {
                 if (!hurtEnemies.Contains(enemy.gameObject))
                 {
@@ -137,12 +137,10 @@ public class Projectile : MonoBehaviour
                     hurtEnemies.Add(enemy.gameObject);
                     hitEnemy = true;
                 }
-                
+
             }
-            if (!arrowProjectile)
-            {
-                BeforeExplosion();
-            }
+
+            BeforeExplosion();
 
         }
         else if (((1 << collision.gameObject.layer) & groundLayer) != 0)
@@ -153,15 +151,13 @@ public class Projectile : MonoBehaviour
             {
                 enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
             }
-         
+
             if (!arrowProjectile)
             {
                 BeforeExplosion();
             }
             // Destroy the projectile when it collides with the ground layer
         }
-
-
     }
 
     private void BeforeExplosion()

@@ -155,16 +155,18 @@ public class StatManagerScript : MonoBehaviour
         {
             statCostText.text = UpgradeCost[currentcritLevel].ToString();
         }
-
+        PressStatButton();
     }
 
     private void TurnOffButtons(int btnIndex, int currentLevel)
     {
         for (int i = 0; i < BuyButton.Length; i++)
         {
-            BuyButton[i].SetActive(false);
-            cantBuyButton[i].SetActive(false);
-
+            if(btnIndex != i)
+            {
+                BuyButton[i].SetActive(false);
+                cantBuyButton[i].SetActive(false);
+            }
             if (btnIndex == statSelected)
             {
                 if (totalCrystalAmount >= UpgradeCost[currentLevel] && currentLevel != 5)
@@ -207,21 +209,18 @@ public class StatManagerScript : MonoBehaviour
     public void PressHealthButton()
     {
         statSelected = 0;
-        PressStatButton();
         popUpWindow.SetActive(true);
     }
 
     public void PressRegenButton()
     {
         statSelected = 1;
-        PressStatButton();
         popUpWindow.SetActive(true);
     }
 
     public void PressCritButton()
     {
         statSelected = 2;
-        PressStatButton();
         popUpWindow.SetActive(true);
     }
 

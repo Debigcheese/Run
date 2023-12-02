@@ -14,6 +14,10 @@ public class AbilityManagerMenu : MonoBehaviour
     private string ownedAbilitiesString;
     public int equippedAbility;
 
+    public Color originalColor;
+    public Color boughtColor;
+    public GameObject[] itemPanels;
+
     public GameObject[] AbilitiesUI;
     public GameObject[] buyButton;
     public GameObject[] cantBuyButton;
@@ -54,6 +58,23 @@ public class AbilityManagerMenu : MonoBehaviour
     {
         totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
         UpdateButtonStates();
+        ChangePanelColor();
+
+    }
+
+    private void ChangePanelColor()
+    {
+        for (int i = 0; i < itemPanels.Length; i++)
+        {
+            if (ownedAbilities.Contains(abilityIndex[i]))
+            {
+                itemPanels[i].GetComponent<Image>().color = boughtColor;
+            }
+            else
+            {
+                itemPanels[i].GetComponent<Image>().color = originalColor;
+            }
+        }
     }
 
     private void UpdateButtonStates()
@@ -63,10 +84,11 @@ public class AbilityManagerMenu : MonoBehaviour
             bool isOwned = ownedAbilities.Contains(abilityIndex[i]);
             bool isEquipped = equippedAbility == abilityIndex[i];
             bool canAfford = totalCrystalAmount >= crystalCost[i];
+            bool previousOwned = i == 0 || ownedAbilities.Contains(abilityIndex[i - 1]);
 
             buyButton[i].SetActive(canAfford && !isOwned);
-            cantBuyButton[i].SetActive(!canAfford && !isOwned || isEquipped);
-            equipButton[i].SetActive(isOwned && !isEquipped);
+            cantBuyButton[i].SetActive(!canAfford && !isOwned || !previousOwned);
+            equipButton[i].SetActive(isOwned);
             buyText[i].SetActive(!isOwned);
             equipText[i].SetActive(isOwned && !isEquipped);
             equippedText[i].SetActive(isEquipped);

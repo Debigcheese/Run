@@ -48,6 +48,12 @@ public class ShopManager : MonoBehaviour
     public void LeaveShop()
     {
         FindObjectOfType<TransitionScript>().TransitionStart();
+        StartCoroutine(LoadLevelSelect());
+    }
+
+    private IEnumerator LoadLevelSelect()
+    {
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(1);
     }
 

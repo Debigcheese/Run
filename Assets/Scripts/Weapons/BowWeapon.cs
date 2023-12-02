@@ -63,6 +63,11 @@ public class BowWeapon : MonoBehaviour
         if (playerState.currentStamina < staminaPerCharge)
         {
             playerAttack.stopAttacking = true;
+            playerState.lowMana = true;
+        }
+        else
+        {
+            playerState.lowMana = false;
         }
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

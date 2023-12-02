@@ -61,9 +61,11 @@ public class MeleeWeapon : MonoBehaviour
         if(playerState.currentStamina <= staminaPerAttack)
         {
             playerAttack.canAttack = false;
+            playerState.lowMana = true;
         }
         else
         {
+            playerState.lowMana = false;
             playerAttack.canAttack = true;
         }
 

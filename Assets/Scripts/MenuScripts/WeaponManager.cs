@@ -138,7 +138,6 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        pageNumber = PlayerPrefs.GetInt("CurrentPage", 0);
         totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
 
         for (int i = 0; i < buyButton.Length; i++)
@@ -257,8 +256,6 @@ public class WeaponManager : MonoBehaviour
         {
             pageNumber++;
             SwitchPage(pageNumber);
-            PlayerPrefs.SetInt("CurrentPage", pageNumber);
-            PlayerPrefs.Save();
         }
         else if (pageNumber < pages.Length - 1 && pageNumber >= pagesUnlocked)
         {
@@ -272,8 +269,6 @@ public class WeaponManager : MonoBehaviour
         {
             pageNumber--;
             SwitchPage(pageNumber);
-            PlayerPrefs.SetInt("CurrentPage", pageNumber);
-            PlayerPrefs.Save();
         }
     }
 
