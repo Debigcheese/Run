@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BowWeapon : MonoBehaviour
 {
@@ -120,10 +121,11 @@ public class BowWeapon : MonoBehaviour
         if (bowCharge && Input.GetMouseButtonUp(0) )
         {
             BowShoot(damageMultiplier);
-            count = 0;
             isBowShooting = true;
             bowCharge = false;
             canDisableBowCharge = false;
+            count = 0;
+
         }
         weaponAnimator.SetBool("isBowCharging", canDisableBowCharge);
         weaponAnimator.SetBool("isBowShooting", isBowShooting);
@@ -137,6 +139,7 @@ public class BowWeapon : MonoBehaviour
         playerAttack.isAttacking = true;
         bowCharge = true;
         playerState.ReduceStamina(staminaPerCharge);
+        AudioManager.Instance.PlaySound("bowcharge");
     }
 
     public void BowShoot(float damageMultiplier)
@@ -146,7 +149,7 @@ public class BowWeapon : MonoBehaviour
         GameObject newProjectile = Instantiate(arrowProjectile, projectilePoint.position, Quaternion.identity);
         Projectile projectile = newProjectile.GetComponent<Projectile>();
 
-        int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
+        int randomDamage = UnityEngine.Random.Range(minDmg, maxDmgMinusOne);
         float totalDamage;
         if (playerAttack.critAttack)
         {
@@ -170,6 +173,8 @@ public class BowWeapon : MonoBehaviour
             StartCoroutine(DoubleProjectile(mousePos, damageMultiplier));
         }
 
+        AudioManager.Instance.DisableSound("bowcharge");
+        AudioManager.Instance.PlaySound("bowattack");
         StartCoroutine(FinishAnimation());
     }
 
@@ -180,7 +185,7 @@ public class BowWeapon : MonoBehaviour
         GameObject newProjectile = Instantiate(arrowProjectile, projectilePoint.position, Quaternion.identity);
         Projectile projectile = newProjectile.GetComponent<Projectile>();
 
-        int randomDamage = Random.Range(minDmg, maxDmgMinusOne);
+        int randomDamage = UnityEngine.Random.Range(minDmg, maxDmgMinusOne);
         float totalDamage;
         if (playerAttack.critAttack)
         {

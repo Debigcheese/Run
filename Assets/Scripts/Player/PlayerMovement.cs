@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Collision coll;
     private PlayerAttack playerAttack;
     private DamageFlash damageFlash;
+    private AudioManager audioManager;
 
     [HideInInspector] public float moveDirection = 0f;
     private float y = 0f;
@@ -91,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collision>();
         playerAttack = GetComponent<PlayerAttack>();
+        audioManager = FindAnyObjectByType<AudioManager>();
         originalAngularDrag = rb.angularDrag;
         originalDrag = rb.drag;
         originalGravity = rb.gravityScale;
@@ -125,7 +127,13 @@ public class PlayerMovement : MonoBehaviour
             playerAttack.canAttackFromKnockback = false;
             cantMoveFromKnockback = true;
         }
- 
+
+        //Sound
+        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater)
+        {
+            AudioManager.Instance.PlayLoopingSound("footsteps");
+        }
+
         //Animation
         if (coll.onGround)
         {
@@ -165,7 +173,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Abilitybackground.SetActive(false);
         }
-        
 
         //Methods
        
@@ -217,6 +224,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == 4)
         {
+            AudioManager.Instance.PlayLoopingSound("water");
             isInWater = true;
             rb.drag = 6;
             rb.angularDrag = 6;
@@ -369,6 +377,7 @@ public class PlayerMovement : MonoBehaviour
         isJumpPressed = true;
         isJumping = true;
         rb.velocity = dir.normalized * JumpForce;
+        AudioManager.Instance.PlaySound("jump");
     }
 
     private void WallSlide()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class PlayerState : MonoBehaviour
 {
@@ -242,10 +243,13 @@ public class PlayerState : MonoBehaviour
     {
         playerMovement.speed *= msReduction;
         playerAttack.AttackMoveSpeed *= msReduction;
-
         guardianEnabled = true;
         checkGuardianCooldown = true;
         GuardianCDImage.fillAmount = 1f;
+
+        Sound s = Array.Find(FindAnyObjectByType<AudioManager>().sounds, mSound => mSound.name == "footsteps");
+        s.pitch -= .5f;
+
         StartCoroutine(GuardianDuration());
     }
 
@@ -255,6 +259,10 @@ public class PlayerState : MonoBehaviour
         playerMovement.speed = playerMovement.originalSpeed;
         playerAttack.AttackMoveSpeed = playerAttack.originalAttackMoveSpeed;
         guardianEnabled = false;
+
+        Sound s = Array.Find(FindAnyObjectByType<AudioManager>().sounds, mSound => mSound.name == "footsteps");
+        s.pitch += .5f;
+
         StartCoroutine(StartGuardianCooldown());
     }
 
@@ -458,8 +466,8 @@ public class PlayerState : MonoBehaviour
     {
 
         // Generate random offset within maxOffsetDistance
-        float offsetX = Random.Range(-maxOffsetDistanceX, maxOffsetDistanceX);
-        float offsetY = Random.Range(-maxOffsetDistanceY, maxOffsetDistanceY);
+        float offsetX = UnityEngine.Random.Range(-maxOffsetDistanceX, maxOffsetDistanceX);
+        float offsetY = UnityEngine.Random.Range(-maxOffsetDistanceY, maxOffsetDistanceY);
         Vector3 offset = new Vector3(offsetX, offsetY, 0f);
         Vector3 startPosition = transform.position + offset;
 
@@ -480,8 +488,8 @@ public class PlayerState : MonoBehaviour
     {
 
         // Generate random offset within maxOffsetDistance
-        float offsetX = Random.Range(-0, 0);
-        float offsetY = Random.Range(-0, 0);
+        float offsetX = UnityEngine.Random.Range(-0, 0);
+        float offsetY = UnityEngine.Random.Range(-0, 0);
         Vector3 offset = new Vector3(offsetX, offsetY, 0f);
         Vector3 startPosition = transform.position + offset;
 

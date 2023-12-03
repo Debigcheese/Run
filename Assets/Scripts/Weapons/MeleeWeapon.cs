@@ -102,6 +102,7 @@ public class MeleeWeapon : MonoBehaviour
         {
             damagedEnemies.Add(enemy.gameObject);
         }
+        AudioManager.Instance.PlaySound("sword");
         StartCoroutine(SwingDelay(damagedEnemies));
         StartCoroutine(MeleeCD());
     }

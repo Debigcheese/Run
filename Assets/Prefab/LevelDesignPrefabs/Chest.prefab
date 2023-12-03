@@ -147,6 +147,8 @@ MonoBehaviour:
   chestIsHurt: 0
   chestIsOpen: 0
   chestOpenAnim: {fileID: 4253680260168401292, guid: 9ddc4c1ce9047f543b1d1d356e72fc8a, type: 3}
+  isWaveChest: 0
+  showWaveChest: 0
 --- !u!114 &4177414082118476304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +312,6 @@ MonoBehaviour:
   detected: 0
   enemyDetectionAnim: {fileID: 4177414083032525182}
   startOffset: {x: 0, y: 0, z: 0}
-  velocityY: 0
 --- !u!114 &4177414082118476317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
+  DamageflashColor: {r: 0, g: 0, b: 0, a: 0}
+  DashflashColor: {r: 0, g: 0, b: 0, a: 0}
   flashTime: 0.2
   flashSpeedCurve:
     serializedVersion: 2
@@ -508,7 +511,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

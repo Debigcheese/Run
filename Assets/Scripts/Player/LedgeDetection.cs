@@ -10,6 +10,8 @@ public class LedgeDetection : MonoBehaviour
     public LayerMask layer;
 
     public bool canDetect;
+    public Vector2 dir = Vector2.right;
+    public float rayLength;
 
 
     // Start is called before the first frame update
@@ -24,7 +26,16 @@ public class LedgeDetection : MonoBehaviour
     {
         if (canDetect && coll.onWall)
         {
-            playerMovement.ledgeDetected = Physics2D.OverlapCircle(transform.position, radius, layer);
+            if (playerMovement.isFacingLeft)
+            {
+                 dir = Vector2.left;
+            }
+            else
+            {
+                 dir = Vector2.right;
+            }
+
+            playerMovement.ledgeDetected = Physics2D.Raycast(transform.position, dir , rayLength,  layer);
         }
         else
         {
@@ -51,6 +62,14 @@ public class LedgeDetection : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, radius);
+        if (playerMovement.isFacingLeft)
+        {
+            Gizmos.DrawRay(transform.position, Vector2.left* rayLength);
+        }
+        else
+        {
+            Gizmos.DrawRay(transform.position, Vector2.right * rayLength);
+        }
+
     }
 }

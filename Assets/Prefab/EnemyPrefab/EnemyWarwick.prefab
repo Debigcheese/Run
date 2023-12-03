@@ -303,7 +303,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -462,6 +462,7 @@ MonoBehaviour:
   attackPoint: {fileID: 1603429670694106491}
   isAttacking: 0
   inRange: 0
+  canAttack: 0
   attackDamage: 3
   attackSpeed: 1
   attackDmgDelay: 0.25
@@ -494,10 +495,15 @@ MonoBehaviour:
   isInAir: 0
   directionLookEnabled: 1
   canMove: 1
+  jumpCheck: {fileID: 0}
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpDetectionRadius: 10
   isMoving: 0
   lookingRight: 0
   detected: 0
-  DetectionSymbolPopup: {fileID: 1603429670997513744}
+  enemyDetectionAnim: {fileID: 0}
   startOffset: {x: 0.56, y: 0, z: 0}
 --- !u!114 &1603429671295208598
 MonoBehaviour:
@@ -571,7 +577,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  countWaveEnemies: 0
+  isDead: 0
+  dontInstaKill: 0
   maxHealth: 1220
+  currentHealth: 0
+  crystalDropAmount: 0
   enemyHealthBar: {fileID: 2513948929728760531}
   easeHealthBar: {fileID: 4512222021530142532}
   damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}
@@ -590,6 +601,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
+  DamageflashColor: {r: 0, g: 0, b: 0, a: 0}
+  DashflashColor: {r: 0, g: 0, b: 0, a: 0}
   flashTime: 0.15
   flashSpeedCurve:
     serializedVersion: 2
