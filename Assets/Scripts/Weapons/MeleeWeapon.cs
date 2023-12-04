@@ -11,6 +11,7 @@ public class MeleeWeapon : MonoBehaviour
     private Animator weaponAnimator;
     public LayerMask enemy;
     public Transform attackPoint;
+    public string weaponAttackSFX;
 
     [Space]
     [Header("Animation")]
@@ -104,7 +105,7 @@ public class MeleeWeapon : MonoBehaviour
         {
             damagedEnemies.Add(enemy.gameObject);
         }
-        AudioManager.Instance.PlaySound("playersword");
+        AudioManager.Instance.PlaySound(weaponAttackSFX);
         StartCoroutine(SwingDelay(damagedEnemies));
         StartCoroutine(MeleeCD());
     }

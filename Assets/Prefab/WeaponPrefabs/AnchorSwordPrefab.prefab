@@ -156,13 +156,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackPoint: {fileID: 1211853385638879711}
+  weaponAttackSFX: playersword
   attackCounter: 1
   isMeleeAttacking: 0
   minDmg: 140
   maxDmgMinusOne: 666
   attackRange: 1.3
-  attackSpeed: 0.8
-  staminaPerAttack: 40
+  attackSpeed: 0.64
+  staminaPerAttack: 30
   firstSwingDmgDelay: 0.5
   SecondSwingDmgDelay: 0.18
 --- !u!1 &6613921829213237603
