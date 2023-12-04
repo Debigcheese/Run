@@ -11,10 +11,13 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] sounds;
 
-    //Keys needed to show PlayerPrefs where to save the set sound from VolumSettings
-    public const string MASTER_KEY = "masterVolume";
-    public const string MUSIC_KEY = "musicVolume";
-    public const string SFX_KEY = "sfxVolume";
+    //settings
+    public Slider musicSlider;
+    public Slider SFXSlider;
+    public AudioMixerGroup musicMixerGroup;
+    public AudioMixerGroup SFXMixerGroup;
+    public GameObject fullscreenActive;
+    public GameObject fullscreenNotActive;
 
     private void Awake()
     {
@@ -29,11 +32,18 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        SetMusicVolume(PlayerPrefs.GetFloat("MusicVolume", 1));
+        SetSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 1));
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1);
+        SFXSlider.onValueChanged.AddListener(SetSFXVolume);
+        SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1);
     }
 
     private void Start()
     {
-        //PlaySound("Theme");
+
     }
 
     public void PlaySound(string name)
@@ -46,7 +56,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            ChangePitch(s);
+            RandomPitch(s);
         }
     }
 
@@ -62,12 +72,12 @@ public class AudioManager : MonoBehaviour
         {
             if (!s.source.isPlaying)
             {
-                ChangePitch(s);
+                RandomPitch(s);
             }
         }
     }
 
-    public void ChangePitch(Sound s)
+    public void RandomPitch(Sound s)
     {
         float rng = UnityEngine.Random.Range(-s.randomPitchValue, s.randomPitchValue);
         s.source.pitch = s.pitch + rng;
@@ -85,5 +95,47 @@ public class AudioManager : MonoBehaviour
         {
             s.source.Stop();
         }
+    }
+
+
+    //settings
+    public void SetVolume(AudioMixerGroup mixerGroup, float decimalVolume, string exposedParam)
+    {
+        float dbVolume = Mathf.Log10(decimalVolume) * 20;
+        if (decimalVolume == 0.0f)
+        {
+            dbVolume = -80.0f;
+        }
+
+        mixerGroup.audioMixer.SetFloat(exposedParam, dbVolume);
+        PlayerPrefs.SetFloat(exposedParam, decimalVolume);
+        PlayerPrefs.Save();
+    }
+
+    public void SetMusicVolume(float decimalVolume)
+    {
+        SetVolume(musicMixerGroup, decimalVolume, "MusicVolume");
+    }
+
+    public void SetSFXVolume(float decimalVolume)
+    {
+        SetVolume(SFXMixerGroup, decimalVolume, "SFXVolume");
+    }
+
+
+    public void ToggleFullScreen(int check)
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+        if (check == 0)
+        {
+            fullscreenActive.SetActive(false);
+            fullscreenNotActive.SetActive(true);
+        }
+        if (check == 1)
+        {
+            fullscreenActive.SetActive(true);
+            fullscreenNotActive.SetActive(false);
+        }
+
     }
 }

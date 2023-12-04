@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
     private PlayerMovement playerMovement;
     private PlayerState playerState;
     private EnemyAI enemyAI;
+    private EnemyHp enemyHp;
     public Transform attackPoint;
 
     [Header("Booleans")]
@@ -27,7 +27,7 @@ public class EnemyAttack : MonoBehaviour
         playerMovement = FindAnyObjectByType<PlayerMovement>();
         playerState = FindAnyObjectByType<PlayerState>();
         enemyAI = GetComponent<EnemyAI>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        enemyHp = GetComponent<EnemyHp>();
         canAttack = true;
         
     }
@@ -87,9 +87,13 @@ public class EnemyAttack : MonoBehaviour
             {
                 playerMovement.KnockFromRight = false;
             }
-
         }
         StartCoroutine("AttackSpeed");
+
+        if (enemyHp.enemySFX.EnemyAttackSFX != null)
+        {
+            enemyHp.enemySFX.PlayEnemySound(enemyHp.enemySFX.EnemyAttackSFX);
+        }
     }
 
     IEnumerator AttackSpeed()

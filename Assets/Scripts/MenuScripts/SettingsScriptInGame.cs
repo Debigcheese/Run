@@ -11,7 +11,6 @@ public class SettingsScriptInGame : MonoBehaviour
     private bool canRespawn = true;
     public GameObject menuPanel;
     public GameObject settingsPanel;
-    public bool settingsInMenu = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +23,9 @@ public class SettingsScriptInGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !settingsInMenu)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             OpenMenu();
-        }
-        else if(Input.GetKeyDown(KeyCode.Escape) && settingsInMenu)
-        {
-            OpenSettings();
         }
     }
 
@@ -41,56 +36,35 @@ public class SettingsScriptInGame : MonoBehaviour
             checkIfEsc = false;
             Time.timeScale = 1f;
             menuPanel.SetActive(false);
+            settingsPanel.SetActive(false);
         }
         else
         {
             checkIfEsc = true;
             Time.timeScale = 0f;
             menuPanel.SetActive(true);
-        }
-    }
 
-    public void OpenSettingsInMainMenu()
-    {
-        settingsPanel.SetActive(true);
+        }
     }
 
     public void OpenSettings()
     {
-        if (!settingsInMenu)
-        {
-            menuPanel.SetActive(false);
-            settingsPanel.SetActive(true);
-        }
-        else
-        {
-            settingsPanel.SetActive(true);
-            if (checkIfEsc)
-            {
-                ReturnToMenu();
-            }
-            checkIfEsc = true;
-        }
-
+        menuPanel.SetActive(false);
+        settingsPanel.SetActive(true);
     }
 
-    public void ReturnToMenu()
+    public void CloseSettingsInGame()
     {
-        if (!settingsInMenu)
-        {
-            menuPanel.SetActive(true);
-            settingsPanel.SetActive(false);
-        }
-        else
-        {
-            StartCoroutine(CheckIfEsc());
-            settingsPanel.SetActive(false);
-        }
+        menuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
     }
-    private IEnumerator CheckIfEsc()
+
+    public void CloseSettings()
     {
-        yield return new WaitForSeconds(.05f);
         checkIfEsc = false;
+        Time.timeScale = 1f;
+        menuPanel.SetActive(false);
+        settingsPanel.SetActive(false);
     }
 
     public void LeaveGame()

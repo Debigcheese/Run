@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAttack playerAttack;
     private DamageFlash damageFlash;
     private AudioManager audioManager;
+    private PlayerState playerState;
 
     [HideInInspector] public float moveDirection = 0f;
     private float y = 0f;
@@ -93,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<Collision>();
         playerAttack = GetComponent<PlayerAttack>();
         audioManager = FindAnyObjectByType<AudioManager>();
+        playerState = GetComponent<PlayerState>();
         originalAngularDrag = rb.angularDrag;
         originalDrag = rb.drag;
         originalGravity = rb.gravityScale;
@@ -129,9 +131,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Sound
-        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater)
+        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater && !playerState.guardianEnabled)
         {
-            AudioManager.Instance.PlayLoopingSound("footsteps");
+            AudioManager.Instance.PlayLoopingSound("playerfootsteps");
+        }
+        if(isMoving && coll.onGround && (playerAttack.isAttacking || isInWater || playerState.guardianEnabled))
+        {
+            AudioManager.Instance.PlayLoopingSound("playerslowfootsteps");
         }
 
         //Animation
@@ -224,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == 4)
         {
-            AudioManager.Instance.PlayLoopingSound("water");
+            AudioManager.Instance.PlayLoopingSound("playerinwater");
             isInWater = true;
             rb.drag = 6;
             rb.angularDrag = 6;
@@ -249,6 +255,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (ledgeDetected && canGrabLedge)
         {
+            AudioManager.Instance.PlaySound("playerledgeclimb");
             rb.velocity = Vector2.zero;
             canGrabLedge = false;
             isClimbingLedge = true;
@@ -320,7 +327,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallJump()
     {
-         isJumping = true;
+        AudioManager.Instance.PlaySound("playerjump");
+        isJumping = true;
          StopCoroutine(DisableMovement(0));
          StartCoroutine(DisableMovement(.15f));
          isWallJumping = true;
@@ -377,7 +385,7 @@ public class PlayerMovement : MonoBehaviour
         isJumpPressed = true;
         isJumping = true;
         rb.velocity = dir.normalized * JumpForce;
-        AudioManager.Instance.PlaySound("jump");
+        AudioManager.Instance.PlaySound("playerjump");
     }
 
     private void WallSlide()

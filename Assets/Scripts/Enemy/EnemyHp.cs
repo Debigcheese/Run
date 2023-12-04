@@ -5,8 +5,23 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
+public class EnemySFX
+{
+    [Header("SFX")]
+    public string EnemyHurtSFX;
+    public string EnemyDieSFX;
+    public string EnemyAttackSFX;
+
+    public void PlayEnemySound(string enemySFX)
+    {
+        AudioManager.Instance.PlaySound(enemySFX);
+    }
+}
+
 public class EnemyHp : MonoBehaviour
 {
+    public EnemySFX enemySFX;
     private Rigidbody2D rb;
     private SpriteRenderer sRenderer;
     private Collider2D coll;
@@ -96,18 +111,27 @@ public class EnemyHp : MonoBehaviour
     {
         if (!tookDamage)
         {
+
+            if (currentHealth > 0 && enemySFX.EnemyHurtSFX != null)
+            {
+                enemySFX.PlayEnemySound(enemySFX.EnemyHurtSFX);
+            }
+
             tookDamage = true;
             currentHealth -= damageAmount;
             //play hurt animation
             if (currentHealth <= 0 && !dontInstaKill)
             {
+                if(enemySFX.EnemyDieSFX != null)
+                {
+                    enemySFX.PlayEnemySound(enemySFX.EnemyDieSFX);
+                }
                 StartCoroutine(Die());
             }
             EnemyKnockback.Invoke();
             damageFlash.CallDamageFlash();
             ShowDamagePopup(damageAmount);
             StartCoroutine(CanTakeDamage());
-
         }
     }
 

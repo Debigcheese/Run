@@ -363,6 +363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45ca62c59e802f46b75452ba038226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySFX:
+    EnemyHurtSFX: enemychomperhurt
+    EnemyDieSFX: enemychomperdie
+    EnemyAttackSFX: enemychomperattack
   EnemyKnockback:
     m_PersistentCalls:
       m_Calls:
@@ -381,8 +385,8 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
-  maxHealth: 13
-  currentHealth: 0
+  maxHealth: 1000
+  currentHealth: 1000
   crystalDropAmount: 11
   enemyHealthBar: {fileID: 6056731953762989873}
   easeHealthBar: {fileID: 6056731954379498334}
@@ -402,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
-  DamageflashColor: {r: 0, g: 0, b: 0, a: 0}
+  DamageflashColor: {r: 1, g: 1, b: 1, a: 1}
   DashflashColor: {r: 0, g: 0, b: 0, a: 0}
   flashTime: 0.2
   flashSpeedCurve:

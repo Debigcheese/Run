@@ -247,8 +247,7 @@ public class PlayerState : MonoBehaviour
         checkGuardianCooldown = true;
         GuardianCDImage.fillAmount = 1f;
 
-        Sound s = Array.Find(FindAnyObjectByType<AudioManager>().sounds, mSound => mSound.name == "footsteps");
-        s.pitch -= .5f;
+        AudioManager.Instance.PlayLoopingSound("smallfootsteps");
 
         StartCoroutine(GuardianDuration());
     }
@@ -260,8 +259,7 @@ public class PlayerState : MonoBehaviour
         playerAttack.AttackMoveSpeed = playerAttack.originalAttackMoveSpeed;
         guardianEnabled = false;
 
-        Sound s = Array.Find(FindAnyObjectByType<AudioManager>().sounds, mSound => mSound.name == "footsteps");
-        s.pitch += .5f;
+        AudioManager.Instance.PlayLoopingSound("smallfootsteps");
 
         StartCoroutine(StartGuardianCooldown());
     }
@@ -386,6 +384,7 @@ public class PlayerState : MonoBehaviour
             currentHealth -= damageAmount;
             ShowDamagePopup(damageAmount);
         }
+        AudioManager.Instance.PlaySound("playerhurt");
         damageFlash.CallDamageFlash();
         bloodyScreenActivateOnFeedback = true;
         if (currentHealth <= 0)

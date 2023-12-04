@@ -173,8 +173,16 @@ public class BowWeapon : MonoBehaviour
             StartCoroutine(DoubleProjectile(mousePos, damageMultiplier));
         }
 
-        AudioManager.Instance.DisableSound("bowcharge");
-        AudioManager.Instance.PlaySound("bowattack");
+        AudioManager.Instance.DisableSound("playerbowcharge");
+        if(weaponHolder.currentWeapon != weaponHolder.weapons[9])
+        {
+            AudioManager.Instance.PlaySound("playerbowattack");
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound("playerbowdarkattack");
+        }
+        
         StartCoroutine(FinishAnimation());
     }
 
@@ -203,6 +211,15 @@ public class BowWeapon : MonoBehaviour
         projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(mousePos);
         projectile.SetArrowDamageMultipler(damageMultiplier);
+
+        if (weaponHolder.currentWeapon != weaponHolder.weapons[9])
+        {
+            AudioManager.Instance.PlaySound("playerbowattack");
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound("playerbowdarkattack");
+        }
     }
 
     public IEnumerator FinishAnimation()

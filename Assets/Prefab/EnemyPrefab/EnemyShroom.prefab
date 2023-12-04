@@ -310,6 +310,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45ca62c59e802f46b75452ba038226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySFX:
+    EnemyHurtSFX: enemyshroomhurt
+    EnemyDieSFX: enemyshroomdie
+    EnemyAttackSFX: enemyshroomattack
   EnemyKnockback:
     m_PersistentCalls:
       m_Calls:
@@ -349,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
-  DamageflashColor: {r: 0, g: 0, b: 0, a: 0}
+  DamageflashColor: {r: 1, g: 1, b: 1, a: 1}
   DashflashColor: {r: 0, g: 0, b: 0, a: 0}
   flashTime: 0.2
   flashSpeedCurve:

@@ -16,7 +16,6 @@ public class MeleeWeapon : MonoBehaviour
     [Header("Animation")]
     public float attackCounter = 1f;
     public bool isMeleeAttacking = false;
-    private bool returnAttackCounter;
     private float attackCounterTimer =0f;
 
     [Space]
@@ -74,7 +73,7 @@ public class MeleeWeapon : MonoBehaviour
             Attack();
         }
 
-        if (!playerAttack.isAttacking && returnAttackCounter)
+        if (!playerAttack.isAttacking )
         {
             attackCounterTimer += Time.deltaTime;
             float delay = 1.2f;
@@ -84,6 +83,10 @@ public class MeleeWeapon : MonoBehaviour
                 attackCounterTimer = 0f;
             }
         }
+        else
+        {
+            attackCounterTimer = 0;
+        }
 
         weaponAnimator.SetBool("meleeAttack", playerAttack.isAttacking);
         weaponAnimator.SetFloat("attackCounter", attackCounter);
@@ -92,7 +95,6 @@ public class MeleeWeapon : MonoBehaviour
     public void Attack()
     {
         attackCounterTimer = 0f;
-        returnAttackCounter = false;
         playerAttack.canAttack = false;
         playerState.ReduceStamina(staminaPerAttack);
         isMeleeAttacking = true;
@@ -102,7 +104,7 @@ public class MeleeWeapon : MonoBehaviour
         {
             damagedEnemies.Add(enemy.gameObject);
         }
-        AudioManager.Instance.PlaySound("sword");
+        AudioManager.Instance.PlaySound("playersword");
         StartCoroutine(SwingDelay(damagedEnemies));
         StartCoroutine(MeleeCD());
     }
@@ -148,7 +150,6 @@ public class MeleeWeapon : MonoBehaviour
         isMeleeAttacking = false;
         playerAttack.isAttacking = false;
         playerAttack.canAttack = true;
-        returnAttackCounter = true;
     }
 
     private void OnDrawGizmosSelected()
