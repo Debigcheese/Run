@@ -306,6 +306,7 @@ public class PlayerMovement : MonoBehaviour
         damageFlash.dashFlashOn = true;
         StartCoroutine(DashWait());
         damageFlash.CallDashFlash();
+        AudioManager.Instance.PlaySound("playerdash");
     }
 
     IEnumerator DashWait()

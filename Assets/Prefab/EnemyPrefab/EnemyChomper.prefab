@@ -385,8 +385,8 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
-  maxHealth: 1000
-  currentHealth: 1000
+  maxHealth: 15
+  currentHealth: 15
   crystalDropAmount: 11
   enemyHealthBar: {fileID: 6056731953762989873}
   easeHealthBar: {fileID: 6056731954379498334}

@@ -149,6 +149,10 @@ public class PlayerState : MonoBehaviour
         {
             ActivateGuardian();
         }
+        if (guardianEnabled)
+        {
+            AudioManager.Instance.PlayLoopingSound("playerduringguardian");
+        }
 
         if (PlayerPrefs.GetInt("Ability") == 1)
         {
@@ -247,6 +251,7 @@ public class PlayerState : MonoBehaviour
         checkGuardianCooldown = true;
         GuardianCDImage.fillAmount = 1f;
 
+        AudioManager.Instance.PlaySound("playeractivateguardian");
         AudioManager.Instance.PlayLoopingSound("smallfootsteps");
 
         StartCoroutine(GuardianDuration());
@@ -259,7 +264,8 @@ public class PlayerState : MonoBehaviour
         playerAttack.AttackMoveSpeed = playerAttack.originalAttackMoveSpeed;
         guardianEnabled = false;
 
-        AudioManager.Instance.PlayLoopingSound("smallfootsteps");
+        AudioManager.Instance.DisableSound("playerduringguardian");
+        AudioManager.Instance.PlaySound("playerdisableguardian");
 
         StartCoroutine(StartGuardianCooldown());
     }
@@ -309,7 +315,6 @@ public class PlayerState : MonoBehaviour
 
     public IEnumerator RegenHp()
     {
-
         isRegeningHp = true;
         canRegen = false;
         isRegeningHpParticles.SetActive(true);

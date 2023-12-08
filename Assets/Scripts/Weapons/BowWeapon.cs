@@ -139,7 +139,7 @@ public class BowWeapon : MonoBehaviour
         playerAttack.isAttacking = true;
         bowCharge = true;
         playerState.ReduceStamina(staminaPerCharge);
-        AudioManager.Instance.PlaySound("bowcharge");
+        AudioManager.Instance.PlaySound("playerbowcharge");
     }
 
     public void BowShoot(float damageMultiplier)

@@ -79,12 +79,12 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && PlayerPrefs.GetInt("Ability") == 2 && !checkRageCooldown)
         {
+            AudioManager.Instance.PlaySound("playeractivatevengeance");
             rageEnabled = true;
             checkRageCooldown = true;
             vengeanceCDImage.fillAmount = 1f;
             VengeanceExplosion();
             StartCoroutine(RageDuration());
-
         }
         if(PlayerPrefs.GetInt("Ability") == 2)
         {
@@ -103,6 +103,10 @@ public class PlayerAttack : MonoBehaviour
         else
         {
             vengeanceIcon.SetActive(false);
+        }
+        if (rageEnabled)
+        {
+            AudioManager.Instance.PlayLoopingSound("playerduringvengeance");
         }
         
 
@@ -138,6 +142,8 @@ public class PlayerAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(rageDuration);
         rageEnabled = false;
+        AudioManager.Instance.DisableSound("playerduringvengeance");
+        AudioManager.Instance.PlaySound("playerdisablevengeance");
         StartCoroutine(RageCooldownTimer());
     }
 
