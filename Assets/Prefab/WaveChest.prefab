@@ -134,6 +134,12 @@ MonoBehaviour:
   chestOpenAnim: {fileID: 4225104866379262913, guid: 1279d0d297c6afd4fa15985e5a15c022, type: 3}
   isWaveChest: 1
   showWaveChest: 0
+  chestHitSFX:
+  - chesthit0
+  - chesthit1
+  - chesthit2
+  - chesthit3
+  chestOpenSFX: chestopen
 --- !u!114 &5068303147253789048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45ca62c59e802f46b75452ba038226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySFX:
+    EnemyHurtSFX: 
+    EnemyDieSFX: 
+    EnemyAttackSFX: 
   EnemyKnockback:
     m_PersistentCalls:
       m_Calls: []
@@ -258,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
-  DamageflashColor: {r: 0, g: 0, b: 0, a: 0}
+  DamageflashColor: {r: 1, g: 1, b: 1, a: 1}
   DashflashColor: {r: 0, g: 0, b: 0, a: 0}
   flashTime: 0.2
   flashSpeedCurve:

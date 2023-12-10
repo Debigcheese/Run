@@ -185,9 +185,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePoint: {fileID: 2589595200274687567}
   magicProjectile: {fileID: 3316587769837000510, guid: 0762983483d78df429934ecb78aa5a59, type: 3}
+  weaponAttackSFX: 
+  weaponHitSFX: 
   attackCounter: 1
   isMagicAttacking: 0
   canAttack: 1
+  attackAnimCooldown: 0.45
   minDmg: 12
   maxDmgMinusOne: 18
   attackCooldown: 0.45

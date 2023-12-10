@@ -15,6 +15,9 @@ public class Chest : MonoBehaviour
     public GameObject chestOpenAnim;
     public bool isWaveChest;
     public bool showWaveChest;
+    private int hitCounter;
+    public string[] chestHitSFX;
+    public string chestOpenSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,11 @@ public class Chest : MonoBehaviour
         {
             StartCoroutine("IsHurt");
             currentHealth = enemyHp.currentHealth;
+            AudioManager.Instance.PlaySound(chestHitSFX[hitCounter]);
+            if(hitCounter != 3)
+            {
+                hitCounter++;
+            }
         }
         else
         {
@@ -47,6 +55,7 @@ public class Chest : MonoBehaviour
 
         if (enemyHp.currentHealth <= 0 && !justDied )
         {
+            AudioManager.Instance.PlaySound(chestOpenSFX);
             justDied = true;
             chestIsOpen = true;
             Instantiate(chestOpenAnim, transform.position, Quaternion.identity);

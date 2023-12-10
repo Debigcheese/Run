@@ -149,6 +149,12 @@ MonoBehaviour:
   chestOpenAnim: {fileID: 4253680260168401292, guid: 9ddc4c1ce9047f543b1d1d356e72fc8a, type: 3}
   isWaveChest: 0
   showWaveChest: 0
+  chestHitSFX:
+  - chesthit0
+  - chesthit1
+  - chesthit2
+  - chesthit3
+  chestOpenSFX: chestopen
 --- !u!114 &4177414082118476304
 MonoBehaviour:
   m_ObjectHideFlags: 0

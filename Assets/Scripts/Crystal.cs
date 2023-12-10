@@ -67,6 +67,7 @@ public class Crystal : MonoBehaviour
 
         if (collision.CompareTag("Player") && stopMoving && magnetize)
         {
+            AudioManager.Instance.PlayLoopingSound("playercrystalcollect");
             magnetize = false;
             rb.velocity = Vector2.zero;
             SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();

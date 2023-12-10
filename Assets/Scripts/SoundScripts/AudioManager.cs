@@ -87,14 +87,31 @@ public class AudioManager : MonoBehaviour
     public void DisableSound(string name)
     {
         Sound s = Array.Find(sounds, mSound => mSound.name == name);
+
         if (s == null)
         {
             Debug.Log("Sound not found");
         }
         else
         {
-            s.source.Stop();
+            StartCoroutine(FadeOut(s));
         }
+    }
+
+    public IEnumerator FadeOut(Sound s)
+    {
+        float startVolume = s.source.volume;
+        float timer = 0;
+        float duration = .5f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            s.source.volume = Mathf.Lerp(startVolume, 0, timer / duration);
+            yield return null;
+        }
+        s.source.Stop();
+        s.source.volume = startVolume;
     }
 
 

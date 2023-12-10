@@ -145,6 +145,11 @@ public class PlayerState : MonoBehaviour
             currentHealth = maxHealth;
         }
 
+        if (isRegeningHp)
+        {
+            AudioManager.Instance.PlayLoopingSound("healingfountainregen");
+        } 
+
         if(Input.GetKeyDown(KeyCode.LeftShift) && PlayerPrefs.GetInt("Ability") == 1 && !checkGuardianCooldown)
         {
             ActivateGuardian();
@@ -310,6 +315,7 @@ public class PlayerState : MonoBehaviour
             isRegeningHp = false;
             canRegen = true;
             isRegeningHpParticles.SetActive(false);
+            AudioManager.Instance.DisableSound("healingfountainregen");
         }
     }
 
@@ -318,7 +324,7 @@ public class PlayerState : MonoBehaviour
         isRegeningHp = true;
         canRegen = false;
         isRegeningHpParticles.SetActive(true);
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.8f);
         if (currentHealth < maxHealth && isRegeningHp )
         {
             float tempCurrHp = currentHealth;

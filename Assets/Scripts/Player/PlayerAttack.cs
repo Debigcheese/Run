@@ -20,6 +20,7 @@ public class PlayerAttack : MonoBehaviour
     public bool stopAttacking = false;
     public bool dialogueStopAttack = false;
     public float meleeAttackForce;
+    public bool insufficientEnergyAttack;
 
     [Header("CritAttack")]
     public bool critAttack;
@@ -57,7 +58,7 @@ public class PlayerAttack : MonoBehaviour
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
 
-        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack && !stopAttacking && !dialogueStopAttack)
+        if (Input.GetButtonDown("Fire1") && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge && !isAttacking && canAttackFromKnockback && canAttack && !stopAttacking && !dialogueStopAttack && !insufficientEnergyAttack)
         {
             float randomValue = Random.Range(0f, 100f);
             if (randomValue <= critChance)

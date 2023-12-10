@@ -50,7 +50,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackPoint: {fileID: 3370127440006458561}
-  weaponAttackSFX: playersword
+  weaponAttackSFX: playerragesword
   attackCounter: 1
   isMeleeAttacking: 0
   minDmg: 3

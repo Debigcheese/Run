@@ -55,18 +55,17 @@ public class MeleeWeapon : MonoBehaviour
             attackCounter *= -1f;
             isMeleeAttacking = false;
             playerAttack.isAttacking = false;
-            playerAttack.canAttack = true;
         }
 
         if(playerState.currentStamina <= staminaPerAttack)
         {
-            playerAttack.canAttack = false;
+            playerAttack.insufficientEnergyAttack = true;
             playerState.lowMana = true;
         }
         else
         {
             playerState.lowMana = false;
-            playerAttack.canAttack = true;
+            playerAttack.insufficientEnergyAttack = false;
         }
 
         if(playerAttack.isAttacking && !isMeleeAttacking && playerAttack.canAttack)

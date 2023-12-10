@@ -85,6 +85,7 @@ public class WaveSpawner : MonoBehaviour
             readyToCountDown = true;
             playerState.isRespawnForSpawner = false;
             startButton.transform.GetChild(0).gameObject.SetActive(false);
+            AudioManager.Instance.PlaySound("wavebuttonpressed");
             for (int i = 0; i < waves.Length; i++)
             {
                 waves[i].enemiesLeft = waves[i].enemies.Length;

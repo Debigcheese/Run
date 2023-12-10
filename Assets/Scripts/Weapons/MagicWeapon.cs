@@ -11,6 +11,8 @@ public class MagicWeapon : MonoBehaviour
     private Animator weaponAnimator;
     public Transform projectilePoint;
     public GameObject magicProjectile;
+    public string weaponAttackSFX;
+    public string weaponHitSFX;
 
     private Vector3 storedMousePos;
 
@@ -19,6 +21,7 @@ public class MagicWeapon : MonoBehaviour
     public float attackCounter = 1f;
     public bool isMagicAttacking;
     public bool canAttack = true;
+    public float attackAnimCooldown = 1f;
 
     [Space]
     [Header("Balancing")]
@@ -48,17 +51,16 @@ public class MagicWeapon : MonoBehaviour
         {
             isMagicAttacking = false;
             playerAttack.isAttacking = false;
-            playerAttack.canAttack = true;
         }
 
         if (playerState.currentMana < manaPerProjectile)
         {
-            playerAttack.canAttack = false;
+            playerAttack.insufficientEnergyAttack = true;
             playerState.lowMana = true;
         }
         else if(!playerAttack.isAttacking)
         {
-            playerAttack.canAttack = true;
+            playerAttack.insufficientEnergyAttack = false;
             playerState.lowMana = false;
         }
 
@@ -74,6 +76,7 @@ public class MagicWeapon : MonoBehaviour
 
     private IEnumerator ProjectileDelay()
     {
+        AudioManager.Instance.PlaySound(weaponAttackSFX);
         playerState.ReduceMana(manaPerProjectile);
         isMagicAttacking = true;
         playerAttack.canAttack = false;
@@ -103,13 +106,14 @@ public class MagicWeapon : MonoBehaviour
         int roundedDamage = Mathf.RoundToInt(totalDamage);
         projectile.SetDamage(roundedDamage);
         projectile.SetMousePosition(storedMousePos);
+        projectile.SetHitSound(weaponHitSFX);
 
         StartCoroutine(ShootCooldown());
     }
 
     private IEnumerator ShootCooldown()
     {
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(attackAnimCooldown);
         isMagicAttacking = false;
         playerAttack.isAttacking = false;
         StartCoroutine(ExtraCooldown());
@@ -117,7 +121,7 @@ public class MagicWeapon : MonoBehaviour
 
     private IEnumerator ExtraCooldown()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(attackCooldown);
         playerAttack.canAttack = true;
     }
 

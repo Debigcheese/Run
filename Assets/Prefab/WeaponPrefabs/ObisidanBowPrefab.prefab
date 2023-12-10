@@ -185,6 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePoint: {fileID: 2480617703618373914}
   arrowProjectile: {fileID: 7864024866944184346, guid: 5daf1efeafcc4464286b6f8e331e9339, type: 3}
+  weaponAttackSFX: playerbowattack
+  weaponHitSFX: playerbowhit
   isBowAttacking: 0
   isBowShooting: 0
   bowCharge: 0

@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     public GameObject explosionPrefab;
     public bool hitGroundDontExplode;
     private bool hitGround;
+    private string hitSFX;
 
     [Header("balancing")]
     public float force;
@@ -141,7 +142,7 @@ public class Projectile : MonoBehaviour
             }
 
             BeforeExplosion();
-
+            AudioManager.Instance.PlaySound(GetHitSound());
         }
         else if (((1 << collision.gameObject.layer) & groundLayer) != 0)
         {
@@ -157,6 +158,11 @@ public class Projectile : MonoBehaviour
                 BeforeExplosion();
             }
             // Destroy the projectile when it collides with the ground layer
+            if(!(transform.position.x > FindObjectOfType<PlayerMovement>().transform.position.x + 25 || transform.position.x < FindObjectOfType<PlayerMovement>().transform.position.x - 25))
+            {
+                AudioManager.Instance.PlaySound(GetHitSound());
+            }
+
         }
     }
 
@@ -210,6 +216,16 @@ public class Projectile : MonoBehaviour
     public int GetDamage()
     {
         return damage;
+    }
+
+    public void SetHitSound(string hitSound)
+    {
+        hitSFX = hitSound;
+    }
+
+    public string GetHitSound()
+    {
+        return hitSFX;
     }
 
     public void SetArrowDamageMultipler(float damageMultiplier)
