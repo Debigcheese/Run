@@ -31,6 +31,7 @@ public class FinishLevel : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            AudioManager.Instance.PlaySound("levelcomplete");
             playerMovement.FinishLevelMovement();
             anim.SetBool("TransitionStart", true);
             StartCoroutine(LoadNextLevel());

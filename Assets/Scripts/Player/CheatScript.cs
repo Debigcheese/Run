@@ -25,12 +25,24 @@ public class CheatScript : MonoBehaviour
         {
             weaponCount++;
             weaponHolder.secondWeapon = weaponHolder.weapons[weaponCount];
+            if(weaponCount == 16) 
+            {
+                weaponCount = 0;
+            }
 
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
+            PlayerPrefs.SetInt("ShowSecondWeaponUI", 1);
+            GetComponent<WeaponHolder>().showSecondWeaponUI.SetActive(true);
+            PlayerPrefs.Save();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
             PlayerPrefs.SetInt("EnableDash", 1);
+            PlayerPrefs.SetInt("Ability", 0);
             playerMovement.Dash(new Vector2(1f, 1f));
             playerMovement.enableDashUponCollision = true;
             PlayerPrefs.Save();
@@ -38,13 +50,12 @@ public class CheatScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            PlayerPrefs.SetInt("ShowSecondWeaponUI",1 );
-            PlayerPrefs.Save();
-        }
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            abilityCount2++;
             PlayerPrefs.SetInt("Ability", abilityCount2);
+            abilityCount2++;
+            if(abilityCount2 == 2)
+            {
+                abilityCount2 = 0;
+            }
             PlayerPrefs.Save();
 
         }

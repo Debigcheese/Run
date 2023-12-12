@@ -67,6 +67,7 @@ public class WaveSpawner : MonoBehaviour
         {
             IterateColliders(false, false, false);
 
+            AudioManager.Instance.PlaySound("wavesfinished");
             endSpawn = true;
             EndSpawner();
             wavesClearedText.SetActive(true);
@@ -162,9 +163,11 @@ public class WaveSpawner : MonoBehaviour
             }
             else
             {
+                AudioManager.Instance.PlaySound("nextwave");
                 nextWaveText.SetActive(true);
             }
             WaveText.enabled = true;
+
 
             for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
             {

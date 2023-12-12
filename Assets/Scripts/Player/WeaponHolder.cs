@@ -103,6 +103,7 @@ public class WeaponHolder : MonoBehaviour
         //swap weapons
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("Fire2")) && !isSwappingWeapons)
         {
+            AudioManager.Instance.PlaySound("playerswitchweapons");
             isSwappingWeapons = true;
             StartCoroutine(SwitchWeapon());
         }
