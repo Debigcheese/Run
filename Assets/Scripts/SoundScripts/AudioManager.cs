@@ -4,12 +4,17 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
     public Sound[] sounds;
+
+    private int SceneIndex = 0;
+    public bool waveMusicSwitch;
+    public string[] musicTheme;
 
     //settings
     public Slider musicSlider;
@@ -39,12 +44,38 @@ public class AudioManager : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1);
         SFXSlider.onValueChanged.AddListener(SetSFXVolume);
         SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1);
+        SceneIndex = SceneManager.GetActiveScene().buildIndex;
+        ChangeMusicTheme();
+
+        /*        PlayerPrefs.SetInt("SceneManager", SceneIndex);
+                PlayerPrefs.Save();*/
     }
 
     private void Start()
     {
 
     }
+
+    private void Update()
+    {
+        ChangeMusicTheme();
+    }
+
+    private void ChangeMusicTheme()
+    {
+        if (SceneIndex == 3 && !waveMusicSwitch)
+        {
+            PlayLoopingSound(musicTheme[0]);
+            DisableSoundNoFade(musicTheme[1]);
+        }
+        else if(SceneIndex == 3 && waveMusicSwitch)
+        {
+            DisableSoundNoFade(musicTheme[0]);
+            PlayLoopingSound(musicTheme[1]);
+        }
+    }
+
+
 
     public void PlaySound(string name)
     {
@@ -98,11 +129,25 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void DisableSoundNoFade(string name)
+    {
+        Sound s = Array.Find(sounds, mSound => mSound.name == name);
+
+        if (s == null)
+        {
+            Debug.Log("Sound not found");
+        }
+        else
+        {
+            s.source.Stop();
+        }
+    }
+
     public IEnumerator FadeOut(Sound s)
     {
         float startVolume = s.source.volume;
         float timer = 0;
-        float duration = .5f;
+        float duration = .8f;
 
         while (timer < duration)
         {

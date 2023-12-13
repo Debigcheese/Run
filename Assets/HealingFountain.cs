@@ -29,6 +29,7 @@ public class HealingFountain : MonoBehaviour
             {
                 checkPoint = true;
                 Instantiate(checkPointParticles, transform.position, Quaternion.identity, transform);
+                AudioManager.Instance.PlaySound("healingfountaincheckpoint");
             }
         }
     }

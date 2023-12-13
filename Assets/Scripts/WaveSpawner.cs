@@ -87,6 +87,7 @@ public class WaveSpawner : MonoBehaviour
             playerState.isRespawnForSpawner = false;
             startButton.transform.GetChild(0).gameObject.SetActive(false);
             AudioManager.Instance.PlaySound("wavebuttonpressed");
+            AudioManager.Instance.waveMusicSwitch = true;
             for (int i = 0; i < waves.Length; i++)
             {
                 waves[i].enemiesLeft = waves[i].enemies.Length;
@@ -225,6 +226,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void EndSpawner()
     {
+        AudioManager.Instance.waveMusicSwitch = false;
         nextWaveText.SetActive(false);
         wavesStarting.SetActive(false);
         WaveText.enabled = false;

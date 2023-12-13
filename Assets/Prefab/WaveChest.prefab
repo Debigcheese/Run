@@ -128,10 +128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1830263547dc9fd4d8d99fde330ae187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
+  dropCrystalSwitch: 1
+  dropObjSwitch: 0
+  objToDrop: {fileID: 0}
+  chestOpenAnim: {fileID: 4225104866379262913, guid: 1279d0d297c6afd4fa15985e5a15c022, type: 3}
   chestIsHurt: 0
   chestIsOpen: 0
-  chestOpenAnim: {fileID: 4225104866379262913, guid: 1279d0d297c6afd4fa15985e5a15c022, type: 3}
   isWaveChest: 1
   showWaveChest: 0
   chestHitSFX:

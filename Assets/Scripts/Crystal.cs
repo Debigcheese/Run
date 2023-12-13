@@ -9,8 +9,8 @@ public class Crystal : MonoBehaviour
     private PlayerState playerState;
     private Collider2D crystalCollider;
 
-    public Transform crystalTrans;
     public GameObject textPrefab;
+    public GameObject crystalLight;
 
     [Header("Booleans")]
     public bool magnetize = false;
@@ -24,7 +24,8 @@ public class Crystal : MonoBehaviour
     public float crystalMs = 9f;
     public float stopMovingDelay = 1.8f;
     private Vector3 offset;
-    
+    private Vector3 rotationOffset;
+    private Quaternion originalRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,8 @@ public class Crystal : MonoBehaviour
         playerState = FindAnyObjectByType<PlayerState>();
         textPrefab.SetActive(true);
         offset = new Vector3(Random.Range(1.5f, -1.5f), Random.Range(0, 2));
+        rotationOffset = new Vector3(0,0, Random.Range(-360, 360));
+        originalRotation = Quaternion.identity;
         StartCoroutine(StopMoving());
     }
 
@@ -42,7 +45,9 @@ public class Crystal : MonoBehaviour
     {
         if (!stopMoving)
         {
-            crystalTrans.position += offset * Time.deltaTime;
+            transform.position += offset * Time.deltaTime;
+            Quaternion targetRotation = Quaternion.Euler(rotationOffset);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime*2);
         }
         if (stopMoving)
         {
@@ -68,6 +73,7 @@ public class Crystal : MonoBehaviour
         if (collision.CompareTag("Player") && stopMoving && magnetize)
         {
             AudioManager.Instance.PlayLoopingSound("playercrystalcollect");
+            crystalLight.SetActive(false);
             magnetize = false;
             rb.velocity = Vector2.zero;
             SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
@@ -97,6 +103,7 @@ public class Crystal : MonoBehaviour
 
     private void ShowFloatingText()
     {
+        transform.rotation = originalRotation;
         GameObject text = Instantiate(textPrefab, transform.position, Quaternion.identity, transform);
         text.GetComponentInChildren<TextMeshPro>().text = "+" + playerState.tempCrystalAmount.ToString();
         playerState.tempCrystalAmount = 0;

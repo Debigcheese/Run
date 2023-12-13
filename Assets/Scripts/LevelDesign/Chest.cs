@@ -7,15 +7,26 @@ public class Chest : MonoBehaviour
     private Animator anim;
     private EnemyHp enemyHp;
     private CrystalDropper crystalDropper;
-    public int currentHealth;
+    private int currentHealth;
+
+    [Header("Loot To Drop")]
+    public bool dropCrystalSwitch = false;
+    public bool dropObjSwitch = false;
+    public GameObject objToDrop;
+
+    [Space]
+    [Header("Anim")]
+    public GameObject chestOpenAnim;
     public bool chestIsHurt;
     public bool chestIsOpen;
     private bool justHurt;
     private bool justDied;
-    public GameObject chestOpenAnim;
     public bool isWaveChest;
     public bool showWaveChest;
     private int hitCounter;
+
+    [Space]
+    [Header("SFX")]
     public string[] chestHitSFX;
     public string chestOpenSFX;
 
@@ -59,7 +70,16 @@ public class Chest : MonoBehaviour
             justDied = true;
             chestIsOpen = true;
             Instantiate(chestOpenAnim, transform.position, Quaternion.identity);
-            crystalDropper.DropCrystal(enemyHp.crystalDropAmount);
+
+            if(dropCrystalSwitch)
+            {
+                crystalDropper.DropCrystal(enemyHp.crystalDropAmount);
+            }
+            if (dropObjSwitch && objToDrop != null)
+            {
+                Instantiate(objToDrop, transform.position, Quaternion.identity);
+            }
+
             Destroy(this.gameObject);
         }
 
