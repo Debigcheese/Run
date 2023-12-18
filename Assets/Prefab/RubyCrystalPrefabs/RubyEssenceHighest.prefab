@@ -28,7 +28,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.95, y: 0.95, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 575569667500828040}
   m_Father: {fileID: 8083822389027191352}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -109,12 +110,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7678593019511267926}
   m_LocalRotation: {x: -0, y: -0, z: -0.009185062, w: 0.99995786}
-  m_LocalPosition: {x: -0.003, y: 0.002, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.003157666, y: 0.0021052596, z: 0}
+  m_LocalScale: {x: 1.0526315, y: 1.0526315, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8083822389027191352}
-  m_RootOrder: 1
+  m_Father: {fileID: 7141744764205209685}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3622825327075183036
 MonoBehaviour:
@@ -229,7 +230,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7141744764205209685}
-  - {fileID: 575569667500828040}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -245,7 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92107878d02fe1a4d95ef519e1549f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalTrans: {fileID: 8083822389027191352}
   textPrefab: {fileID: 1955720658241887224, guid: 658923effdd1d6045b3a1cdfbbe3b89a, type: 3}
   crystalLight: {fileID: 7678593019511267926}
   magnetize: 0

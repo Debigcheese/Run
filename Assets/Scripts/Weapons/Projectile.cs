@@ -132,11 +132,16 @@ public class Projectile : MonoBehaviour
 
             foreach (Collider2D enemy in hitEnemies)
             {
-                if (!hurtEnemies.Contains(enemy.gameObject))
+                if (!hurtEnemies.Contains(enemy.gameObject) && enemy != null)
                 {
-                    enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
-                    hurtEnemies.Add(enemy.gameObject);
-                    hitEnemy = true;
+                    EnemyHp enemyHp = enemy.GetComponent<EnemyHp>();
+                    if(enemyHp != null)
+                    {
+                        enemyHp.TakeDamage(GetDamage());
+                        hurtEnemies.Add(enemy.gameObject);
+                        hitEnemy = true;
+                    }
+
                 }
 
             }
@@ -150,7 +155,11 @@ public class Projectile : MonoBehaviour
             hitGround = true;
             foreach (Collider2D enemy in hitEnemies)
             {
-                enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
+                if(enemy != null)
+                {
+                    enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
+                }
+
             }
 
             if (!arrowProjectile)
@@ -240,10 +249,7 @@ public class Projectile : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-
-         Gizmos.DrawWireSphere(transform.position + radiusColliderOffset, radiusCollider);
-        
-
+        Gizmos.DrawWireSphere(transform.position + radiusColliderOffset, radiusCollider);
     }
 
 

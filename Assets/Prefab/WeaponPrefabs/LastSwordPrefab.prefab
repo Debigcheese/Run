@@ -159,11 +159,11 @@ MonoBehaviour:
   weaponAttackSFX: playergodsword
   attackCounter: 1
   isMeleeAttacking: 0
-  minDmg: 333
-  maxDmgMinusOne: 999
+  minDmg: 110
+  maxDmgMinusOne: 265
   attackRange: 2
   attackSpeed: 0.6
-  staminaPerAttack: 20
+  staminaPerAttack: 10
   firstSwingDmgDelay: 0.35
   SecondSwingDmgDelay: 0.18
 --- !u!1 &5491807875571219918

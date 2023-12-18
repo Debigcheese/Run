@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 1457540034491635792}
+  useRayCast: 0
   isAttacking: 0
   inRange: 0
   canAttack: 0
@@ -215,6 +216,11 @@ MonoBehaviour:
   attackSpeed: 1.2
   attackDmgDelay: 0.65
   attackRange: 1.17
+  isRangedAttacker: 0
+  rangedAttackCooldown: 0
+  rangedProjectileDelay: 0
+  projectileAttackPoint: {fileID: 0}
+  projectile: {fileID: 0}
 --- !u!114 &1457540034455084162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +249,8 @@ MonoBehaviour:
   isInAir: 0
   directionLookEnabled: 1
   canMove: 1
+  ledgeCheck: 0
+  ledgeCollider: {fileID: 0}
   jumpCheck: {fileID: 5066931068053798271}
   GroundLayer:
     serializedVersion: 2
@@ -251,6 +259,7 @@ MonoBehaviour:
   isMoving: 0
   lookingRight: 0
   detected: 0
+  tookDamageDetect: 0
   enemyDetectionAnim: {fileID: 1457540034146409958}
   startOffset: {x: 0.56, y: 0, z: 0}
 --- !u!114 &1457540034455084222
@@ -334,7 +343,7 @@ MonoBehaviour:
   dontInstaKill: 0
   maxHealth: 35
   currentHealth: 0
-  crystalDropAmount: 31
+  crystalDropAmount: 16
   enemyHealthBar: {fileID: 5974629013738183787}
   easeHealthBar: {fileID: 5974629012316325892}
   damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}

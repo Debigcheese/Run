@@ -32,6 +32,7 @@ public class PlayerState : MonoBehaviour
     public bool isRegeningHp;
     private float lerpSpeed = 0.014f;
     private bool canRegen = true;
+    private bool tookDamage = false;
 
     [Space]
     [Header("GuardianAbility")]
@@ -62,12 +63,14 @@ public class PlayerState : MonoBehaviour
     public Slider staminaBar;
     public float maxStamina = 100;
     public float currentStamina;
+    public float staminaRegenTimer = 0.07f;
 
     [Space]
     [Header("Mana")]
     public Slider manaBar;
     public float maxMana = 100;
     public float currentMana;
+    public float manaRegenTimer = 0.07f;
 
     [Header("Crystals")]
     public int totalCrystalAmount;
@@ -124,8 +127,8 @@ public class PlayerState : MonoBehaviour
 
         isRegeningHpParticles.SetActive(false);
         
-        InvokeRepeating("RefillMana", 0f, PlayerPrefs.GetFloat("ManaRegen", .25f));
-        InvokeRepeating("RefillStamina", 0f, PlayerPrefs.GetFloat("StaminaRegen", 0.035f));
+        InvokeRepeating("RefillMana", 0f, PlayerPrefs.GetFloat("ManaRegen", manaRegenTimer));
+        InvokeRepeating("RefillStamina", 0f, PlayerPrefs.GetFloat("StaminaRegen", staminaRegenTimer));
     }
 
     // Update is called once per frame
@@ -383,32 +386,42 @@ public class PlayerState : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        if (guardianEnabled)
+        if (!tookDamage)
         {
-            float damage = damageAmount * guardianDamageReduction;
-            int roundedDamage = Mathf.RoundToInt(damage);
-            currentHealth -= roundedDamage;
-            ShowDamagePopup(roundedDamage);
-        }
-        else
-        {
-            currentHealth -= damageAmount;
-            ShowDamagePopup(damageAmount);
-        }
-        AudioManager.Instance.PlaySound("playerhurt");
-        damageFlash.CallDamageFlash();
-        bloodyScreenActivateOnFeedback = true;
-        if (currentHealth <= 0)
-        {
-            StartCoroutine(PlayerDie());
-        }
+            if (guardianEnabled)
+            {
+                float damage = damageAmount * guardianDamageReduction;
+                int roundedDamage = Mathf.RoundToInt(damage);
+                currentHealth -= roundedDamage;
+                ShowDamagePopup(roundedDamage);
+            }
+            else
+            {
+                currentHealth -= damageAmount;
+                ShowDamagePopup(damageAmount);
+            }
+            AudioManager.Instance.PlaySound("playerhurt");
+            damageFlash.CallDamageFlash();
+            bloodyScreenActivateOnFeedback = true;
+            if (currentHealth <= 0)
+            {
+                StartCoroutine(PlayerDie());
+            }
 
-        if (!playerAttack.isAttacking && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge)
-        {
-            isHurt = true;
-            StartCoroutine("IsHurtAnimStop");
+            if (!playerAttack.isAttacking && !playerMovement.isWallSliding && !playerMovement.isClimbingLedge)
+            {
+                isHurt = true;
+                StartCoroutine("IsHurtAnimStop");
+            }
+            StartCoroutine(CanTakeDamage());
+            tookDamage = true;
         }
+    }
 
+    private IEnumerator CanTakeDamage()
+    {
+        yield return new WaitForSeconds(.01f);
+        tookDamage = false;
     }
 
     private IEnumerator IsHurtAnimStop()
@@ -469,7 +482,7 @@ public class PlayerState : MonoBehaviour
 
     private void RefillMana()
     {
-        currentMana += 5f;
+        currentMana += 1f;
     }
 
     protected void ShowDamagePopup(float damageAmount)

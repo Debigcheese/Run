@@ -65,7 +65,7 @@ public class StatManagerScript : MonoBehaviour
         for (int i = 0; i< StatsDisplayText.Length; i++)
         {
             int manaRegen = 25;
-            int staminaRegen = 35;
+            int staminaRegen = 25;
             StatsDisplayText[1].text = "Mana regen: ";
             StatsDisplayText[2].text = "Stamina regen: ";
 
@@ -76,28 +76,28 @@ public class StatManagerScript : MonoBehaviour
             }
             if (currentregenLevel == 1)
             {
-                StatsDisplayText[1].text += manaRegen + 8 + "%";
-                StatsDisplayText[2].text += staminaRegen + 8 + "%";
-            }
-            if (currentregenLevel == 2)
-            {
                 StatsDisplayText[1].text += manaRegen + 16 + "%";
                 StatsDisplayText[2].text += staminaRegen + 16 + "%";
             }
-            if (currentregenLevel == 3)
-            {
-                StatsDisplayText[1].text += manaRegen + 24 + "%";
-                StatsDisplayText[2].text += staminaRegen + 24 + "%";
-            }
-            if (currentregenLevel == 4)
+            if (currentregenLevel == 2)
             {
                 StatsDisplayText[1].text += manaRegen + 32 + "%";
                 StatsDisplayText[2].text += staminaRegen + 32 + "%";
             }
+            if (currentregenLevel == 3)
+            {
+                StatsDisplayText[1].text += manaRegen + 48 + "%";
+                StatsDisplayText[2].text += staminaRegen + 48 + "%";
+            }
+            if (currentregenLevel == 4)
+            {
+                StatsDisplayText[1].text += manaRegen + 64 + "%";
+                StatsDisplayText[2].text += staminaRegen + 64 + "%";
+            }
             if (currentregenLevel == 5)
             {
-                StatsDisplayText[1].text += manaRegen + 40 + "%";
-                StatsDisplayText[2].text += staminaRegen + 40 + "%";
+                StatsDisplayText[1].text += manaRegen + 80 + "%";
+                StatsDisplayText[2].text += staminaRegen + 80 + "%";
             }
         }
 
@@ -113,23 +113,23 @@ public class StatManagerScript : MonoBehaviour
             }
             if (currentcritLevel == 1)
             {
-                StatsDisplayText[4].text += critDamage + 20 + "%";
+                StatsDisplayText[4].text += critDamage + 16 + "%";
             }
             if (currentcritLevel == 2)
             {
-                StatsDisplayText[4].text += critDamage + 40 + "%";
+                StatsDisplayText[4].text += critDamage + 32 + "%";
             }
             if (currentcritLevel == 3)
             {
-                StatsDisplayText[4].text += critDamage + 60 + "%";
+                StatsDisplayText[4].text += critDamage + 48 + "%";
             }
             if (currentcritLevel == 4)
             {
-                StatsDisplayText[4].text += critDamage + 80 + "%";
+                StatsDisplayText[4].text += critDamage + 64 + "%";
             }
             if (currentcritLevel == 5)
             {
-                StatsDisplayText[4].text += critDamage + 100 + "%";
+                StatsDisplayText[4].text += critDamage + 80 + "%";
             }
 
         }
@@ -195,13 +195,13 @@ public class StatManagerScript : MonoBehaviour
         if (statSelected == 1)
 
         {
-            statDescription.text = "Increases stamina and mana regeneration by +8%";
+            statDescription.text = "Increases stamina and mana regeneration by +16%";
             TurnOffButtons(1, currentregenLevel);
         }
 
         if (statSelected == 2)
         {
-            statDescription.text = "increases crit chance by +4% and crit damage by +20%";
+            statDescription.text = "increases crit chance by +3% and crit damage by +16%";
             TurnOffButtons(2, currentcritLevel);
         }
     }
@@ -210,18 +210,21 @@ public class StatManagerScript : MonoBehaviour
     {
         statSelected = 0;
         popUpWindow.SetActive(true);
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void PressRegenButton()
     {
         statSelected = 1;
         popUpWindow.SetActive(true);
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void PressCritButton()
     {
         statSelected = 2;
         popUpWindow.SetActive(true);
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void UpgradeHealth()
@@ -238,7 +241,14 @@ public class StatManagerScript : MonoBehaviour
             currenthealthLevel++;
             PlayerPrefs.SetInt("CurrentHealthLevel", currenthealthLevel);
             PlayerPrefs.Save();
+
+            AudioManager.Instance.PlaySound("uibuttonbuy");
         }
+        else
+        {
+            AudioManager.Instance.PlaySound("uibuttonwrong");
+        }
+
     }
 
     public void UpgradeRegen()
@@ -246,12 +256,12 @@ public class StatManagerScript : MonoBehaviour
         if (totalCrystalAmount >= UpgradeCost[currentregenLevel] && currentregenLevel != 5)
         {
 
-            float manaRegen = PlayerPrefs.GetFloat("ManaRegen", .25f);
-            float newManaRegen = manaRegen / 1.08f;
+            float manaRegen = PlayerPrefs.GetFloat("ManaRegen", 0.07f);
+            float newManaRegen = manaRegen / 1.16f;
             PlayerPrefs.SetFloat("ManaRegen", newManaRegen);
 
-            float staminaRegen = PlayerPrefs.GetFloat("StaminaRegen", 0.035f);
-            float newStaminaRegen = staminaRegen / 1.08f;
+            float staminaRegen = PlayerPrefs.GetFloat("StaminaRegen", 0.07f);
+            float newStaminaRegen = staminaRegen / 1.16f;
             PlayerPrefs.SetFloat("StaminaRegen", newStaminaRegen);
 
             PlayerPrefs.SetInt("TotalCrystal", totalCrystalAmount - UpgradeCost[currentregenLevel]);
@@ -259,6 +269,12 @@ public class StatManagerScript : MonoBehaviour
             currentregenLevel++;
             PlayerPrefs.SetInt("CurrentRegenLevel", currentregenLevel);
             PlayerPrefs.Save();
+
+            AudioManager.Instance.PlaySound("uibuttonbuy");
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound("uibuttonwrong");
         }
     }
 
@@ -267,11 +283,11 @@ public class StatManagerScript : MonoBehaviour
         if (totalCrystalAmount >= UpgradeCost[currentcritLevel] && currentcritLevel != 5)
         {
             float CritChance = PlayerPrefs.GetFloat("CritChance", 4);
-            float newCritChance = CritChance + 4f;
+            float newCritChance = CritChance + 3f;
             PlayerPrefs.SetFloat("CritChance", newCritChance);
 
             float critDamage = PlayerPrefs.GetFloat("CritDamage", 2);
-            float newCritDamage = critDamage + .20f;
+            float newCritDamage = critDamage + .16f;
             PlayerPrefs.SetFloat("CritDamage", newCritDamage);
 
             PlayerPrefs.SetInt("TotalCrystal", totalCrystalAmount - UpgradeCost[currentcritLevel]);
@@ -279,11 +295,17 @@ public class StatManagerScript : MonoBehaviour
             currentcritLevel++;
             PlayerPrefs.SetInt("CurrentCritLevel", currentcritLevel);
             PlayerPrefs.Save();
+            AudioManager.Instance.PlaySound("uibuttonbuy");
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound("uibuttonwrong");
         }
     }
 
     public void ReturnButton()
     {
+        AudioManager.Instance.PlaySound("uibutton");
         popUpWindow.SetActive(false);
         BuyButton[statSelected].SetActive(false);
     }

@@ -28,6 +28,9 @@ public class EnemyAI : MonoBehaviour
     public bool jumpEnabled = true, isJumping, isInAir;
     public bool directionLookEnabled = true;
     public bool canMove = true;
+    private bool ledgeDetected = false;
+    public bool ledgeCheck;
+    public Collider2D ledgeCollider;
 
     [Header("Jump Behavior")]
     public Transform jumpCheck;
@@ -38,6 +41,7 @@ public class EnemyAI : MonoBehaviour
     public bool isMoving;
     public bool lookingRight;
     public bool detected = false;
+    public bool tookDamageDetect;
     public GameObject enemyDetectionAnim;
 
     [SerializeField] Vector3 startOffset;
@@ -50,7 +54,17 @@ public class EnemyAI : MonoBehaviour
     Animator anim;
     private bool isOnCoolDown;
 
-
+    private void LedgeCheck()
+    {
+        if (!ledgeCollider.IsTouchingLayers(GroundLayer))
+        {
+            ledgeDetected = true;
+        }
+        else if (ledgeCollider.IsTouchingLayers(GroundLayer))
+        {
+            ledgeDetected = false;
+        }
+    }
 
     public void Start()
     {
@@ -71,10 +85,16 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
 
-        targetPos = target.position;
-        if (TargetInDistance() && followEnabled && !waveSpawnerEnemies)
+        if (ledgeCheck)
         {
-            detectionRadius = (originalDetectionRadius*1.2f);
+            LedgeCheck();
+        }
+
+        targetPos = target.position;
+
+        if ((TargetInDistance() || tookDamageDetect) && followEnabled && !waveSpawnerEnemies)
+        {
+            detectionRadius = (originalDetectionRadius * 1.3f);
             detected = true;
             enemyDetectionAnim.SetActive(true);
             PathFollow();
@@ -152,10 +172,14 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Movement
-        if (canMove)
+        if (canMove && !ledgeDetected)
         {
             rb.velocity = new Vector2(force.x, rb.velocity.y);
             isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
         }
 
         // Next Waypoint
@@ -168,12 +192,12 @@ public class EnemyAI : MonoBehaviour
         // Direction Graphics Handling
         if (directionLookEnabled)
         {
-            if (rb.velocity.x > 0.05f)
+            if (playerMovement.transform.position.x > transform.position.x)
             {
                 transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                 lookingRight = true;
             }
-            else if (rb.velocity.x < -0.05f)
+            else if (playerMovement.transform.position.x < transform.position.x)
             {
                 lookingRight = false;
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);

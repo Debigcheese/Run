@@ -194,6 +194,6 @@ MonoBehaviour:
   maxDmgMinusOne: 11
   attackRange: 1
   attackSpeed: 0.54
-  staminaPerAttack: 24
+  staminaPerAttack: 6
   firstSwingDmgDelay: 0.42
   SecondSwingDmgDelay: 0.18

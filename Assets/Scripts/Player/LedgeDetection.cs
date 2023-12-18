@@ -10,6 +10,7 @@ public class LedgeDetection : MonoBehaviour
     public LayerMask layer;
 
     public bool canDetect;
+    public bool canDetectWait;
     public Vector2 dir = Vector2.right;
     public float rayLength;
 
@@ -44,11 +45,12 @@ public class LedgeDetection : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             canDetect = false;
+            canDetectWait = false;
         }
     }
 
@@ -56,8 +58,19 @@ public class LedgeDetection : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            canDetectWait = true;
+            StartCoroutine(IsAbleToDetect());
+        }
+    }
+
+    public IEnumerator IsAbleToDetect()
+    {
+        yield return new WaitForSeconds(.02f);
+        if (canDetectWait)
+        {
             canDetect = true;
         }
+
     }
 
     private void OnDrawGizmos()

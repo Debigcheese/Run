@@ -211,6 +211,7 @@ public class WeaponManager : MonoBehaviour
             PlayerPrefs.SetInt("CurrentWeapon", weaponIndex);
             PlayerPrefs.Save();
         }
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void SwapSecondary(int btnIndex)
@@ -219,6 +220,7 @@ public class WeaponManager : MonoBehaviour
         PlayerPrefs.SetInt("SecondWeapon", PlayerPrefs.GetInt("CurrentWeapon"));
         PlayerPrefs.SetInt("CurrentWeapon", secondWeaponIndex);
         PlayerPrefs.Save();
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void BuyWeapon(int btnIndex)
@@ -242,11 +244,17 @@ public class WeaponManager : MonoBehaviour
 
                 Debug.Log(PlayerPrefs.GetString("OwnedWeapons"));
             }
+            AudioManager.Instance.PlaySound("uibuttonbuy"); 
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound("uibuttonwrong");
         }
     }
 
     public void ReturnButton()
     {
+        AudioManager.Instance.PlaySound("uibutton");
         popUpPageWarning.SetActive(false);
     }
 
@@ -259,6 +267,7 @@ public class WeaponManager : MonoBehaviour
         }
         else if (pageNumber < pages.Length - 1 && pageNumber >= pagesUnlocked)
         {
+            AudioManager.Instance.PlaySound("uibuttonwrong");
             popUpPageWarning.SetActive(true);
         }
     }
@@ -286,6 +295,7 @@ public class WeaponManager : MonoBehaviour
                 }
             }
         }
+        AudioManager.Instance.PlaySound("uibuttonturnpage");
     }
 
     public void HideCrystalBoxes()

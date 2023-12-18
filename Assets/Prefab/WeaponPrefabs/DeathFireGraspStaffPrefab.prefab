@@ -54,11 +54,11 @@ MonoBehaviour:
   isMagicAttacking: 0
   canAttack: 1
   attackAnimCooldown: 0.7
-  minDmg: 12
-  maxDmgMinusOne: 18
+  minDmg: 90
+  maxDmgMinusOne: 200
   attackCooldown: 0.5
   projectileDelay: 0.55
-  manaPerProjectile: 30
+  manaPerProjectile: 40
 --- !u!1 &3781986441516987379
 GameObject:
   m_ObjectHideFlags: 0

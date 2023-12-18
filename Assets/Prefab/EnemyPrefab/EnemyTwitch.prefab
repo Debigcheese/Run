@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956559837}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7599987, y: -0.6699996, z: 0}
+  m_LocalPosition: {x: -0.701, y: -0.772, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -687,6 +687,64 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1898385270214369195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5802097576607408826}
+  - component: {fileID: 6277920045991823183}
+  m_Layer: 8
+  m_Name: LedgeCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5802097576607408826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898385270214369195}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.7599987, y: -0.6699996, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8214987462801863946}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &6277920045991823183
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898385270214369195}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.5285661, y: -1.244254}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.103807, y: 2.3046234}
+  m_EdgeRadius: 0
 --- !u!1 &4520355331328685204
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +824,7 @@ Transform:
   m_Children:
   - {fileID: 5938948311425408753}
   - {fileID: 1956559838}
+  - {fileID: 5802097576607408826}
   m_Father: {fileID: 5938948310583286305}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -923,6 +982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 5938948311425408753}
+  useRayCast: 0
   isAttacking: 0
   inRange: 0
   canAttack: 0
@@ -930,6 +990,11 @@ MonoBehaviour:
   attackSpeed: 1.4
   attackDmgDelay: 0.6
   attackRange: 0.4
+  isRangedAttacker: 0
+  rangedAttackCooldown: 0
+  rangedProjectileDelay: 0
+  projectileAttackPoint: {fileID: 0}
+  projectile: {fileID: 0}
 --- !u!114 &5938948310583286307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,6 +1023,8 @@ MonoBehaviour:
   isInAir: 0
   directionLookEnabled: 1
   canMove: 1
+  ledgeCheck: 0
+  ledgeCollider: {fileID: 6277920045991823183}
   jumpCheck: {fileID: 1956559838}
   GroundLayer:
     serializedVersion: 2
@@ -966,6 +1033,7 @@ MonoBehaviour:
   isMoving: 0
   lookingRight: 0
   detected: 0
+  tookDamageDetect: 0
   enemyDetectionAnim: {fileID: 5938948310807550791}
   startOffset: {x: 0.56, y: 0, z: 0}
 --- !u!114 &5938948310583286303
@@ -1049,7 +1117,7 @@ MonoBehaviour:
   dontInstaKill: 0
   maxHealth: 5
   currentHealth: 0
-  crystalDropAmount: 3
+  crystalDropAmount: 4
   enemyHealthBar: {fileID: 1493928006253107914}
   easeHealthBar: {fileID: 1493928005636558501}
   damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}

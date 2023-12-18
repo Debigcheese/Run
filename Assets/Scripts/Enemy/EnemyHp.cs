@@ -118,6 +118,7 @@ public class EnemyHp : MonoBehaviour
             }
 
             tookDamage = true;
+            enemyAi.tookDamageDetect = true;
             currentHealth -= damageAmount;
             //play hurt animation
             if (currentHealth <= 0 && !dontInstaKill)
@@ -139,6 +140,8 @@ public class EnemyHp : MonoBehaviour
     {
         yield return new WaitForSeconds(.01f);
         tookDamage = false;
+        yield return new WaitForSeconds(3f);
+        enemyAi.tookDamageDetect = false;
     }
 
     private IEnumerator Die()
@@ -152,7 +155,14 @@ public class EnemyHp : MonoBehaviour
         isDead = true;
         coll.enabled = false;
         enemyAi.canMove = false;
-        enemyAttack.canAttack = false;
+        if(GetComponent<EnemyMinotaur>() != null)
+        {
+            GetComponent<EnemyMinotaur>().canAttack = false;
+        }
+        else
+        {
+            enemyAttack.canAttack = false;
+        }
         rb.simulated = false;
 
         yield return new WaitForSeconds(.66f);

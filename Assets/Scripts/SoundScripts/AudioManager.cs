@@ -31,11 +31,9 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (Instance != this)
+        else
         {
-            Destroy(Instance.gameObject);
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
 
         SetMusicVolume(PlayerPrefs.GetFloat("MusicVolume", 1));
@@ -44,7 +42,6 @@ public class AudioManager : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1);
         SFXSlider.onValueChanged.AddListener(SetSFXVolume);
         SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1);
-        SceneIndex = SceneManager.GetActiveScene().buildIndex;
         ChangeMusicTheme();
 
         /*        PlayerPrefs.SetInt("SceneManager", SceneIndex);
@@ -58,20 +55,30 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
+        SceneIndex = SceneManager.GetActiveScene().buildIndex;
         ChangeMusicTheme();
     }
 
     private void ChangeMusicTheme()
     {
-        if (SceneIndex == 3 && !waveMusicSwitch)
+        if(SceneIndex < 3)
         {
             PlayLoopingSound(musicTheme[0]);
-            DisableSoundNoFade(musicTheme[1]);
+        }
+        else if(SceneIndex >= 3)
+        {
+            DisableSound(musicTheme[0]);
+        }
+
+        if (SceneIndex == 3 && !waveMusicSwitch)
+        {
+            PlayLoopingSound(musicTheme[1]);
+            DisableSoundNoFade(musicTheme[2]);
         }
         else if(SceneIndex == 3 && waveMusicSwitch)
         {
-            DisableSoundNoFade(musicTheme[0]);
-            PlayLoopingSound(musicTheme[1]);
+            DisableSoundNoFade(musicTheme[1]);
+            PlayLoopingSound(musicTheme[2]);
         }
     }
 
@@ -168,7 +175,6 @@ public class AudioManager : MonoBehaviour
         {
             dbVolume = -80.0f;
         }
-
         mixerGroup.audioMixer.SetFloat(exposedParam, dbVolume);
         PlayerPrefs.SetFloat(exposedParam, decimalVolume);
         PlayerPrefs.Save();
@@ -198,6 +204,7 @@ public class AudioManager : MonoBehaviour
             fullscreenActive.SetActive(true);
             fullscreenNotActive.SetActive(false);
         }
+        AudioManager.Instance.PlaySound("uibutton");
 
     }
 }

@@ -8,18 +8,28 @@ public class EnemyAttack : MonoBehaviour
     private PlayerState playerState;
     private EnemyAI enemyAI;
     private EnemyHp enemyHp;
+    private Collider2D[] hitPlayersCollider;
+    private RaycastHit2D[] hitPlayersRayCollider;
     public Transform attackPoint;
+    public bool useRayCast = false;
 
     [Header("Booleans")]
     public bool isAttacking;
     public bool inRange;
-    public bool canAttack;
+    public bool canAttack = true;
 
     [Header("Balancing")]
     public int attackDamage;
     public float attackSpeed;
     public float attackDmgDelay;
     public float attackRange;
+
+    [Header("Ranged Enemy")]
+    public bool isRangedAttacker = false;
+    public float rangedAttackCooldown;
+    public float rangedProjectileDelay;
+    public Transform projectileAttackPoint;
+    public GameObject projectile;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +45,23 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InvokeRepeating("CheckForPlayer", 0f, 0.6f);
+        InvokeRepeating("AttackIfInRange", 0f, 0.6f);
 
-        Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
-        foreach (Collider2D hitplayer in hitPlayers) 
+        if (!useRayCast)
+        {
+            CheckForPlayerCircle();
+        }
+        else
+        {
+            CheckForPlayerRayCast();
+        }
+    }
+
+    private void CheckForPlayerCircle()
+    {
+        hitPlayersCollider = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
+
+        foreach (Collider2D hitplayer in hitPlayersCollider)
         {
             if (hitplayer.CompareTag("Player") && hitplayer != null && canAttack)
             {
@@ -52,7 +75,33 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    private void CheckForPlayer()
+    private void CheckForPlayerRayCast()
+    {
+        if (transform.position.x < playerMovement.transform.position.x)
+        {
+            hitPlayersRayCollider = Physics2D.RaycastAll(attackPoint.position, Vector2.right, attackRange);
+        }
+        else
+        {
+            hitPlayersRayCollider = Physics2D.RaycastAll(attackPoint.position, Vector2.left, attackRange);
+        }
+
+        foreach (RaycastHit2D hitplayer in hitPlayersRayCollider)
+        {
+            if (hitplayer.collider.CompareTag("Player") && hitplayer.collider != null && canAttack)
+            {
+                inRange = true;
+                break;
+            }
+            else
+            {
+                inRange = false;
+            }
+        }
+    }
+
+
+    private void AttackIfInRange()
     {
         if (inRange)
         {
@@ -73,22 +122,49 @@ public class EnemyAttack : MonoBehaviour
 
     private void Attack()
     {
-
-        if (inRange)
+        if (!isRangedAttacker)
         {
-            playerState.TakeDamage(attackDamage);
-            //knockback the player
-            playerMovement.KBCounter = playerMovement.KBTotalTime;
-            if (playerMovement.transform.position.x <= transform.position.x)
+            if (inRange)
             {
-                playerMovement.KnockFromRight = true;
+                playerState.TakeDamage(attackDamage);
+                //knockback the player
+                playerMovement.KBCounter = playerMovement.KBTotalTime;
+                if (playerMovement.transform.position.x <= transform.position.x)
+                {
+                    playerMovement.KnockFromRight = true;
+                }
+                if (playerMovement.transform.position.x >= transform.position.x)
+                {
+                    playerMovement.KnockFromRight = false;
+                }
             }
-            if (playerMovement.transform.position.x >= transform.position.x)
+            StartCoroutine("AttackSpeed");
+
+            if (enemyHp.enemySFX.EnemyAttackSFX != null)
             {
-                playerMovement.KnockFromRight = false;
+                enemyHp.enemySFX.PlayEnemySound(enemyHp.enemySFX.EnemyAttackSFX);
             }
         }
-        StartCoroutine("AttackSpeed");
+        else
+        {
+            StartCoroutine(RangedAttack());
+        }
+        
+    }
+
+    private IEnumerator RangedAttack()
+    {
+        if (inRange && canAttack)
+        {
+            yield return new WaitForSeconds(rangedProjectileDelay);
+            GameObject newProjectile = Instantiate(projectile, projectileAttackPoint.position, Quaternion.identity);
+            EnemyProjectile enemyProjectile = newProjectile.GetComponent<EnemyProjectile>();
+
+            enemyProjectile.SetProjectileDamage(attackDamage);
+        }
+        canAttack = false;
+        StartCoroutine(AttackSpeed());
+
 
         if (enemyHp.enemySFX.EnemyAttackSFX != null)
         {
@@ -101,13 +177,31 @@ public class EnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(attackSpeed);
         isAttacking = false;
         enemyAI.canMove = true;
+
+        if (canAttack == false)
+        {
+            StartCoroutine(RangedAttackSpeed());
+        }
     }
 
+    IEnumerator RangedAttackSpeed()
+    {
+        yield return new WaitForSeconds(rangedAttackCooldown);
+        canAttack = true;
+    }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if (useRayCast)
+        {
+            Gizmos.DrawRay(attackPoint.position, Vector2.right * attackRange);
+            Gizmos.DrawRay(attackPoint.position, Vector2.left * attackRange);
+        }
+
     }
+
+
 
 }

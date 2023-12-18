@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SettingsScriptInGame : MonoBehaviour
 {
     private PlayerState playerState;
+    public Animator anim;
 
     private bool checkIfEsc = false;
     private bool canRespawn = true;
@@ -25,6 +26,7 @@ public class SettingsScriptInGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            AudioManager.Instance.PlaySound("uibutton");
             OpenMenu();
         }
     }
@@ -33,6 +35,7 @@ public class SettingsScriptInGame : MonoBehaviour
     {
         if (checkIfEsc)
         {
+            AudioManager.Instance.PlaySound("uibutton");
             checkIfEsc = false;
             Time.timeScale = 1f;
             menuPanel.SetActive(false);
@@ -40,6 +43,7 @@ public class SettingsScriptInGame : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlaySound("uibutton");
             checkIfEsc = true;
             Time.timeScale = 0f;
             menuPanel.SetActive(true);
@@ -51,12 +55,15 @@ public class SettingsScriptInGame : MonoBehaviour
     {
         menuPanel.SetActive(false);
         settingsPanel.SetActive(true);
+
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void CloseSettingsInGame()
     {
         menuPanel.SetActive(true);
         settingsPanel.SetActive(false);
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void CloseSettings()
@@ -65,23 +72,28 @@ public class SettingsScriptInGame : MonoBehaviour
         Time.timeScale = 1f;
         menuPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void LeaveGame()
     {
-        SceneManager.LoadScene(1);
-    }
-    public void PlayGame()
-    {
-        checkIfEsc = false;
         Time.timeScale = 1f;
-        menuPanel.SetActive(false);
+        StartCoroutine(LeaveGameCoroutine());
+        AudioManager.Instance.PlaySound("uibutton");
+        anim.SetBool("TransitionStart", true);
+    }
+
+    public IEnumerator LeaveGameCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(1);
     }
 
     public void Respawn()
     {
         if (canRespawn)
         {
+            AudioManager.Instance.PlaySound("uibutton");
             checkIfEsc = false;
             canRespawn = false;
             menuPanel.SetActive(false);
@@ -89,6 +101,7 @@ public class SettingsScriptInGame : MonoBehaviour
             playerState.StartPlayerDie();
             StartCoroutine(RespawnTimer());
         }
+        AudioManager.Instance.PlaySound("uibuttonwrong");
 
     }
 

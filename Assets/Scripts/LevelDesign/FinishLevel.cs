@@ -47,7 +47,7 @@ public class FinishLevel : MonoBehaviour
 
     IEnumerator EndTransition()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         anim.SetBool("TransitionEnd", false);
     }
 

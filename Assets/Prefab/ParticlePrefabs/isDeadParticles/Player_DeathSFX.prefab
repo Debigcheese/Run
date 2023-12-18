@@ -9751,6 +9751,7 @@ GameObject:
   - component: {fileID: 2803407385360884045}
   - component: {fileID: 132735405961558598}
   - component: {fileID: 1687471748163445042}
+  - component: {fileID: 2753533840402820307}
   m_Layer: 0
   m_Name: Player_DeathSFX
   m_TagString: Untagged
@@ -14555,6 +14556,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &2753533840402820307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491787699242858628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6286a72277bda148a7aa64de0e26cba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2
 --- !u!1 &8499373520078826331
 GameObject:
   m_ObjectHideFlags: 0

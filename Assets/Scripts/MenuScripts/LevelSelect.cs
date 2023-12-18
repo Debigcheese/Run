@@ -64,11 +64,16 @@ public class LevelSelect : MonoBehaviour
             if(level != 2)
             {
                 letterAnim[level - 3].SetBool("LetterOpen", true);
+                AudioManager.Instance.PlaySound("uibuttonturnpage");
             }
             transitionImage.SetActive(true);
             transitionAnim.SetBool("TransitionStart", true);
             yield return new WaitForSeconds(transitionDuration);
             SceneManager.LoadScene(level);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound("uibuttonwrong");
         }
     }
 
@@ -76,6 +81,7 @@ public class LevelSelect : MonoBehaviour
     {
         PlayerPrefs.SetInt("isUnlocked", levelsUnlocked);
         PlayerPrefs.Save();
+        AudioManager.Instance.PlaySound("lockopen");
         yield return new WaitForSeconds(3f);
         LockAnim[levelsUnlocked].SetBool("Unlock", false);
     }
@@ -89,6 +95,7 @@ public class LevelSelect : MonoBehaviour
 
     public void OpenShop()
     {
+        AudioManager.Instance.PlaySound("uibutton");
         StartCoroutine(LoadScene(2));
     }
 

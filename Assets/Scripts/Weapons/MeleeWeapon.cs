@@ -98,18 +98,12 @@ public class MeleeWeapon : MonoBehaviour
         playerAttack.canAttack = false;
         playerState.ReduceStamina(staminaPerAttack);
         isMeleeAttacking = true;
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
-        List<GameObject> damagedEnemies = new List<GameObject>();
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            damagedEnemies.Add(enemy.gameObject);
-        }
         AudioManager.Instance.PlaySound(weaponAttackSFX);
-        StartCoroutine(SwingDelay(damagedEnemies));
+        StartCoroutine(SwingDelay());
         StartCoroutine(MeleeCD());
     }
 
-    IEnumerator SwingDelay(List<GameObject> damagedEnemies)
+    IEnumerator SwingDelay()
     {
         if (attackCounter >= 0)
         {
@@ -136,9 +130,14 @@ public class MeleeWeapon : MonoBehaviour
         }
         int roundedDamage = Mathf.RoundToInt(totalDamage);
 
-        foreach (GameObject enemy in damagedEnemies)
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemy);
+        foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<EnemyHp>().TakeDamage(roundedDamage);
+            EnemyHp enemyHp = enemy.GetComponent<EnemyHp>();
+            if (enemyHp != null)
+            {
+                enemyHp.TakeDamage(roundedDamage);
+            }
         }
 
     }

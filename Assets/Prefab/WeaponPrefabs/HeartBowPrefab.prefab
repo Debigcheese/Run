@@ -85,9 +85,9 @@ MonoBehaviour:
   isBowShooting: 0
   bowCharge: 0
   canDisableBowCharge: 0
-  minDmg: 69
-  maxDmgMinusOne: 99
-  staminaPerCharge: 20
+  minDmg: 11
+  maxDmgMinusOne: 20
+  staminaPerCharge: 33
   doubleProjectile: 0
 --- !u!1 &4480909602799872191
 GameObject:

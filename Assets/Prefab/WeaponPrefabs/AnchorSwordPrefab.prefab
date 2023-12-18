@@ -159,11 +159,11 @@ MonoBehaviour:
   weaponAttackSFX: playeranchorsword
   attackCounter: 1
   isMeleeAttacking: 0
-  minDmg: 140
-  maxDmgMinusOne: 666
+  minDmg: 80
+  maxDmgMinusOne: 160
   attackRange: 1.3
   attackSpeed: 0.64
-  staminaPerAttack: 30
+  staminaPerAttack: 14
   firstSwingDmgDelay: 0.5
   SecondSwingDmgDelay: 0.18
 --- !u!1 &6613921829213237603

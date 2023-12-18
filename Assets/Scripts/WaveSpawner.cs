@@ -6,24 +6,26 @@ using TMPro;
 public class WaveSpawner : MonoBehaviour
 {
     private PlayerState playerState;
+
     [SerializeField] private float countdown;
-    public GameObject startButton;
-    public GameObject showWaveChest;
+    public bool spawnerActive = false;
+    private bool readyToCountDown = false;
+    public bool endSpawn = false;
     public bool canPressWaveBtn;
+    public bool activateBossSpawner;
+    public bool bossDefeated;
 
     public Wave[] waves;
     public int currentWaveIndex = 0;
-
     public GameObject[] spawnPoints;
-
-    public bool spawnerActive = false;
-    private bool readyToCountDown = false;
-    private bool endSpawn = false;
 
     private Collider2D[] waveBoundaries;
     private string boundaryEndString = "BoundaryEnd";
     private string boundaryStartString = "BoundaryStart";
     private string doorBoundary = "DoorSprite";
+
+    public GameObject startButton;
+    public GameObject showWaveChest;
 
     [Space]
     [Header("Canvas")]
@@ -31,6 +33,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private TextMeshProUGUI WaveText;
     public GameObject wavesStarting;
     public GameObject nextWaveText;
+    public GameObject bossFightText;
     public GameObject wavesClearedText;
 
     public Animator buttonAnim;
@@ -44,6 +47,10 @@ public class WaveSpawner : MonoBehaviour
         Canvas.SetActive(false);
         nextWaveText.SetActive(false);
         wavesStarting.SetActive(false);
+        if(bossFightText != null)
+        {
+            bossFightText.SetActive(false);
+        }
         spawnerActive = false;
         wavesClearedText.SetActive(false);
         startButton.transform.GetChild(0).gameObject.SetActive(false);
@@ -60,6 +67,12 @@ public class WaveSpawner : MonoBehaviour
         if (!spawnerActive && !endSpawn)
         {
             IterateColliders(false, true, true);
+        }
+
+        if (bossDefeated)
+        {
+            KillAllEnemies();
+            currentWaveIndex = waves.Length;
         }
 
         //finish
@@ -113,9 +126,9 @@ public class WaveSpawner : MonoBehaviour
                 {
                     StartCoroutine(SpawnWave());
                 }
-
             }
-            if (waves[currentWaveIndex].enemiesLeft == 0)
+
+            if (waves[currentWaveIndex].enemiesLeft == 0 && !bossDefeated)
             {
                 readyToCountDown = true;
                 currentWaveIndex++;
@@ -125,20 +138,8 @@ public class WaveSpawner : MonoBehaviour
 
             //player dies (restart spawner)
             if (playerState.isRespawnForSpawner)
-            { 
-                foreach(GameObject spawnpoint in spawnPoints)
-                {
-                    GameObject[] childObjects = new GameObject[spawnpoint.transform.childCount];
-                    for(int i = 0; i < spawnpoint.transform.childCount; i++)
-                    {
-                        childObjects[i] = spawnpoint.transform.GetChild(i).gameObject;
-                    }
-
-                    foreach (GameObject childObject in childObjects)
-                    {
-                        Destroy(childObject);
-                    }
-                }
+            {
+                KillAllEnemies();
 
                 startButton.transform.GetChild(0).gameObject.SetActive(false);
                 buttonAnim.SetBool("isPressed", false);
@@ -154,13 +155,35 @@ public class WaveSpawner : MonoBehaviour
         } 
     }
 
+    private void KillAllEnemies()
+    {
+        foreach (GameObject spawnpoint in spawnPoints)
+        {
+            GameObject[] childObjects = new GameObject[spawnpoint.transform.childCount];
+            for (int i = 0; i < spawnpoint.transform.childCount; i++)
+            {
+                childObjects[i] = spawnpoint.transform.GetChild(i).gameObject;
+            }
+
+            foreach (GameObject childObject in childObjects)
+            {
+                Destroy(childObject);
+            }
+        }
+    }
+
     private IEnumerator SpawnWave()
     {
         if(currentWaveIndex < waves.Length)
         {
-            if(currentWaveIndex == 0)
+            if (currentWaveIndex == 0)
             {
                 wavesStarting.SetActive(true);
+            }
+            else if (currentWaveIndex == waves.Length - 1 && activateBossSpawner)
+            {
+                AudioManager.Instance.PlaySound("nextwave");
+                bossFightText.SetActive(true);
             }
             else
             {
@@ -169,17 +192,23 @@ public class WaveSpawner : MonoBehaviour
             }
             WaveText.enabled = true;
 
-
             for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
             {
                 if (!playerState.isRespawnForSpawner)
                 {
+
                     int random = Random.Range(0, spawnPoints.Length);
                     GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform.position, Quaternion.identity, spawnPoints[random].transform);
                     enemy.GetComponent<EnemyAI>().waveSpawnerEnemies = true;
                     enemy.GetComponent<EnemyHp>().countWaveEnemies = true;
 
                     yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
+
+                    if (bossDefeated)
+                    {
+                        break;
+                    }
+
                 }
             }
             wavesStarting.SetActive(false);

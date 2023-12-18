@@ -154,15 +154,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePoint: {fileID: 8840068980370417231}
   magicProjectile: {fileID: 7127742449494675844, guid: a1170cf23e6787e4dacadb97b086f8e5, type: 3}
-  weaponAttackSFX: 
-  weaponHitSFX: 
+  weaponAttackSFX: playersapphireattack
+  weaponHitSFX: playersapphirehit
   attackCounter: 1
   isMagicAttacking: 0
   canAttack: 1
   attackAnimCooldown: 0.45
-  minDmg: 12
-  maxDmgMinusOne: 18
-  attackCooldown: 0.45
+  minDmg: 9
+  maxDmgMinusOne: 17
+  attackCooldown: 0.3
   projectileDelay: 0.4
   manaPerProjectile: 30
 --- !u!1 &8840068980370417224

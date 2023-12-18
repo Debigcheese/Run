@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("WallJumping")]
     private float wallJumpingDirection;
     private float wallJumpingSlowMo = 16f;
+    private bool enableFlipWhenWalljumping = true;
 
     [Space]
     [Header("Dash")]
@@ -330,9 +331,10 @@ public class PlayerMovement : MonoBehaviour
     {
         AudioManager.Instance.PlaySound("playerjump");
         isJumping = true;
-         StopCoroutine(DisableMovement(0));
-         StartCoroutine(DisableMovement(.15f));
+/*         StopCoroutine(DisableMovement(0));
+         StartCoroutine(DisableMovement(.15f));*/
          isWallJumping = true;
+        rb.velocity = Vector2.zero;
          wallJumpingDirection = -transform.localScale.x;
          rb.velocity = new Vector2(wallJumpingDirection * wallJumpingForce.x, wallJumpingForce.y);
          Flip();
@@ -366,10 +368,12 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
             MoveDirectionFlip();
+
         }
-        else
+        else if(enableFlipWhenWalljumping && isWallJumping)
         {
             StartCoroutine(EnableFlip(.4f));
+            enableFlipWhenWalljumping = false;
         }
     }
 
@@ -377,7 +381,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         MoveDirectionFlip();
-        StopCoroutine(EnableFlip(0));
+        enableFlipWhenWalljumping = true;
     }
 
     private void Jump(Vector2 dir)

@@ -40,13 +40,12 @@ public class ShopManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         crystalText.text = PlayerPrefs.GetInt("TotalCrystal", 0).ToString();
     }
 
     public void LeaveShop()
     {
+        AudioManager.Instance.PlaySound("uibutton");
         FindObjectOfType<TransitionScript>().TransitionStart();
         StartCoroutine(LoadLevelSelect());
     }
@@ -74,6 +73,7 @@ public class ShopManager : MonoBehaviour
 
     private void OpenPanel(int panel)
     {
+        AudioManager.Instance.PlaySound("uibutton");
         for (int i = 0; i < panels.Length; i++)
         {
             if (panels[i] == panels[panel])

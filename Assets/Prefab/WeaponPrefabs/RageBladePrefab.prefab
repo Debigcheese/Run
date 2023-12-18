@@ -53,11 +53,11 @@ MonoBehaviour:
   weaponAttackSFX: playerragesword
   attackCounter: 1
   isMeleeAttacking: 0
-  minDmg: 3
-  maxDmgMinusOne: 9
+  minDmg: 11
+  maxDmgMinusOne: 19
   attackRange: 0.95
   attackSpeed: 0.37
-  staminaPerAttack: 20
+  staminaPerAttack: 6
   firstSwingDmgDelay: 0.35
   SecondSwingDmgDelay: 0.1
 --- !u!1 &4386009893018406388

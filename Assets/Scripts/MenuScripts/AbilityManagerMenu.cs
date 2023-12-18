@@ -106,6 +106,7 @@ public class AbilityManagerMenu : MonoBehaviour
                 PlayerPrefs.Save();
 
                 UpdateButtonStates();
+                AudioManager.Instance.PlaySound("uibutton");
             }
             if (equippedAbility == abilityIndex[i])
             {
@@ -142,8 +143,14 @@ public class AbilityManagerMenu : MonoBehaviour
                     PlayerPrefs.Save();
 
                     UpdateButtonStates();
+
+                    AudioManager.Instance.PlaySound("uibuttonbuy");
                 }
 
+            }
+            else
+            {
+                AudioManager.Instance.PlaySound("uibuttonwrong");
             }
         }
     }
