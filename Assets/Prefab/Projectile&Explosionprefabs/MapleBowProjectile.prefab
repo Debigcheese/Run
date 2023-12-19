@@ -140,7 +140,8 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4292349310376242502, guid: 20d149db7ba34ae4290865d8f4335cc2, type: 3}
   hitGroundDontExplode: 1
   force: 17
-  radiusCollider: 0.26
+  radiusCollider: 0.2
+  radiusColliderOffset: {x: 0, y: 0, z: 0}
   rotationOff: 0
   flipY: 1
   arrowProjectile: 1
@@ -184,4 +185,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.0018936992}
   serializedVersion: 2
-  m_Radius: 0.23352021
+  m_Radius: 0.1774743

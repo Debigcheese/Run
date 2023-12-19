@@ -176,7 +176,7 @@ public class BowWeapon : MonoBehaviour
             StartCoroutine(DoubleProjectile(mousePos, damageMultiplier));
         }
 
-        AudioManager.Instance.DisableSound("playerbowcharge");
+        AudioManager.Instance.DisableSoundNoFade("playerbowcharge");
         AudioManager.Instance.PlaySound(weaponAttackSFX);
 
         StartCoroutine(FinishAnimation());

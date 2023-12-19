@@ -56,13 +56,15 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4292349310376242502, guid: 20d149db7ba34ae4290865d8f4335cc2, type: 3}
   hitGroundDontExplode: 1
   force: 22
-  radiusCollider: 0.4
+  radiusCollider: 0.322
+  radiusColliderOffset: {x: 0, y: 0, z: 0}
   rotationOff: 0
   flipY: 0
   arrowProjectile: 1
   arrowGravity: 1.5
   arrowGravityDelay: 0.04
   arrowGoThroughEnemies: 0
+  hitEnemy: 0
 --- !u!50 &6526624107512754213
 Rigidbody2D:
   serializedVersion: 4
@@ -99,7 +101,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.01078251}
   serializedVersion: 2
-  m_Radius: 0.30568442
+  m_Radius: 0.27902493
 --- !u!1 &4473220124442292607
 GameObject:
   m_ObjectHideFlags: 0

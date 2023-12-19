@@ -117,9 +117,12 @@ public class AudioManager : MonoBehaviour
 
     public void RandomPitch(Sound s)
     {
+        s.source.pitch = s.pitch;
         float rng = UnityEngine.Random.Range(-s.randomPitchValue, s.randomPitchValue);
         s.source.pitch = s.pitch + rng;
+        s.source.volume = s.volume;
         s.source.Play();
+
     }
 
     public void DisableSound(string name)
@@ -152,18 +155,18 @@ public class AudioManager : MonoBehaviour
 
     public IEnumerator FadeOut(Sound s)
     {
-        float startVolume = s.source.volume;
         float timer = 0;
         float duration = .8f;
+        s.source.volume = s.volume;
 
         while (timer < duration)
         {
             timer += Time.deltaTime;
-            s.source.volume = Mathf.Lerp(startVolume, 0, timer / duration);
+            s.source.volume = Mathf.Lerp(s.volume, 0, timer / duration);
             yield return null;
         }
         s.source.Stop();
-        s.source.volume = startVolume;
+        s.source.volume = s.volume;
     }
 
 

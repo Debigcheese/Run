@@ -8,6 +8,7 @@ public class Sound
     public string name;
     public AudioSource source;
 
+    public float volume;
     public float pitch;
     public float randomPitchValue = 0.1f;
 

@@ -8656,262 +8656,327 @@ MonoBehaviour:
   sounds:
   - name: playerfootsteps
     source: {fileID: 5895719301467660223}
+    volume: 0.05
     pitch: 1.36
     randomPitchValue: 0.13
   - name: playerslowfootsteps
     source: {fileID: 5895719302041042732}
+    volume: 0.05
     pitch: 0.7
     randomPitchValue: 0.05
   - name: playerhurt
     source: {fileID: 5895719301489028710}
+    volume: 0.05
     pitch: 2
     randomPitchValue: 0.1
   - name: playerjump
     source: {fileID: 5895719302234568350}
+    volume: 0.1
     pitch: 1.25
     randomPitchValue: 0.05
   - name: playerledgeclimb
     source: {fileID: 5895719302049426948}
+    volume: 0.1
     pitch: 1.7
     randomPitchValue: 0.1
   - name: playerinwater
     source: {fileID: 5895719301920498934}
+    volume: 1
     pitch: 1.3
     randomPitchValue: 0.1
   - name: playercrystalcollect
     source: {fileID: 5895719301427159943}
+    volume: 0.15
     pitch: 1.05
     randomPitchValue: 0.1
   - name: playerswitchweapons
     source: {fileID: 5895719302312634272}
+    volume: 0.08
     pitch: 1
     randomPitchValue: 0.1
   - name: playerdash
     source: {fileID: 5895719301058312247}
+    volume: 0.1
     pitch: 1.8
     randomPitchValue: 0.1
   - name: playeractivateguardian
     source: {fileID: 5895719300795716817}
+    volume: 0.1
     pitch: 1.2
     randomPitchValue: 0
   - name: playerduringguardian
     source: {fileID: 5895719300391654249}
+    volume: 0.5
     pitch: 0.7
     randomPitchValue: 0
   - name: playerdisableguardian
     source: {fileID: 5895719301638889104}
+    volume: 0.1
     pitch: 0.9
     randomPitchValue: 0
   - name: playeractivatevengeance
     source: {fileID: 5895719302247887690}
+    volume: 0.1
     pitch: 1.3
     randomPitchValue: 0
   - name: playerduringvengeance
     source: {fileID: 5895719300846180840}
+    volume: 0.5
     pitch: 1.1
     randomPitchValue: 0
   - name: playerdisablevengeance
     source: {fileID: 5895719302221325538}
+    volume: 0.1
     pitch: 1
     randomPitchValue: 0
   - name: playerpunch
     source: {fileID: 5895719301420927122}
+    volume: 0.1
     pitch: 1.45
     randomPitchValue: 0.05
   - name: playersteelsword
     source: {fileID: 5895719301078524938}
+    volume: 0.1
     pitch: 2
     randomPitchValue: 0.05
   - name: playerragesword
     source: {fileID: 5895719301771208862}
+    volume: 0.1
     pitch: 2.25
     randomPitchValue: 0.05
   - name: playerqueensword
     source: {fileID: 5895719300799953586}
+    volume: 0.1
     pitch: 1.7
     randomPitchValue: 0.05
   - name: playeranchorsword
     source: {fileID: 5895719301304330791}
+    volume: 0.1
     pitch: 1.25
     randomPitchValue: 0.05
   - name: playergodsword
     source: {fileID: 5895719301172344699}
+    volume: 0.1
     pitch: 1.55
     randomPitchValue: 0.05
   - name: playerbowcharge
     source: {fileID: 5895719302322319279}
+    volume: 0.15
     pitch: 1.2
     randomPitchValue: 0.1
   - name: playerbowattack
     source: {fileID: 5895719301575962363}
+    volume: 0.08
     pitch: 1.1
     randomPitchValue: 0.1
   - name: playerbowhit
     source: {fileID: 5895719300877404380}
+    volume: 0.05
     pitch: 1.2
     randomPitchValue: 0.05
   - name: playerheartbowattack
     source: {fileID: 5895719302083778732}
+    volume: 0.1
     pitch: 1.1
     randomPitchValue: 0.1
   - name: playerfrostbowattack
     source: {fileID: 5895719300597123645}
+    volume: 0.1
     pitch: 1
     randomPitchValue: 0.1
   - name: playerdarkbowattack
     source: {fileID: 5895719301067795139}
+    volume: 0.1
     pitch: 1
     randomPitchValue: 0.1
   - name: playersapphireattack
     source: {fileID: 5895719302094667062}
+    volume: 0.07
     pitch: 1.1
     randomPitchValue: 0.07
   - name: playersapphirehit
     source: {fileID: 5895719302427510243}
+    volume: 0.06
     pitch: 1.8
     randomPitchValue: 0.07
   - name: playerwhiteattack
     source: {fileID: 5895719301570733852}
+    volume: 0.07
     pitch: 1.2
     randomPitchValue: 0.1
   - name: playerwhitehit
     source: {fileID: 5895719300499694593}
+    volume: 0.04
     pitch: 1.2
     randomPitchValue: 0.1
   - name: playerbrandattack
     source: {fileID: 5895719300708820026}
+    volume: 0.055
     pitch: 1.1
     randomPitchValue: 0.1
   - name: playerbrandhit
     source: {fileID: 5895719301298170738}
+    volume: 0.045
     pitch: 1.8
     randomPitchValue: 0.1
   - name: playereyeballattack
     source: {fileID: 5895719301946649863}
+    volume: 0.14
     pitch: 1.1
     randomPitchValue: 0.05
   - name: playereyeballhit
     source: {fileID: 5895719301373385597}
+    volume: 0.12
     pitch: 1.35
     randomPitchValue: 0.1
   - name: playergraspattack
     source: {fileID: 5895719301732610468}
+    volume: 0.07
     pitch: 1.4
     randomPitchValue: 0.1
   - name: playergrasphit
     source: {fileID: 5895719301745735846}
+    volume: 0.07
     pitch: 1
     randomPitchValue: 0.1
   - name: chesthit0
     source: {fileID: 5895719300490398518}
+    volume: 0.1
     pitch: 0.7
     randomPitchValue: 0
   - name: chesthit1
     source: {fileID: 5895719301405172219}
+    volume: 0.1
     pitch: 0.84
     randomPitchValue: 0
   - name: chesthit2
     source: {fileID: 5895719301687726408}
+    volume: 0.1
     pitch: 0.96
     randomPitchValue: 0
   - name: chesthit3
     source: {fileID: 5895719300552803868}
+    volume: 0.1
     pitch: 1.13
     randomPitchValue: 0.12
   - name: chestopen
     source: {fileID: 5895719301119547210}
+    volume: 0.1
     pitch: 1.1
     randomPitchValue: 0.1
   - name: healingfountaincheckpoint
     source: {fileID: 5895719302259790831}
+    volume: 0.14
     pitch: 1.1
     randomPitchValue: 0.05
   - name: healingfountainregen
     source: {fileID: 5895719301342376499}
+    volume: 0.1
     pitch: 0.66
     randomPitchValue: 0
   - name: wavebuttonpressed
     source: {fileID: 5895719301484836817}
+    volume: 0.16
     pitch: 1
     randomPitchValue: 0.05
   - name: wavesfinished
     source: {fileID: 5895719302345136459}
+    volume: 0.16
     pitch: 0.8
     randomPitchValue: 0
   - name: nextwave
     source: {fileID: 5895719301057721771}
+    volume: 0.16
     pitch: 0.75
     randomPitchValue: 0.05
   - name: levelcomplete
     source: {fileID: 5895719301936497319}
+    volume: 0.2
     pitch: 1.1
     randomPitchValue: 0
   - name: enemymousehurt
     source: {fileID: 6306817577068342015}
+    volume: 0.2
     pitch: 1.2
     randomPitchValue: 0.1
   - name: enemymousedie
     source: {fileID: 5895719300749935524}
+    volume: 0.2
     pitch: 0.35
     randomPitchValue: 0.1
   - name: enemymouseattack
     source: {fileID: 5895719300461778744}
+    volume: 0.2
     pitch: 0.7
     randomPitchValue: 0.1
   - name: enemychomperhurt
     source: {fileID: 5895719300470832357}
+    volume: 0.15
     pitch: 2
     randomPitchValue: 0.1
   - name: enemychomperdie
     source: {fileID: 5895719300570462807}
+    volume: 0.15
     pitch: 0.9
     randomPitchValue: 0.1
   - name: enemychomperattack
     source: {fileID: 5895719302342976366}
+    volume: 0.15
     pitch: 1.4
     randomPitchValue: 0.1
   - name: enemyshroomhurt
     source: {fileID: 5895719301015076769}
+    volume: 0.15
     pitch: 1.4
     randomPitchValue: 0.1
   - name: enemyshroomdie
     source: {fileID: 5895719301748250935}
+    volume: 0.15
     pitch: 0.55
     randomPitchValue: 0.1
   - name: enemyshroomattack
     source: {fileID: 5895719300922298121}
+    volume: 0.15
     pitch: 0.92
     randomPitchValue: 0.1
   - name: level1music
     source: {fileID: 5895719301650755350}
+    volume: 0.2
     pitch: 1
     randomPitchValue: 0
   - name: level1musicwave1
     source: {fileID: 5895719302250580473}
+    volume: 0.2
     pitch: 1
     randomPitchValue: 0
   - name: menumusic
     source: {fileID: 5111682490320080528}
+    volume: 0.2
     pitch: 1
     randomPitchValue: 0
   - name: uibutton
     source: {fileID: 2140862927}
+    volume: 0.1
     pitch: 1
     randomPitchValue: 0.1
   - name: uibuttonbuy
     source: {fileID: 947349457}
+    volume: 0.3
     pitch: 0.8
     randomPitchValue: 0.05
   - name: uibuttonturnpage
     source: {fileID: 1992083996}
+    volume: 0.2
     pitch: 1
     randomPitchValue: 0.05
   - name: uibuttonwrong
     source: {fileID: 1534832733156356698}
+    volume: 0.3
     pitch: 0.8
     randomPitchValue: 0.05
   - name: lockopen
     source: {fileID: 772208761}
+    volume: 0.4
     pitch: 0.98
     randomPitchValue: 0
   waveMusicSwitch: 0
