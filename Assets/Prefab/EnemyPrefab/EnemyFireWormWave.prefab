@@ -383,7 +383,7 @@ MonoBehaviour:
   attackDamage: 4
   attackSpeed: 0.45
   attackDmgDelay: 0.25
-  attackRange: 12
+  attackRange: 16
   isRangedAttacker: 1
   rangedAttackCooldown: 1
   rangedProjectileDelay: 1.1

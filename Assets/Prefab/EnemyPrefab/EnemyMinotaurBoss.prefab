@@ -73,7 +73,7 @@ MonoBehaviour:
   attackSwingDmgDelay: 0.45
   attackRange: 2.1
   attackRangeSwing: 2.9
-  attackCooldown: 2
+  attackCooldown: 2.5
 --- !u!114 &2496160133343277262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   detectionRadius: 9.5
   pathUpdateSeconds: 0.5
   nextWaypointDistance: 1
-  speed: 4
+  speed: 5
   jumpForce: 12
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0.3
@@ -194,7 +194,7 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
-  maxHealth: 310
+  maxHealth: 280
   currentHealth: 15
   crystalDropAmount: 245
   enemyHealthBar: {fileID: 7238474221249802279}
