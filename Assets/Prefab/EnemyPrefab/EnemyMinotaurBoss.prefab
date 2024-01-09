@@ -67,7 +67,7 @@ MonoBehaviour:
   canAttack: 1
   stopAttack: 0
   useRayCast: 0
-  attackDamage: 6
+  attackDamage: 12
   attackSpeed: 1
   attackDmgDelay: 0.15
   attackSwingDmgDelay: 0.45

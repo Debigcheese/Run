@@ -33,6 +33,7 @@ public class WeaponManager : MonoBehaviour
     public TextMeshProUGUI[] buyText;
     public TextMeshProUGUI[] equipText;
     public TextMeshProUGUI[] equippedText;
+    public TextMeshProUGUI[] cantAffordText;
     public TextMeshProUGUI[] crystalCostText;
 
     //images
@@ -154,41 +155,20 @@ public class WeaponManager : MonoBehaviour
                 buyText[i].enabled = true;
                 equipText[i].enabled = false;
                 equippedText[i].enabled = false;
+                cantAffordText[i].enabled = false;
             }
-            else if (ownedWeapons.Contains(pages[pageNumber].weaponIndex[i]) )
+            else if (ownedWeapons.Contains(pages[pageNumber].weaponIndex[i]))
             {
                 pages[pageNumber].itemPanels[i].GetComponent<Image>().color = boughtColor;
 
-                if (currentWeaponIndex == pages[pageNumber].weaponIndex[i])
-                {
-                    buyButton[i].SetActive(false);
-                    cantBuyButton[i].SetActive(false);
-                    EquipButton[i].SetActive(false);
-                    EquipAsSecondary[i].SetActive(true);
-                    buyText[i].enabled = false;
-                    equipText[i].enabled = false;
-                    equippedText[i].enabled = true;
-                }
-                else if(secondWeaponIndex == pages[pageNumber].weaponIndex[i])
-                {
-                    buyButton[i].SetActive(false);
-                    cantBuyButton[i].SetActive(false);
-                    EquipButton[i].SetActive(false);
-                    EquipAsSecondary[i].SetActive(true);
-                    buyText[i].enabled = false;
-                    equipText[i].enabled = true;
-                    equippedText[i].enabled = false;
-                }
-                else
-                {
-                    buyButton[i].SetActive(false);
-                    cantBuyButton[i].SetActive(false);
-                    EquipButton[i].SetActive(true);
-                    EquipAsSecondary[i].SetActive(false);
-                    buyText[i].enabled = false;
-                    equipText[i].enabled = true;
-                    equippedText[i].enabled = false;
-                }
+                buyButton[i].SetActive(false);
+                cantBuyButton[i].SetActive(false);
+                EquipButton[i].SetActive(true);
+                EquipAsSecondary[i].SetActive(true);
+                buyText[i].enabled = false;
+                equipText[i].enabled = true;
+                equippedText[i].enabled = true;
+                cantAffordText[i].enabled = false;
             }
             else
             {
@@ -196,29 +176,68 @@ public class WeaponManager : MonoBehaviour
                 EquipButton[i].SetActive(false);
                 cantBuyButton[i].SetActive(true);
                 EquipAsSecondary[i].SetActive(false);
-                buyText[i].enabled = true;
+                buyText[i].enabled = false;
                 equipText[i].enabled = false;
                 equippedText[i].enabled = false;
+                cantAffordText[i].enabled = true;
             }
         }
     }
 
     public void EquipWeapon(int btnIndex)
     {
-        for (int i = 0; i < buyButton.Length; i++)
+        int currentWeaponIndex = PlayerPrefs.GetInt("CurrentWeapon", 0);
+        int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon", 0);
+        int selectedWeaponIndex = pages[pageNumber].weaponIndex[btnIndex];
+
+        //weapon is not in primary and gets set to secondary
+        if (selectedWeaponIndex != currentWeaponIndex && secondWeaponIndex != selectedWeaponIndex)
         {
-            int weaponIndex = pages[pageNumber].weaponIndex[btnIndex];
-            PlayerPrefs.SetInt("CurrentWeapon", weaponIndex);
-            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("CurrentWeapon", selectedWeaponIndex);
         }
+
+        //weapon is already secondary
+        if (currentWeaponIndex == selectedWeaponIndex)
+        {
+            return;
+        }
+
+        //weapon is already in primary, (swap)
+        if (selectedWeaponIndex == secondWeaponIndex)
+        {
+            PlayerPrefs.SetInt("CurrentWeapon", selectedWeaponIndex);
+            PlayerPrefs.SetInt("SecondWeapon", currentWeaponIndex);
+        }
+
+        PlayerPrefs.Save();
         AudioManager.Instance.PlaySound("uibutton");
     }
 
     public void SwapSecondary(int btnIndex)
     {
-        int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon");
-        PlayerPrefs.SetInt("SecondWeapon", PlayerPrefs.GetInt("CurrentWeapon"));
-        PlayerPrefs.SetInt("CurrentWeapon", secondWeaponIndex);
+        int currentWeaponIndex = PlayerPrefs.GetInt("CurrentWeapon", 0);
+        int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon", 0);
+        int selectedWeaponIndex = pages[pageNumber].weaponIndex[btnIndex];
+
+        //weapon is not in primary and gets set to secondary
+        if(selectedWeaponIndex != currentWeaponIndex && secondWeaponIndex != selectedWeaponIndex)
+        {
+            PlayerPrefs.SetInt("SecondWeapon", selectedWeaponIndex);
+        }
+
+        //weapon is already secondary
+        if(secondWeaponIndex == selectedWeaponIndex)
+        {
+            return;
+        }
+
+        //weapon is already in primary, (swap)
+        if (selectedWeaponIndex == currentWeaponIndex)
+        {
+            PlayerPrefs.SetInt("CurrentWeapon", secondWeaponIndex);
+            PlayerPrefs.SetInt("SecondWeapon", selectedWeaponIndex);
+        }
+
         PlayerPrefs.Save();
         AudioManager.Instance.PlaySound("uibutton");
     }

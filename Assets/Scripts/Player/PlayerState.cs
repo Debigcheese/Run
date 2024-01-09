@@ -31,7 +31,8 @@ public class PlayerState : MonoBehaviour
     public bool isDead;
     public bool isRegeningHp;
     private float lerpSpeed = 0.014f;
-    private bool canRegen = true;
+    private bool inRangeHealingFountain = false;
+    private float healingFountainTimer = 0f;
     private bool tookDamage = false;
 
     [Space]
@@ -75,6 +76,7 @@ public class PlayerState : MonoBehaviour
     [Header("Crystals")]
     public int totalCrystalAmount;
     public int tempCrystalAmount;
+    public int crystalsLostOnDeath;
     public bool isCounting;
     public TextMeshProUGUI crystalText;
 
@@ -86,6 +88,7 @@ public class PlayerState : MonoBehaviour
 
     [SerializeField] private GameObject lowManaPopupPrefab;
     [SerializeField] private GameObject lowStaminaPopupPrefab;
+    [SerializeField] private GameObject healingPopupPrefab;
     public bool lowMana;
     private bool lowEnergyTimer;
 
@@ -106,6 +109,7 @@ public class PlayerState : MonoBehaviour
         rb = GetComponentInChildren<Rigidbody2D>();
 
         totalCrystalAmount = PlayerPrefs.GetInt("TotalCrystal", 0);
+        crystalsLostOnDeath = 0;
         maxHealth = PlayerPrefs.GetInt("TotalHealth", maxHealth);
 
         currentHealth = maxHealth;
@@ -234,14 +238,69 @@ public class PlayerState : MonoBehaviour
 
             if (weaponHolder.meleeEquipped)
             {
-                ShowLowManaPopup("Low stamina", lowStaminaPopupPrefab);
+                ShowTextPopup("Low stamina", lowStaminaPopupPrefab);
             }
             else if (weaponHolder.magicEquipped)
             {
-                ShowLowManaPopup("Low mana", lowManaPopupPrefab);
+                ShowTextPopup("Low mana", lowManaPopupPrefab);
             }
             lowEnergyTimer = true;
             StartCoroutine(LowEnergyTimer());
+        }
+
+        if (inRangeHealingFountain && Input.GetKey(KeyCode.E) && playerMovement.GroundCheck() && currentHealth != maxHealth)
+        {
+
+            HealingStopMovement();
+            RegenHp();
+        }
+        if ((inRangeHealingFountain && Input.GetKeyUp(KeyCode.E) && playerMovement.GroundCheck()) || (inRangeHealingFountain && currentHealth == maxHealth))
+        {
+            healingFountainTimer = 0f;
+            playerMovement.cantMove = false;
+            playerAttack.canAttack = true;
+            isRegeningHp = false;
+            isRegeningHpParticles.SetActive(false);
+            AudioManager.Instance.DisableSound("healingfountainregen");
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HealingFountain"))
+        {
+            inRangeHealingFountain = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HealingFountain"))
+        {
+            inRangeHealingFountain = false;
+        }
+    }
+
+    private void HealingStopMovement()
+    {
+        playerMovement.cantMove = true;
+        rb.velocity = Vector2.zero;
+        playerAttack.canAttack = false;
+    }
+
+    public void RegenHp()
+    {
+        isRegeningHp = true;
+        isRegeningHpParticles.SetActive(true);
+        healingFountainTimer += Time.deltaTime;
+        if ((healingFountainTimer >= 1f) && isRegeningHp)
+        {
+            float tempCurrHp = currentHealth;
+            float tempMaxHp = maxHealth;
+            tempCurrHp += tempMaxHp * 0.1f;
+            currentHealth = Mathf.RoundToInt(tempCurrHp);
+            ShowTextPopup("Healing", healingPopupPrefab);
+            healingFountainTimer = 0f;
         }
     }
 
@@ -296,45 +355,6 @@ public class PlayerState : MonoBehaviour
             {
                 sprite.color = originalPlayerColor;
             }
-        }
-        
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("HealingFountain"))
-        {
-            if (canRegen)
-            {
-                StartCoroutine(RegenHp());
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("HealingFountain"))
-        {
-            isRegeningHp = false;
-            canRegen = true;
-            isRegeningHpParticles.SetActive(false);
-            AudioManager.Instance.DisableSound("healingfountainregen");
-        }
-    }
-
-    public IEnumerator RegenHp()
-    {
-        isRegeningHp = true;
-        canRegen = false;
-        isRegeningHpParticles.SetActive(true);
-        yield return new WaitForSeconds(.8f);
-        if (currentHealth < maxHealth && isRegeningHp )
-        {
-            float tempCurrHp = currentHealth;
-            float tempMaxHp = maxHealth;
-            tempCurrHp += tempMaxHp * 0.1f;
-            currentHealth = Mathf.RoundToInt(tempCurrHp);
-            canRegen = true;
         }
     }
 
@@ -444,6 +464,9 @@ public class PlayerState : MonoBehaviour
         playerAttack.dialogueStopAttack = true;
         playerAttack.isAttacking = false;
         rb.simulated = false;
+
+        totalCrystalAmount -= Mathf.RoundToInt(crystalsLostOnDeath / 2f);
+        crystalsLostOnDeath = 0;
         Instantiate(isDeadParticles, transform.position, Quaternion.identity, transform);
         StartCoroutine(Respawn());
         Time.timeScale = .4f;
@@ -463,6 +486,11 @@ public class PlayerState : MonoBehaviour
         rb.simulated = true;
         transform.position = respawnPosition.transform.position;
         currentHealth = maxHealth;
+
+        //bloodyscreen
+        waitColorChange = false;
+        bloodyScreen.color = transparentColor;
+        bloodyScreenActivateOnFeedback = false;
     }
 
     public void ReduceStamina(float staminaToReduce)
@@ -507,12 +535,12 @@ public class PlayerState : MonoBehaviour
         damagePopupScript.ShowDamageAmount(damageAmount, gameObject);
     }
 
-    protected void ShowLowManaPopup(string text, GameObject popupPrefab)
+    protected void ShowTextPopup(string text, GameObject popupPrefab)
     {
 
         // Generate random offset within maxOffsetDistance
         float offsetX = UnityEngine.Random.Range(-0, 0);
-        float offsetY = UnityEngine.Random.Range(-0, 0);
+        float offsetY = UnityEngine.Random.Range(-0, 0.5f);
         Vector3 offset = new Vector3(offsetX, offsetY, 0f);
         Vector3 startPosition = transform.position + offset;
 

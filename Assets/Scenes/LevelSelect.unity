@@ -326,6 +326,12 @@ MonoBehaviour:
   levelsUnlocked: 0
   crystalAmount: 0
   crystalText: {fileID: 1950354441}
+  shopObject:
+  - {fileID: 1934978580}
+  - {fileID: 526456941}
+  shopText: {fileID: 1076931849}
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
+  unavailableColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 0}
 --- !u!4 &76720402
 Transform:
   m_ObjectHideFlags: 0
@@ -732,6 +738,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &477824160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 477824163}
+  - component: {fileID: 477824161}
+  m_Layer: 0
+  m_Name: CheatScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &477824161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477824160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ad01466e7d9eb4c9b2fb690dcd8124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &477824163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477824160}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 72.617676, y: 7.4172306, z: 4.280225}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3515,8 +3565,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1934978581}
   - component: {fileID: 1934978585}
-  - component: {fileID: 1934978583}
   - component: {fileID: 1934978586}
+  - component: {fileID: 1934978583}
   m_Layer: 0
   m_Name: ShopButton
   m_TagString: Untagged
@@ -5508,8 +5558,8 @@ RectTransform:
   m_Father: {fileID: 976570664181219370}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.5, y: 0.069999695}
   m_SizeDelta: {x: 75, y: 81.25}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5854,8 +5904,8 @@ RectTransform:
   m_Father: {fileID: 976570663595509319}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.5, y: 0.069999695}
   m_SizeDelta: {x: 75, y: 81.25}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6581,7 +6631,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7179,7 +7229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &976570664896206686
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7200,6 +7250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f614d484196b4409a5233467b8f5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   menuPanel: {fileID: 976570664433829807}
   settingsPanel: {fileID: 976570664433829807}
 --- !u!114 &976570664969857944
@@ -7248,7 +7299,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

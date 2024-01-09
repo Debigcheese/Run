@@ -106,7 +106,7 @@ public class DialogueManager : MonoBehaviour
     IEnumerator GoDash()
     {
         yield return new WaitForSeconds(.1f);
-        playerMovement.Dash(new Vector2(1f, 1f));
+        playerMovement.Dash(new Vector2(1f, 1f), true);
 
     }
 

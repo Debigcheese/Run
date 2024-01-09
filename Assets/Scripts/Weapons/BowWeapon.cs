@@ -112,10 +112,10 @@ public class BowWeapon : MonoBehaviour
         if (playerAttack.isAttacking)
         {
             timeElapsed += Time.deltaTime;
-            if (timeElapsed >= .6f && count != 3)
+            if (timeElapsed >= .65f && count != 3)
             {
                 count++;
-                damageMultiplier += 0.4f+(count*0.65f);
+                damageMultiplier += (count*0.25f);
                 timeElapsed = 0f;
             }
         }

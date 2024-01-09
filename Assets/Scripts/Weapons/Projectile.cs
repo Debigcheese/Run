@@ -51,11 +51,11 @@ public class Projectile : MonoBehaviour
         {
             force -= 6f;
         }
-        if (GetArrowDamageMultipler() <= 2.05f)
+        if (GetArrowDamageMultipler() <= 1.25f)
         {
             force -= 3f;
         }
-        if (GetArrowDamageMultipler() <= 3.75f)
+        if (GetArrowDamageMultipler() <= 1.5f)
         {
             force -= 1.5f;
         }
@@ -82,18 +82,17 @@ public class Projectile : MonoBehaviour
             {
                 rb.gravityScale += arrowGravity * 4f * Time.deltaTime;
             }
-            if (GetArrowDamageMultipler() <= 2.05f)
+            if (GetArrowDamageMultipler() <= 1.25f)
             {
                 rb.gravityScale += arrowGravity * 2.5f * Time.deltaTime;
             }
-            if (GetArrowDamageMultipler() <= 3.75f)
+            if (GetArrowDamageMultipler() <= 1.5f)
             {
                 rb.gravityScale += arrowGravity * 1.8f * Time.deltaTime;
             }
-            //6.1
-            else
+            else if(GetArrowDamageMultipler() > 1.5f)
             {
-                rb.gravityScale += arrowGravity * Time.deltaTime;
+                rb.gravityScale += ((arrowGravity * Time.deltaTime)/1.5f);
             }
             if (arrowProjectile && (!(hitGround || hitEnemy)))
             {

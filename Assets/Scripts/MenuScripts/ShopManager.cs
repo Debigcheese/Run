@@ -15,7 +15,7 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerPrefs.SetInt("mustShopAfterLevel", 1);
         for (int i = 0; i < panels.Length; i++)
         {
             panels[i].SetActive(false);
@@ -35,6 +35,8 @@ public class ShopManager : MonoBehaviour
                 AbilitiesUI[i].SetActive(false);
             }
         }
+
+        PlayerPrefs.Save();
     }
 
     // Update is called once per frame

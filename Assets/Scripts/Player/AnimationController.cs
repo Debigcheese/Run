@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
+    private Rigidbody2D rb;
     private Animator anim;
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
@@ -14,6 +15,7 @@ public class AnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponentInParent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAttack = GetComponentInParent<PlayerAttack>();
@@ -23,13 +25,9 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerMovement.isMoving)
+        if (playerMovement.isMoving && !playerState.isRegeningHp)
         {
-            if (playerState.guardianEnabled)
-            {
-                movement = 2f;
-            }
-            else if (playerMovement.isInWater)
+            if (playerState.guardianEnabled || playerMovement.isInWater)
             {
                 movement = 2f;
             }

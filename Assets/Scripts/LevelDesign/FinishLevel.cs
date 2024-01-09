@@ -7,7 +7,6 @@ public class FinishLevel : MonoBehaviour
 {
     private Animator anim;
     private PlayerMovement playerMovement;
-    private int LevelSelectIndex = 1;
     public int LevelUnlocked;
 
     // Start is called before the first frame update
@@ -42,7 +41,11 @@ public class FinishLevel : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         PlayerPrefs.SetInt("LevelsUnlocked", LevelUnlocked);
-        SceneManager.LoadScene(LevelSelectIndex);
+        if (LevelUnlocked == 4) 
+        {
+            PlayerPrefs.SetInt("mustShopAfterLevel", 2);
+        }
+        SceneManager.LoadScene(1);
     }
 
     IEnumerator EndTransition()

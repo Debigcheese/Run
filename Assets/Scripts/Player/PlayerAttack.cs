@@ -120,6 +120,7 @@ public class PlayerAttack : MonoBehaviour
         if (isAttacking && !playerMovement.isFalling && !playerMovement.isDashing)
         {
             rb.velocity = new Vector2(playerMovement.moveDirection * AttackMoveSpeed, rb.velocity.y);
+            Debug.Log("1");
         }
         //stop flip character when attacking
         if (!isAttacking)

@@ -25,6 +25,7 @@ public class AbilityManagerMenu : MonoBehaviour
     public GameObject[] buyText;
     public GameObject[] equipText;
     public GameObject[] equippedText;
+    public GameObject[] cantAffordText;
     public TextMeshProUGUI[] costText;
 
     // Start is called before the first frame update
@@ -84,12 +85,12 @@ public class AbilityManagerMenu : MonoBehaviour
             bool isOwned = ownedAbilities.Contains(abilityIndex[i]);
             bool isEquipped = equippedAbility == abilityIndex[i];
             bool canAfford = totalCrystalAmount >= crystalCost[i];
-            bool previousOwned = i == 0 || ownedAbilities.Contains(abilityIndex[i - 1]);
 
             buyButton[i].SetActive(canAfford && !isOwned);
-            cantBuyButton[i].SetActive(!canAfford && !isOwned || !previousOwned);
+            cantBuyButton[i].SetActive(!canAfford && !isOwned);
+            cantAffordText[i].SetActive(!canAfford && !isOwned);
             equipButton[i].SetActive(isOwned);
-            buyText[i].SetActive(!isOwned);
+            buyText[i].SetActive(canAfford && !isOwned);
             equipText[i].SetActive(isOwned && !isEquipped);
             equippedText[i].SetActive(isEquipped);
         }

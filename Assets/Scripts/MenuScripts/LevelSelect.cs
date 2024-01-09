@@ -14,8 +14,13 @@ public class LevelSelect : MonoBehaviour
     public float transitionDuration = 1.5f;
     public int levelsUnlocked;
     private int keyUnlocked;
+    private int mustShopAfterLevel;
     public int crystalAmount;
     public TextMeshProUGUI crystalText;
+    public GameObject[] shopObject;
+    public TextMeshProUGUI shopText;
+    public Color originalColor;
+    public Color unavailableColor;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +30,7 @@ public class LevelSelect : MonoBehaviour
         StartCoroutine(EndTransition());
         levelsUnlocked = PlayerPrefs.GetInt("LevelsUnlocked", 3);
         keyUnlocked = PlayerPrefs.GetInt("isUnlocked", 3);
+
 
         for (int i = 0; i < letterAnim.Length; i++)
         {
@@ -46,26 +52,39 @@ public class LevelSelect : MonoBehaviour
                 letterAnim[i].SetBool("LetterLocked", true);
             }
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         crystalText.text = PlayerPrefs.GetInt("TotalCrystal", 0).ToString();
+        mustShopAfterLevel = PlayerPrefs.GetInt("mustShopAfterLevel", 3);
+        if (mustShopAfterLevel == 3)
+        {
+            foreach(GameObject shop in shopObject) 
+            {
+                shop.GetComponent<Image>().color = unavailableColor;
+            }
+            shopText.color = unavailableColor;
+        }
+        else
+        {
+            foreach (GameObject shop in shopObject)
+            {
 
+                shop.GetComponent<Image>().color = originalColor;
+            }
+            shopText.color = originalColor;
+        }
     }
 
-    public IEnumerator LoadScene(int level)
+    public IEnumerator LoadLevel(int level)
     {
-        if(levelsUnlocked >= level)
+        if (levelsUnlocked >= level && (mustShopAfterLevel == 1 || mustShopAfterLevel == 3))
         {
-            if(level != 2)
-            {
-                letterAnim[level - 3].SetBool("LetterOpen", true);
-                AudioManager.Instance.PlaySound("uibuttonturnpage");
-            }
+            letterAnim[level - 3].SetBool("LetterOpen", true);
+            AudioManager.Instance.PlaySound("uibuttonturnpage");
+
             transitionImage.SetActive(true);
             transitionAnim.SetBool("TransitionStart", true);
             yield return new WaitForSeconds(transitionDuration);
@@ -74,6 +93,18 @@ public class LevelSelect : MonoBehaviour
         else
         {
             AudioManager.Instance.PlaySound("uibuttonwrong");
+        }
+    }
+
+    public IEnumerator LoadShop(int level)
+    {
+        if (levelsUnlocked >= level && (mustShopAfterLevel == 1 || mustShopAfterLevel == 2))
+        {
+            AudioManager.Instance.PlaySound("uibutton");
+            transitionImage.SetActive(true);
+            transitionAnim.SetBool("TransitionStart", true);
+            yield return new WaitForSeconds(transitionDuration);
+            SceneManager.LoadScene(level);
         }
     }
 
@@ -95,32 +126,31 @@ public class LevelSelect : MonoBehaviour
 
     public void OpenShop()
     {
-        AudioManager.Instance.PlaySound("uibutton");
-        StartCoroutine(LoadScene(2));
+        StartCoroutine(LoadShop(2));
     }
 
     public void SelectLevel1()
     {
-        StartCoroutine(LoadScene(3));
+        StartCoroutine(LoadLevel(3));
     }
 
     public void SelectLevel2()
     {
-        StartCoroutine(LoadScene(4));
+        StartCoroutine(LoadLevel(4));
     }
 
     public void SelectLevel3()
     {
-        StartCoroutine(LoadScene(5));
+        StartCoroutine(LoadLevel(5));
     }
 
     public void SelectLevel4()
     {
-        StartCoroutine(LoadScene(6));
+        StartCoroutine(LoadLevel(6));
     }
 
     public void SelectLevel5()
     {
-        StartCoroutine(LoadScene(7));
+        StartCoroutine(LoadLevel(7));
     }
 }

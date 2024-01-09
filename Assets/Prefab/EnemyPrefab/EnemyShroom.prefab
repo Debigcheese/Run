@@ -212,7 +212,7 @@ MonoBehaviour:
   isAttacking: 0
   inRange: 0
   canAttack: 0
-  attackDamage: 3
+  attackDamage: 8
   attackSpeed: 1.2
   attackDmgDelay: 0.65
   attackRange: 1.17

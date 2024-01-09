@@ -59,7 +59,7 @@ public class StatManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StatsDisplayText[0].text = "HealthPoints: " + PlayerPrefs.GetInt("TotalHealth", 37).ToString();
+        StatsDisplayText[0].text = "HealthPoints: " + PlayerPrefs.GetInt("TotalHealth", 100).ToString();
         StatsDisplayText[3].text = "Crit chance: " + PlayerPrefs.GetFloat("CritChance", 4).ToString() + "%";
 
         for (int i = 0; i< StatsDisplayText.Length; i++)
@@ -188,7 +188,7 @@ public class StatManagerScript : MonoBehaviour
     {
         if (statSelected == 0)
         {
-            statDescription.text = "Increases max health by +50%";
+            statDescription.text = "Increases max health by +20%";
             TurnOffButtons(0, currenthealthLevel);
         }
 
@@ -231,8 +231,8 @@ public class StatManagerScript : MonoBehaviour
     {
         if (totalCrystalAmount >= UpgradeCost[currenthealthLevel] && currenthealthLevel != 5)
         {
-            int totalHealth = PlayerPrefs.GetInt("TotalHealth", 37);
-            float newTotalHealth = totalHealth * 1.5f;
+            int totalHealth = PlayerPrefs.GetInt("TotalHealth", 100);
+            float newTotalHealth = totalHealth * 1.2f;
             int roundedTotalHealth = Mathf.RoundToInt(newTotalHealth);
             PlayerPrefs.SetInt("TotalHealth", roundedTotalHealth);
 

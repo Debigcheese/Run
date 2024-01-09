@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Sound
-        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater && !playerState.guardianEnabled)
+        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater && !playerState.guardianEnabled && !playerState.isRegeningHp)
         {
             AudioManager.Instance.PlayLoopingSound("playerfootsteps");
         }
@@ -216,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving && enableDashUponCollision && ability == 0 )
             {
-                Dash(dir);
+                Dash(dir, false);
 
             }
         }
@@ -290,17 +290,21 @@ public class PlayerMovement : MonoBehaviour
         canGrabLedge = true;
     }
 
-    public void Dash(Vector2 dir)
+    public void Dash(Vector2 dir, bool firstLevelDash)
     {
         dashParticle.Play();
         dashCDImage.fillAmount = 1f;
         canDash = false;
         isDashing = true;
-        if(rb.velocity.x > 0)
+        if(rb.velocity.x > 0 && !firstLevelDash)
         {
             rb.AddForce(new Vector2(1, 0)*dashSpeed, ForceMode2D.Impulse);
         }
-        if(rb.velocity.x < 0)
+        if (firstLevelDash)
+        {
+            rb.AddForce(new Vector2(1.5f, 1.5f) * dashSpeed, ForceMode2D.Impulse);
+        }
+        if(rb.velocity.x < 0 && !firstLevelDash)
         {
             rb.AddForce(new Vector2(-1, 0) * dashSpeed, ForceMode2D.Impulse);
         }
@@ -331,13 +335,12 @@ public class PlayerMovement : MonoBehaviour
     {
         AudioManager.Instance.PlaySound("playerjump");
         isJumping = true;
-/*         StopCoroutine(DisableMovement(0));
-         StartCoroutine(DisableMovement(.15f));*/
-         isWallJumping = true;
+        StartCoroutine(DisableMovement(.12f));
+        isWallJumping = true;
         rb.velocity = Vector2.zero;
-         wallJumpingDirection = -transform.localScale.x;
-         rb.velocity = new Vector2(wallJumpingDirection * wallJumpingForce.x, wallJumpingForce.y);
-         Flip();
+        wallJumpingDirection = -transform.localScale.x;
+        rb.velocity = new Vector2(wallJumpingDirection * wallJumpingForce.x, wallJumpingForce.y);
+        Flip();
 
         if (isFacingLeft)
         {
@@ -352,9 +355,9 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DisableMovement(float time)
     {
-        speed = 0;
+        rb.simulated = false;
         yield return new WaitForSeconds(time);
-        speed = originalSpeed;
+        rb.simulated = true;
     }
 
     private void Walk(Vector2 dir)
@@ -364,7 +367,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpingSlowMo * Time.deltaTime);
         }
-        if(!isWallJumping )
+        if(!isWallJumping && !playerAttack.isAttacking )
         {
             rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
             MoveDirectionFlip();
@@ -421,6 +424,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Flip()
     {
+
         isFacingLeft = !isFacingLeft;
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
@@ -463,8 +467,13 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator JustFlippedChecker()
     {
         justFlipped = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
         justFlipped = false;
+    }
+
+    public bool GroundCheck()
+    {
+        return coll.onGround;
     }
 }
 

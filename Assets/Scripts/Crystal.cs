@@ -81,6 +81,7 @@ public class Crystal : MonoBehaviour
             crystalCollider.enabled = false;
             playerState.totalCrystalAmount += crystalValue;
             playerState.tempCrystalAmount += crystalValue;
+            playerState.crystalsLostOnDeath += crystalValue;
             if (!playerState.isCounting)
             {
                 StartCoroutine(WaitSeconds());

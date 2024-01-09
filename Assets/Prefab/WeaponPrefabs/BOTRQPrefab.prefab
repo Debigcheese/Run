@@ -159,7 +159,7 @@ MonoBehaviour:
   weaponAttackSFX: playerqueensword
   attackCounter: 1
   isMeleeAttacking: 0
-  minDmg: 17
+  minDmg: 23
   maxDmgMinusOne: 41
   attackRange: 1
   attackSpeed: 0.43
