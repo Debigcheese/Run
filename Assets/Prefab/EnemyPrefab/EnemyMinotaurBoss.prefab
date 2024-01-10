@@ -67,7 +67,7 @@ MonoBehaviour:
   canAttack: 1
   stopAttack: 0
   useRayCast: 0
-  attackDamage: 12
+  attackDamage: 8
   attackSpeed: 1
   attackDmgDelay: 0.15
   attackSwingDmgDelay: 0.45
@@ -194,7 +194,7 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
-  maxHealth: 280
+  maxHealth: 355
   currentHealth: 15
   crystalDropAmount: 245
   enemyHealthBar: {fileID: 7238474221249802279}

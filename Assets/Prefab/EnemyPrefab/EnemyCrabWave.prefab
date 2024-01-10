@@ -1070,7 +1070,7 @@ MonoBehaviour:
   isAttacking: 0
   inRange: 0
   canAttack: 0
-  attackDamage: 5
+  attackDamage: 3
   attackSpeed: 1
   attackDmgDelay: 0.42
   attackRange: 1
@@ -1199,7 +1199,7 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
-  maxHealth: 22
+  maxHealth: 28
   currentHealth: 15
   crystalDropAmount: 10
   enemyHealthBar: {fileID: 2316881261140563881}

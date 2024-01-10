@@ -424,7 +424,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Flip()
     {
-
         isFacingLeft = !isFacingLeft;
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;

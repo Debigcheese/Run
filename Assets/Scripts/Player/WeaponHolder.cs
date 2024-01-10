@@ -14,8 +14,11 @@ public class WeaponHolder : MonoBehaviour
     private GameObject previousWeapon;
 
     public bool isSwappingWeapons;
-    public bool meleeEquipped;
-    public bool magicEquipped;
+    public bool attackUseStamina; //meleeEquipped
+    public bool attackUseMana; //magicEquipped
+    public bool isUsingMelee;
+    public bool isUsingRanged;
+    public bool isUsingMagic;
     public bool justSwitchedWeapon;
     public bool canSwitchWeapons = true;
 
@@ -122,16 +125,36 @@ public class WeaponHolder : MonoBehaviour
             justSwitchedWeapon = false;
         }
 
-        //check which weapon is equipped;
+
+        //check which energi to use;
         if (currentWeapon == weapons[10] || currentWeapon == weapons[11] || currentWeapon == weapons[12] || currentWeapon == weapons[13] || currentWeapon == weapons[14])
         {
-            meleeEquipped = false;
-            magicEquipped = true;
+            attackUseStamina = false;
+            attackUseMana = true;
         }
         else
         {
-            meleeEquipped = true;
-            magicEquipped = false;
+            attackUseStamina = true;
+            attackUseMana = false;
+        }
+        //check which type of weapon is equipped;
+        if (currentWeapon == weapons[5] || currentWeapon == weapons[6] || currentWeapon == weapons[7] || currentWeapon == weapons[8] || currentWeapon == weapons[9])
+        {
+            isUsingMelee = false;
+            isUsingRanged = true;
+            isUsingMagic = false;
+        }
+        else if(currentWeapon == weapons[10] || currentWeapon == weapons[11] || currentWeapon == weapons[12] || currentWeapon == weapons[13] || currentWeapon == weapons[14])
+        {
+            isUsingMelee = false;
+            isUsingRanged = false;
+            isUsingMagic = true;
+        }
+        else
+        {
+            isUsingMelee = true;
+            isUsingRanged = false;
+            isUsingMagic = false;
         }
 
     }

@@ -20415,7 +20415,8 @@ MonoBehaviour:
     m_Bits: 256
   isAttacking: 0
   originalAttackMoveSpeed: 0
-  AttackMoveSpeed: 1.9
+  meleeAttackMoveSpeed: 0.85
+  rangedAttackMoveSpeed: 1.3
   checkMousePositionX: 0
   stopFlip: 0
   canAttackFromKnockback: 1
@@ -20424,6 +20425,7 @@ MonoBehaviour:
   dialogueStopAttack: 0
   meleeAttackForce: 5
   insufficientEnergyAttack: 0
+  attackDashDone: 0
   critAttack: 0
   critChance: 4
   critDamageMultiplier: 2
@@ -20529,8 +20531,11 @@ MonoBehaviour:
   currentWeapon: {fileID: 0}
   secondWeapon: {fileID: 0}
   isSwappingWeapons: 0
-  meleeEquipped: 0
-  magicEquipped: 0
+  attackUseStamina: 0
+  attackUseMana: 0
+  isUsingMelee: 0
+  isUsingRanged: 0
+  isUsingMagic: 0
   justSwitchedWeapon: 0
   canSwitchWeapons: 0
   canvas: {fileID: 0}

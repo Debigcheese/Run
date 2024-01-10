@@ -187,7 +187,7 @@ public class PlayerState : MonoBehaviour
 
         GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
 
-        if (weaponHolder.meleeEquipped )
+        if (weaponHolder.attackUseStamina )
         {
             staminaBar.value = currentStamina;
             manaBar.gameObject.SetActive(false);
@@ -199,7 +199,7 @@ public class PlayerState : MonoBehaviour
             currentStamina = maxStamina;
         }
 
-        if (weaponHolder.magicEquipped)
+        if (weaponHolder.attackUseMana)
         {
             manaBar.value = currentMana;
             staminaBar.gameObject.SetActive(false);
@@ -236,11 +236,11 @@ public class PlayerState : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && lowMana && !lowEnergyTimer && !playerAttack.isAttacking)
         {
 
-            if (weaponHolder.meleeEquipped)
+            if (weaponHolder.attackUseStamina)
             {
                 ShowTextPopup("Low stamina", lowStaminaPopupPrefab);
             }
-            else if (weaponHolder.magicEquipped)
+            else if (weaponHolder.attackUseMana)
             {
                 ShowTextPopup("Low mana", lowManaPopupPrefab);
             }
@@ -293,7 +293,7 @@ public class PlayerState : MonoBehaviour
         isRegeningHp = true;
         isRegeningHpParticles.SetActive(true);
         healingFountainTimer += Time.deltaTime;
-        if ((healingFountainTimer >= 1f) && isRegeningHp)
+        if ((healingFountainTimer >= 0.75f) && isRegeningHp)
         {
             float tempCurrHp = currentHealth;
             float tempMaxHp = maxHealth;
@@ -313,7 +313,7 @@ public class PlayerState : MonoBehaviour
     private void ActivateGuardian()
     {
         playerMovement.speed *= msReduction;
-        playerAttack.AttackMoveSpeed *= msReduction;
+        playerAttack.meleeAttackMoveSpeed *= msReduction;
         guardianEnabled = true;
         checkGuardianCooldown = true;
         GuardianCDImage.fillAmount = 1f;
@@ -328,7 +328,7 @@ public class PlayerState : MonoBehaviour
     {
         yield return new WaitForSeconds(guardianDuration);
         playerMovement.speed = playerMovement.originalSpeed;
-        playerAttack.AttackMoveSpeed = playerAttack.originalAttackMoveSpeed;
+        playerAttack.meleeAttackMoveSpeed = playerAttack.originalAttackMoveSpeed;
         guardianEnabled = false;
 
         AudioManager.Instance.DisableSound("playerduringguardian");

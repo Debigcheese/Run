@@ -7,12 +7,14 @@ public class PlayerAttack : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
+    private WeaponHolder weaponHolder;
     public Animator[] anim;
     public LayerMask enemyLayer;
     public bool isAttacking = false;
     [HideInInspector]
     public float originalAttackMoveSpeed;
-    public float AttackMoveSpeed;
+    public float meleeAttackMoveSpeed = 1f;
+    public float rangedAttackMoveSpeed = 1.9f;
     public bool checkMousePositionX;
     public bool stopFlip = false;
     public bool canAttackFromKnockback = true;
@@ -21,6 +23,8 @@ public class PlayerAttack : MonoBehaviour
     public bool dialogueStopAttack = false;
     public float meleeAttackForce;
     public bool insufficientEnergyAttack;
+
+    public bool attackDashDone = true;
 
     [Header("CritAttack")]
     public bool critAttack;
@@ -41,13 +45,14 @@ public class PlayerAttack : MonoBehaviour
     public Color vengeanceColor;
     public Color originalColor;
 
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
-
-        originalAttackMoveSpeed = AttackMoveSpeed;
+        weaponHolder = GetComponent<WeaponHolder>();
+        originalAttackMoveSpeed = meleeAttackMoveSpeed;
         critChance = PlayerPrefs.GetFloat("CritChance", 4f);
         critDamageMultiplier = PlayerPrefs.GetFloat("CritDamage", 2f);
     }
@@ -117,10 +122,25 @@ public class PlayerAttack : MonoBehaviour
             isAttacking = false;
         }
         //if attacking and not in air, slow ms
-        if (isAttacking && !playerMovement.isFalling && !playerMovement.isDashing)
+
+        if (isAttacking && !playerMovement.isFalling && !playerMovement.isDashing && (weaponHolder.isUsingMagic || weaponHolder.isUsingRanged))
         {
-            rb.velocity = new Vector2(playerMovement.moveDirection * AttackMoveSpeed, rb.velocity.y);
-            Debug.Log("1");
+            rb.velocity = new Vector2(playerMovement.moveDirection * rangedAttackMoveSpeed, rb.velocity.y);
+        }
+
+        //melee attack dash, (might need to change in playermovement)
+        if (isAttacking && !playerMovement.isFalling  && !playerMovement.isDashing && weaponHolder.isUsingMelee)
+        {
+            playerMovement.cantMove = true;
+            attackDashDone = false;
+            Vector2 directionToMouse = (mousePosition - transform.position);
+            rb.velocity = (directionToMouse * meleeAttackMoveSpeed).normalized;
+
+        }
+        if (!isAttacking && !attackDashDone && !dialogueStopAttack)
+        {
+            playerMovement.cantMove = false;
+            attackDashDone = true;
         }
         //stop flip character when attacking
         if (!isAttacking)
