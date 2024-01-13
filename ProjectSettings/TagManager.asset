@@ -12,6 +12,7 @@ TagManager:
   - CamBoundary
   - HealingFountain
   - Water
+  - Snow
   layers:
   - Default
   - TransparentFX

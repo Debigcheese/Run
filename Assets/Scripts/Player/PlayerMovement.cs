@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private DamageFlash damageFlash;
     private AudioManager audioManager;
     private PlayerState playerState;
+    private SnowTileScript snowTile;
 
     [HideInInspector] public float moveDirection = 0f;
     private float y = 0f;
@@ -42,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
     public bool cantMove;
     public bool justFlipped;
     public bool isInWater;
+    private bool playerOnSnow;
+    private bool isExitingSnow;
+    private bool secondSnowSound;
+    private float secondSnowSoundTimer = 0;
 
     [Space]
     [Header("KnockBack")]
@@ -131,14 +136,40 @@ public class PlayerMovement : MonoBehaviour
             cantMoveFromKnockback = true;
         }
 
-        //Sound
-        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater && !playerState.guardianEnabled && !playerState.isRegeningHp)
+        //Walking Sounds
+        //grassWalking
+        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater && !playerState.guardianEnabled && !playerState.isRegeningHp && !playerOnSnow)
         {
             AudioManager.Instance.PlayLoopingSound("playerfootsteps");
         }
-        if(isMoving && coll.onGround && (playerAttack.isAttacking || isInWater || playerState.guardianEnabled))
+        if(isMoving && coll.onGround && (playerAttack.isAttacking || isInWater || playerState.guardianEnabled) && !playerOnSnow)
         {
             AudioManager.Instance.PlayLoopingSound("playerslowfootsteps");
+        }
+        //snowwalking
+        if(isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater && !playerState.guardianEnabled && !playerState.isRegeningHp && playerOnSnow && !secondSnowSound)
+        {
+            AudioManager.Instance.PlayLoopingSound("playerfootstepssnow");
+            secondSnowSoundTimer += Time.deltaTime;
+            if(secondSnowSoundTimer >= .24f)
+            {
+                secondSnowSound = true;
+                secondSnowSoundTimer = 0f;
+            }
+        }
+        if (isMoving && coll.onGround && !playerAttack.isAttacking && !isInWater && !playerState.guardianEnabled && !playerState.isRegeningHp && playerOnSnow && secondSnowSound)
+        {
+            AudioManager.Instance.PlayLoopingSound("playerfootstepssnowsecond");
+            secondSnowSoundTimer += Time.deltaTime;
+            if (secondSnowSoundTimer >= .24f)
+            {
+                secondSnowSound = false;
+                secondSnowSoundTimer = 0f;
+            }
+        }
+        if (isMoving && coll.onGround && (playerAttack.isAttacking || isInWater || playerState.guardianEnabled) && playerOnSnow)
+        {
+            AudioManager.Instance.PlayLoopingSound("playerslowfootstepssnow");
         }
 
         //Animation
@@ -181,8 +212,7 @@ public class PlayerMovement : MonoBehaviour
             Abilitybackground.SetActive(false);
         }
 
-        //Methods
-       
+        //Call Methods
         if (!cantMove && !isDashing && !cantMoveFromKnockback)
         {
             moveDirection = Input.GetAxis("Horizontal");
@@ -238,6 +268,11 @@ public class PlayerMovement : MonoBehaviour
             rb.gravityScale = 0.6f;
             speed = originalSpeed * 0.7f;
         }
+        if (collision.CompareTag("Snow"))
+        {
+            playerOnSnow = true;
+            isExitingSnow = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -249,6 +284,20 @@ public class PlayerMovement : MonoBehaviour
             rb.angularDrag = originalAngularDrag;
             rb.gravityScale = originalGravity;
             speed = originalSpeed;
+        }
+        if (collision.CompareTag("Snow"))
+        {
+            isExitingSnow = true;
+            StartCoroutine(PlayerExitSnow());
+        }
+    }
+
+    private IEnumerator PlayerExitSnow()
+    {
+        yield return new WaitForSeconds(0.43f);
+        if (isExitingSnow)
+        {
+            playerOnSnow = false;
         }
     }
 

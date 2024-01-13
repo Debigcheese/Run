@@ -14,19 +14,23 @@ public class HealingFountain : MonoBehaviour
     void Start()
     {
         playerState = FindObjectOfType<PlayerState>();
-        eKey.SetActive(false);
+        if(eKey != null)
+        {
+            eKey.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((playerState.currentHealth != playerState.maxHealth) && fountainInRange)
+        if ((playerState.currentHealth != playerState.maxHealth) && fountainInRange && eKey != null)
         {
             eKey.SetActive(true);
         }
         else
         {
-            eKey.SetActive(false);
+            if (eKey != null)
+                eKey.SetActive(false);
         }
     }
 
@@ -40,15 +44,19 @@ public class HealingFountain : MonoBehaviour
             if (!checkPoint)
             {
                 checkPoint = true;
-                Instantiate(checkPointParticles, transform.position, Quaternion.identity, transform);
-                AudioManager.Instance.PlaySound("healingfountaincheckpoint");
+                if(checkPointParticles != null)
+                {
+                    Instantiate(checkPointParticles, transform.position, Quaternion.identity, transform);
+                    AudioManager.Instance.PlaySound("healingfountaincheckpoint");
+                }
+
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && eKey != null)
         {
             fountainInRange = false;
             eKey.SetActive(false);

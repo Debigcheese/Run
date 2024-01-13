@@ -13,7 +13,7 @@ public class CheatScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
         dialogueManager = FindObjectOfType<DialogueManager>();
         weaponHolder = GetComponent<WeaponHolder>();
     }
@@ -25,7 +25,7 @@ public class CheatScript : MonoBehaviour
         {
             weaponCount++;
             weaponHolder.secondWeapon = weaponHolder.weapons[weaponCount];
-            if(weaponCount == 16) 
+            if(weaponCount == weaponHolder.weapons.Length-1) 
             {
                 weaponCount = 0;
             }

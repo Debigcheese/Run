@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3070028685097028161}
   - component: {fileID: 7724705356508605125}
   - component: {fileID: 727238274039547879}
+  - component: {fileID: 1201257068}
+  - component: {fileID: 2002924285028490226}
   m_Layer: 4
   m_Name: Water
   m_TagString: Water
@@ -119,7 +121,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0.000076293945, y: -0.052028656}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,3 +135,60 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.98498154, y: 0.8959427}
   m_EdgeRadius: 0
+--- !u!50 &1201257068
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260865533642627055}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!66 &2002924285028490226
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260865533642627055}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 727238274039547879}
+    m_ColliderPaths:
+    - - X: 19702682
+        Y: 3959427
+      - X: -19696578
+        Y: 3959427
+      - X: -19696578
+        Y: -5000000
+      - X: 19702682
+        Y: -5000000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 1.9702388, y: -0.5}
+      - {x: 1.9702388, y: 0.39594272}
+      - {x: -1.9696578, y: 0.3959134}
+      - {x: -1.9696285, y: -0.5}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

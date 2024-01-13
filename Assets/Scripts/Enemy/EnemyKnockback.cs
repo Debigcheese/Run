@@ -7,22 +7,22 @@ public class EnemyKnockback : MonoBehaviour
 {
     private Rigidbody2D rb;
     private PlayerMovement playerMovement;
+    private WeaponHolder weaponHolder;
 
     [Space]
     [Header("Knockback")]
-    [SerializeField] private float KnockbackForceX = 10f;
+    [SerializeField] private float KnockbackForceX = 0f;
     [SerializeField] private float KnockbackForceY = 3f;
     [SerializeField] private float delay = 0.15f;
-    private float originalKnockBackForceX;
 
     public UnityEvent OnBegin, OnDone;
 
     // Start is called before the first frame update
     void Start()
     {
+        weaponHolder = FindObjectOfType<WeaponHolder>();
         playerMovement = FindObjectOfType<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
-        originalKnockBackForceX = KnockbackForceX;
     }
 
     // Update is called once per frame
@@ -38,8 +38,12 @@ public class EnemyKnockback : MonoBehaviour
         OnBegin.Invoke();
         Vector2 direction = (transform.position - playerMovement.transform.position).normalized;
         Vector2 newVelocity = rb.velocity;
-        int randomForce = Random.Range(-2, 3);
-        KnockbackForceX += randomForce;
+        int randomForceX = Random.Range(-8, 12);
+        if (!weaponHolder.isUsingMagic || !weaponHolder.isUsingRanged)
+        {
+            randomForceX = Random.Range(12, 15);
+        }
+        KnockbackForceX = randomForceX;
         newVelocity.x = direction.x * KnockbackForceX;
         newVelocity.y = rb.velocity.y + KnockbackForceY;
         rb.velocity = newVelocity;
@@ -51,7 +55,6 @@ public class EnemyKnockback : MonoBehaviour
         yield return new WaitForSeconds(delay);
         rb.velocity = Vector3.zero;
         OnDone.Invoke();
-        KnockbackForceX = originalKnockBackForceX;
     }
 
 
