@@ -420,6 +420,7 @@ public class PlayerState : MonoBehaviour
                 currentHealth -= damageAmount;
                 ShowDamagePopup(damageAmount);
             }
+            FindObjectOfType<CameraShake>().ShakeCameraFlex(2f, 0.25f);
             AudioManager.Instance.PlaySound("playerhurt");
             damageFlash.CallDamageFlash();
             bloodyScreenActivateOnFeedback = true;

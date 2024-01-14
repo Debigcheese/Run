@@ -21,7 +21,7 @@ public class EnemyProjectile : MonoBehaviour
     public float rotationOff;
 
     [Header("SFX")]
-    private string ExplosionSFX;
+    public string explosionSFX;
 
 
     // Start is called before the first frame update
@@ -62,6 +62,7 @@ public class EnemyProjectile : MonoBehaviour
             anim.SetBool("ActivateExplosion", true);
             projectileCollider.enabled = false;
             rb.velocity = Vector2.zero;
+            AudioManager.Instance.PlaySound(explosionSFX);
         }
         else if (((1 << collision.gameObject.layer) & groundLayer) != 0)
         {
@@ -78,6 +79,7 @@ public class EnemyProjectile : MonoBehaviour
             rb.velocity = Vector2.zero;
             projectileCollider.enabled = false;
             anim.SetBool("ActivateExplosion", true);
+            AudioManager.Instance.PlaySound(explosionSFX);
         }
     }
 

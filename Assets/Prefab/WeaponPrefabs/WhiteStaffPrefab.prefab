@@ -195,4 +195,4 @@ MonoBehaviour:
   maxDmgMinusOne: 26
   attackCooldown: 0.45
   projectileDelay: 0.5
-  manaPerProjectile: 31
+  manaPerProjectile: 30

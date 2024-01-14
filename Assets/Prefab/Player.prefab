@@ -26186,6 +26186,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2953137234100997410}
     m_Modifications:
+    - target: {fileID: 8840068980342960804, guid: fcd76e779fddf7b4686fad6323664018, type: 3}
+      propertyPath: manaPerProjectile
+      value: 29
+      objectReference: {fileID: 0}
     - target: {fileID: 8840068980342960805, guid: fcd76e779fddf7b4686fad6323664018, type: 3}
       propertyPath: m_Name
       value: SapphireMagicPrefab

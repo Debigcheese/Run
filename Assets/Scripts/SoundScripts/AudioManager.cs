@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1);
         SFXSlider.onValueChanged.AddListener(SetSFXVolume);
         SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1);
-        ChangeMusicTheme();
+        ManageMusicTheme();
 
         /*        PlayerPrefs.SetInt("SceneManager", SceneIndex);
                 PlayerPrefs.Save();*/
@@ -56,10 +56,10 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         SceneIndex = SceneManager.GetActiveScene().buildIndex;
-        ChangeMusicTheme();
+        ManageMusicTheme();
     }
 
-    private void ChangeMusicTheme()
+    private void ManageMusicTheme()
     {
         if(SceneIndex < 3)
         {
@@ -72,17 +72,36 @@ public class AudioManager : MonoBehaviour
 
         if (SceneIndex == 3 && !waveMusicSwitch)
         {
-            PlayLoopingSound(musicTheme[1]);
-            DisableSoundNoFade(musicTheme[2]);
+            DisableAllExceptOneMusic(musicTheme[1]);
         }
         else if(SceneIndex == 3 && waveMusicSwitch)
         {
-            DisableSoundNoFade(musicTheme[1]);
-            PlayLoopingSound(musicTheme[2]);
+            DisableAllExceptOneMusic(musicTheme[2]);
+        }
+        if (SceneIndex == 4 && !waveMusicSwitch)
+        {
+            DisableAllExceptOneMusic(musicTheme[3]);
+        }
+        else if (SceneIndex == 4 && waveMusicSwitch)
+        {
+            DisableAllExceptOneMusic(musicTheme[4]);
         }
     }
 
-
+    public void DisableAllExceptOneMusic(string name)
+    {
+        for(int i = 0; i<musicTheme.Length; i++)
+        {
+            if(musicTheme[i] == name)
+            {
+                PlayLoopingSound(name);
+            }
+            else
+            {
+                DisableSoundNoFade(musicTheme[i]);
+            }
+        }
+    }
 
     public void PlaySound(string name)
     {

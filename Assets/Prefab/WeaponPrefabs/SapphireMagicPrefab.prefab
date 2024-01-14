@@ -164,7 +164,7 @@ MonoBehaviour:
   maxDmgMinusOne: 17
   attackCooldown: 0.3
   projectileDelay: 0.4
-  manaPerProjectile: 30
+  manaPerProjectile: 29
 --- !u!1 &8840068980370417224
 GameObject:
   m_ObjectHideFlags: 0

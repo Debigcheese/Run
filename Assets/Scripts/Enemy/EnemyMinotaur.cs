@@ -20,6 +20,9 @@ public class EnemyMinotaur : MonoBehaviour
     public Slider enemyHealthBar;
     public Slider easeHealthBar;
 
+    [Header("SFX")]
+    public string spawnSFX;
+
     [Header("Booleans")]
     public bool isMoving;
     public bool isAttacking;
@@ -38,6 +41,13 @@ public class EnemyMinotaur : MonoBehaviour
     public float attackRangeSwing;
     public float attackCooldown;
 
+    [Header("Enraged")]
+    public bool enraged = false;
+    public bool isEnragedAnim = false;
+    public Color originalColor;
+    public Color enragedColor;
+    private float enragedColorTimer = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,9 +62,12 @@ public class EnemyMinotaur : MonoBehaviour
         enemyHp = GetComponent<EnemyHp>();
         waveSpawner = GetComponentInParent<WaveSpawner>();
         canAttack = true;
+        anim.SetFloat("movementSpeed", 0f);
+        GetComponentInChildren<SpriteRenderer>().color = originalColor;
 
         enemyHealthBar.maxValue = enemyHp.maxHealth;
         easeHealthBar.maxValue = enemyHp.maxHealth;
+
     }
 
     // Update is called once per frame
@@ -63,6 +76,7 @@ public class EnemyMinotaur : MonoBehaviour
         anim.SetBool("isMoving", isMoving);
         anim.SetBool("isAttacking", isAttacking);
         anim.SetInteger("attackStyle", attackStyle);
+        anim.SetBool("isEnraged", isEnragedAnim);
 
         enemyHealthBar.value = enemyHp.enemyHealthBar.value;
         easeHealthBar.value = enemyHp.easeHealthBar.value;
@@ -76,7 +90,15 @@ public class EnemyMinotaur : MonoBehaviour
             isMoving = false;
         }
 
-        //
+        if(enemyHp.currentHealth <= (enemyHp.maxHealth / 2.1f) && !enraged)
+        {
+            Enraged();
+        }
+        if (isEnragedAnim)
+        {
+            enragedColorTimer += Time.deltaTime;
+            GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(originalColor, enragedColor, enragedColorTimer / 3.5f);
+        }
 
         InvokeRepeating("AttackIfInRange", 0f, 0.6f);
 
@@ -89,10 +111,39 @@ public class EnemyMinotaur : MonoBehaviour
             CheckForPlayerRayCast();
         }
 
-        if(enemyHp.currentHealth <= 0)
+        if(enemyHp.currentHealth <= 0 && waveSpawner != null)
         {
             waveSpawner.bossDefeated = true;
         }
+    }
+
+    private void Enraged()
+    {
+        enraged = true;
+        isEnragedAnim = true;
+        canAttack = false;
+        enemyAI.canMove = false;
+        enemyHp.canTakeDamage = false;
+        GetComponent<Rigidbody2D>().simulated = false;
+
+        attackDamage = Mathf.RoundToInt(attackDamage * 1.5f);
+        enemyAI.speed = enemyAI.speed * 1.52f;
+        anim.SetFloat("movementSpeed", 1f);
+
+        AudioManager.Instance.PlaySound(spawnSFX);
+        FindObjectOfType<CameraShake>().ShakeCameraFlex(4.5f, 3f);
+
+        StartCoroutine(StopEnragedAnim());
+    }
+
+    private IEnumerator StopEnragedAnim()
+    {
+        yield return new WaitForSeconds(3.5f);
+        isEnragedAnim = false;
+        canAttack = true;
+        enemyAI.canMove = true;
+        enemyHp.canTakeDamage = true;
+        GetComponent<Rigidbody2D>().simulated = true;
     }
 
 
@@ -160,6 +211,11 @@ public class EnemyMinotaur : MonoBehaviour
                 }
 
             }
+            if (enemyHp.enemySFX.EnemyAttackSFX != null)
+            {
+                enemyHp.enemySFX.PlayEnemySound(enemyHp.enemySFX.EnemyAttackSFX);
+            }
+
         }
     }
 
@@ -192,11 +248,6 @@ public class EnemyMinotaur : MonoBehaviour
             }
         }
         StartCoroutine("AttackSpeed");
-
-        if (enemyHp.enemySFX.EnemyAttackSFX != null)
-        {
-            enemyHp.enemySFX.PlayEnemySound(enemyHp.enemySFX.EnemyAttackSFX);
-        }
     }
 
     IEnumerator AttackSpeed()

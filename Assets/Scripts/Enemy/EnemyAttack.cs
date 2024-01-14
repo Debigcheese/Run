@@ -157,10 +157,13 @@ public class EnemyAttack : MonoBehaviour
         if (inRange && canAttack)
         {
             yield return new WaitForSeconds(rangedProjectileDelay);
-            GameObject newProjectile = Instantiate(projectile, projectileAttackPoint.position, Quaternion.identity);
-            EnemyProjectile enemyProjectile = newProjectile.GetComponent<EnemyProjectile>();
+            if (!enemyHp.isDead)
+            {
+                GameObject newProjectile = Instantiate(projectile, projectileAttackPoint.position, Quaternion.identity);
+                EnemyProjectile enemyProjectile = newProjectile.GetComponent<EnemyProjectile>();
 
-            enemyProjectile.SetProjectileDamage(attackDamage);
+                enemyProjectile.SetProjectileDamage(attackDamage);
+            }
         }
         canAttack = false;
         StartCoroutine(AttackSpeed());

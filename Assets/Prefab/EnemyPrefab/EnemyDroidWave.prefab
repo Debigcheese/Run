@@ -236,9 +236,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySFX:
-    EnemyHurtSFX: enemychomperhurt
-    EnemyDieSFX: enemychomperdie
-    EnemyAttackSFX: enemychomperattack
+    EnemyHurtSFX: enemydroidhurt
+    EnemyDieSFX: enemydroiddie
+    EnemyAttackSFX: enemydroidattack
   EnemyKnockback:
     m_PersistentCalls:
       m_Calls:

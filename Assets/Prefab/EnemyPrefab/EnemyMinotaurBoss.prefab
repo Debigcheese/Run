@@ -34,7 +34,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 150.79, y: 2.43, z: 0.3068189}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2496160134109168375}
   - {fileID: 3916195598273873472}
@@ -60,6 +60,7 @@ MonoBehaviour:
   healthUI: {fileID: 3098900783479917143}
   enemyHealthBar: {fileID: 3098900784588323573}
   easeHealthBar: {fileID: 3098900784953100560}
+  spawnSFX: enemyalistarspawn
   isMoving: 0
   isAttacking: 0
   attackStyle: 1
@@ -67,13 +68,17 @@ MonoBehaviour:
   canAttack: 1
   stopAttack: 0
   useRayCast: 0
-  attackDamage: 8
+  attackDamage: 7
   attackSpeed: 1
   attackDmgDelay: 0.15
   attackSwingDmgDelay: 0.45
   attackRange: 2.1
   attackRangeSwing: 2.9
   attackCooldown: 2.5
+  enraged: 0
+  isEnragedAnim: 0
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
+  enragedColor: {r: 1, g: 0.514151, b: 0.514151, a: 1}
 --- !u!114 &2496160133343277262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +95,7 @@ MonoBehaviour:
   detectionRadius: 9.5
   pathUpdateSeconds: 0.5
   nextWaypointDistance: 1
-  speed: 5
+  speed: 3.6
   jumpForce: 12
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0.3
@@ -173,9 +178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySFX:
-    EnemyHurtSFX: enemychomperhurt
-    EnemyDieSFX: enemychomperdie
-    EnemyAttackSFX: enemychomperattack
+    EnemyHurtSFX: enemyalistarhurt
+    EnemyDieSFX: enemyalistardie
+    EnemyAttackSFX: enemyalistarattack
   EnemyKnockback:
     m_PersistentCalls:
       m_Calls:
@@ -194,7 +199,8 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
-  maxHealth: 355
+  canTakeDamage: 1
+  maxHealth: 375
   currentHealth: 15
   crystalDropAmount: 245
   enemyHealthBar: {fileID: 7238474221249802279}
@@ -753,6 +759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3098900783479917140}
+  - component: {fileID: 6539991233462178861}
   m_Layer: 5
   m_Name: HealthBarUI
   m_TagString: Untagged
@@ -769,7 +776,7 @@ RectTransform:
   m_GameObject: {fileID: 3098900783479917143}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.15340945}
-  m_LocalScale: {x: 0.90909094, y: 0.90909094, z: 1}
+  m_LocalScale: {x: 0.9090909, y: 0.9090909, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3098900784977623706}
@@ -783,6 +790,27 @@ RectTransform:
   m_AnchoredPosition: {x: -20, y: -34}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &6539991233462178861
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098900783479917143}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 864907983e5dbc44e9443271bfdeac65, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3098900783833767655
 GameObject:
   m_ObjectHideFlags: 0

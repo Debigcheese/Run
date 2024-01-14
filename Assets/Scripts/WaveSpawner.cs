@@ -196,7 +196,6 @@ public class WaveSpawner : MonoBehaviour
             {
                 if (!playerState.isRespawnForSpawner)
                 {
-
                     int random = Random.Range(0, spawnPoints.Length);
                     GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform.position, Quaternion.identity, spawnPoints[random].transform);
                     enemy.GetComponent<EnemyAI>().waveSpawnerEnemies = true;
@@ -208,7 +207,6 @@ public class WaveSpawner : MonoBehaviour
                     {
                         break;
                     }
-
                 }
             }
             wavesStarting.SetActive(false);

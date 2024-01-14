@@ -37,6 +37,7 @@ public class EnemyHp : MonoBehaviour
     public bool isDead = false;
     private bool tookDamage;
     public bool dontInstaKill = false;
+    public bool canTakeDamage = true;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -111,28 +112,38 @@ public class EnemyHp : MonoBehaviour
     {
         if (!tookDamage)
         {
-
-            if (currentHealth > 0 && enemySFX.EnemyHurtSFX != null)
+            if (canTakeDamage)
             {
-                enemySFX.PlayEnemySound(enemySFX.EnemyHurtSFX);
-            }
-
-            tookDamage = true;
-            enemyAi.tookDamageDetect = true;
-            currentHealth -= damageAmount;
-            //play hurt animation
-            if (currentHealth <= 0 && !dontInstaKill)
-            {
-                if(enemySFX.EnemyDieSFX != null)
+                if (currentHealth > 0 && enemySFX.EnemyHurtSFX != null)
                 {
-                    enemySFX.PlayEnemySound(enemySFX.EnemyDieSFX);
+                    enemySFX.PlayEnemySound(enemySFX.EnemyHurtSFX);
                 }
-                StartCoroutine(Die());
+
+                tookDamage = true;
+                enemyAi.tookDamageDetect = true;
+                currentHealth -= damageAmount;
+                //play hurt animation
+                if (currentHealth <= 0 && !dontInstaKill)
+                {
+                    if (enemySFX.EnemyDieSFX != null)
+                    {
+                        enemySFX.PlayEnemySound(enemySFX.EnemyDieSFX);
+                    }
+                    StartCoroutine(Die());
+                }
+                EnemyKnockback.Invoke();
+                damageFlash.CallDamageFlash();
+                ShowDamagePopup(damageAmount);
+                StartCoroutine(CanTakeDamage());
             }
-            EnemyKnockback.Invoke();
-            damageFlash.CallDamageFlash();
-            ShowDamagePopup(damageAmount);
-            StartCoroutine(CanTakeDamage());
+            else
+            {
+                tookDamage = true;
+                enemyAi.tookDamageDetect = true;
+                damageFlash.CallDamageFlash();
+                ShowDamagePopup(0);
+                StartCoroutine(CanTakeDamage());
+            }
         }
     }
 
