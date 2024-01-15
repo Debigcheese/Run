@@ -21565,7 +21565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1199471683
 Transform:
   m_ObjectHideFlags: 0
@@ -21619,7 +21619,7 @@ MonoBehaviour:
   - WeaponTierPanels:
     - {fileID: 1718035061}
     weaponIndex: 01000000050000000a000000
-    weaponCost: 000000004c00000065000000
+    weaponCost: 00000000500000005a000000
     itemPanels:
     - {fileID: 512751240}
     - {fileID: 1247065532}
@@ -21627,7 +21627,7 @@ MonoBehaviour:
   - WeaponTierPanels:
     - {fileID: 1885194595}
     weaponIndex: 02000000060000000b000000
-    weaponCost: b6000000d5000000ea000000
+    weaponCost: c8000000e6000000d2000000
     itemPanels:
     - {fileID: 6997889}
     - {fileID: 832800039}
@@ -21635,7 +21635,7 @@ MonoBehaviour:
   - WeaponTierPanels:
     - {fileID: 1582033932}
     weaponIndex: 03000000070000000c000000
-    weaponCost: 5901000072010000b3010000
+    weaponCost: 900100007c010000a4010000
     itemPanels:
     - {fileID: 991592484}
     - {fileID: 2130321615}
@@ -21643,7 +21643,7 @@ MonoBehaviour:
   - WeaponTierPanels:
     - {fileID: 159234191}
     weaponIndex: 04000000080000000d000000
-    weaponCost: f8020000200300001e030000
+    weaponCost: 200300008403000052030000
     itemPanels:
     - {fileID: 592952826}
     - {fileID: 1329601385}
@@ -21651,7 +21651,7 @@ MonoBehaviour:
   - WeaponTierPanels:
     - {fileID: 255324858}
     weaponIndex: 0f000000090000000e000000
-    weaponCost: 5c0800009609000039090000
+    weaponCost: 800c0000100e0000100e0000
     itemPanels:
     - {fileID: 761443872}
     - {fileID: 979170548}
@@ -29113,7 +29113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1582033933
 Transform:
   m_ObjectHideFlags: 0

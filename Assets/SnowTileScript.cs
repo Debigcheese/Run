@@ -7,6 +7,7 @@ public class SnowTileScript : MonoBehaviour
     public GameObject normalSnowTile;
     public GameObject walkedOnSnowTile;
     public bool snowTileReset = false;
+    private float snowTileResetTimer = 0f;
     public bool playerOnSnowTile;
 
     // Start is called before the first frame update
@@ -19,6 +20,16 @@ public class SnowTileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!playerOnSnowTile && snowTileReset)
+        {
+            snowTileResetTimer += Time.deltaTime;
+            if (snowTileResetTimer >= 7f )
+            {
+                walkedOnSnowTile.SetActive(false);
+                normalSnowTile.SetActive(true);
+            }
+        }
+
 
     }
 
@@ -31,7 +42,8 @@ public class SnowTileScript : MonoBehaviour
             playerOnSnowTile = true;
             if (snowTileReset)
             {
-                StartCoroutine(ResetSnowTile());
+                //StartCoroutine(ResetSnowTile());
+                snowTileResetTimer = 0f;
             }
         }
     }
@@ -44,13 +56,12 @@ public class SnowTileScript : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetSnowTile()
-    {
-        yield return new WaitForSeconds(7f);
-        if (!playerOnSnowTile)
-        {
-            walkedOnSnowTile.SetActive(false);
-            normalSnowTile.SetActive(true);
-        }
-    }
+    //private IEnumerator ResetSnowTile()
+    //{
+    //    yield return new WaitForSeconds(7f);
+    //    if (!playerOnSnowTile)
+    //    {
+
+    //    }
+    //}
 }

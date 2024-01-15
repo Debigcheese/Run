@@ -15,11 +15,13 @@ public class NoPlayerCheatScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            PlayerPrefs.SetInt("TotalCrystal", (PlayerPrefs.GetInt("TotalCrystal") + 1000));
+            PlayerPrefs.SetInt("TotalCrystal", (PlayerPrefs.GetInt("TotalCrystal") + 500));
         }
         if (Input.GetKeyDown(KeyCode.F4))
         {
             PlayerPrefs.SetInt("mustShopAfterLevel", 1);
+            PlayerPrefs.SetInt("isUnlocked", 8);
+            PlayerPrefs.SetInt("LevelsUnlocked", 8);
         }
     }
 }

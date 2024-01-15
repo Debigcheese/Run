@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Pathfinding;
+using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -32,6 +31,12 @@ public class EnemyAI : MonoBehaviour
     public bool ledgeCheck;
     public Collider2D ledgeCollider;
 
+    [Header("Custom Behavior Flying Enemy")]
+    public bool isFlyingEnemy = false;
+    public float abovePlayerYAxis = 4f;
+    private float abovePlayerYAxisTimer = 0f;
+    private bool abovePlayerYAxisBool = false;
+
     [Header("Jump Behavior")]
     public Transform jumpCheck;
     public LayerMask GroundLayer;
@@ -54,18 +59,6 @@ public class EnemyAI : MonoBehaviour
     Animator anim;
     private bool isOnCoolDown;
 
-    private void LedgeCheck()
-    {
-        if (!ledgeCollider.IsTouchingLayers(GroundLayer))
-        {
-            ledgeDetected = true;
-        }
-        else if (ledgeCollider.IsTouchingLayers(GroundLayer))
-        {
-            ledgeDetected = false;
-        }
-    }
-
     public void Start()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
@@ -84,6 +77,22 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if (isFlyingEnemy)
+        {
+            abovePlayerYAxisTimer += Time.deltaTime;
+            if(abovePlayerYAxisTimer >= 3f && abovePlayerYAxisBool)
+            {
+                abovePlayerYAxis += .5f;
+                abovePlayerYAxisBool = false;
+                abovePlayerYAxisTimer = 0f;
+            }
+            if (abovePlayerYAxisTimer >= 3f && !abovePlayerYAxisBool)
+            {
+                abovePlayerYAxis -= .5f;
+                abovePlayerYAxisBool = true;
+                abovePlayerYAxisTimer = 0f;
+            }
+        }
 
         if (ledgeCheck)
         {
@@ -116,7 +125,7 @@ public class EnemyAI : MonoBehaviour
         }
         
         //minimum velocity_Y so enemies dont fall through map
-        if(rb.velocity.y <= -minVelocity_Y)
+        if(rb.velocity.y <= -minVelocity_Y && !isFlyingEnemy)
         {
             rb.velocity = new Vector2(rb.velocity.x, -minVelocity_Y);
         }
@@ -156,10 +165,10 @@ public class EnemyAI : MonoBehaviour
         // Jump
         if (jumpEnabled && isGrounded && !isInAir && !isOnCoolDown && JumpCheck())
         {
-                if (isInAir) return;
-                isJumping = true;
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                StartCoroutine(JumpCoolDown());
+            if (isInAir) return;
+            isJumping = true;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            StartCoroutine(JumpCoolDown());
         }
         if (isGrounded)
         {
@@ -172,15 +181,37 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Movement
-        if (canMove && !ledgeDetected)
+        if (!isFlyingEnemy)
         {
-            rb.velocity = new Vector2(force.x, rb.velocity.y);
-            isMoving = true;
+            if (canMove && !ledgeDetected)
+            {
+                rb.velocity = new Vector2(force.x, rb.velocity.y);
+                isMoving = true;
+            }
+            else
+            {
+                isMoving = false;
+            }
         }
         else
         {
-            isMoving = false;
+            if (canMove && transform.position.y >= playerMovement.transform.position.y + abovePlayerYAxis)
+            {
+                rb.velocity = new Vector2(force.x, force.y);
+                isMoving = true;
+            }
+            else if(canMove && transform.position.y < playerMovement.transform.position.y + abovePlayerYAxis)
+            {
+                rb.velocity = new Vector2(force.x, speed);
+                isMoving = true;
+            }
+            else
+            {
+                isMoving = false;
+            }
         }
+
+
 
         // Next Waypoint
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
@@ -213,6 +244,18 @@ public class EnemyAI : MonoBehaviour
     private bool JumpCheck()
     {
         return Physics2D.OverlapCircle(jumpCheck.position, jumpDetectionRadius, GroundLayer);
+    }
+
+    private void LedgeCheck()
+    {
+        if (!ledgeCollider.IsTouchingLayers(GroundLayer) && !isFlyingEnemy)
+        {
+            ledgeDetected = true;
+        }
+        else if (ledgeCollider.IsTouchingLayers(GroundLayer) && !isFlyingEnemy)
+        {
+            ledgeDetected = false;
+        }
     }
 
     private void OnPathComplete(Path p)

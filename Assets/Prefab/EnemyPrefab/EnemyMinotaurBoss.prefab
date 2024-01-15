@@ -31,7 +31,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2496160133343277252}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 150.79, y: 2.43, z: 0.3068189}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f40e7856949444bb147d69514a585f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiAnim: {fileID: 6539991233462178861}
   attackPoint: {fileID: 2496160134313096220}
   swingAttackPoint: {fileID: 3098900783962105674}
   healthUI: {fileID: 3098900783479917143}

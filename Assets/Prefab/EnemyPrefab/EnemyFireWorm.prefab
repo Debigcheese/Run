@@ -382,10 +382,10 @@ MonoBehaviour:
   canAttack: 0
   attackDamage: 5
   attackSpeed: 0.45
-  attackDmgDelay: 0.25
+  attackDmgDelay: 0
   attackRange: 12
+  attackCooldown: 1.8
   isRangedAttacker: 1
-  rangedAttackCooldown: 1.2
   rangedProjectileDelay: 1.1
   projectileAttackPoint: {fileID: 1413254629153242654}
   projectile: {fileID: 3587414160344424002, guid: 0b2dbcec46760c741aa7a82a0b6835d1, type: 3}
@@ -419,6 +419,8 @@ MonoBehaviour:
   canMove: 1
   ledgeCheck: 1
   ledgeCollider: {fileID: 4613038579573074470}
+  isFlyingEnemy: 0
+  AbovePlayerYAxis: 4
   jumpCheck: {fileID: 6245294452928947776}
   GroundLayer:
     serializedVersion: 2
@@ -509,6 +511,7 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
+  canTakeDamage: 1
   maxHealth: 49
   currentHealth: 15
   crystalDropAmount: 20

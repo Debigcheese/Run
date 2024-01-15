@@ -991,7 +991,7 @@ MonoBehaviour:
   attackDmgDelay: 0.6
   attackRange: 0.4
   isRangedAttacker: 0
-  rangedAttackCooldown: 0
+  attackCooldown: 0.8
   rangedProjectileDelay: 0
   projectileAttackPoint: {fileID: 0}
   projectile: {fileID: 0}
@@ -1115,6 +1115,7 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 0
+  canTakeDamage: 1
   maxHealth: 5
   currentHealth: 0
   crystalDropAmount: 4

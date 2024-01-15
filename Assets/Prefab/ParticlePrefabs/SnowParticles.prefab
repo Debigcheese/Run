@@ -64,7 +64,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -7.9410553, y: -19.038366}
+  m_Offset: {x: -12.300171, y: -19.038366}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -75,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 90.018875, y: 33.361935}
+  m_Size: {x: 103.45056, y: 33.361935}
   m_EdgeRadius: 0
 --- !u!1001 &148032483574770246
 PrefabInstance:
@@ -85,16 +85,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 2498772085069548657}
     m_Modifications:
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: ShapeModule.m_Scale.x
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
-      value: 350
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: InitialModule.startSpeed.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: EmissionModule.rateOverTime.minScalar
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3417378241705458747, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: m_RootOrder
@@ -172,7 +192,23 @@ PrefabInstance:
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.59562826
+      objectReference: {fileID: 0}
+    - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
+      propertyPath: InitialModule.startSpeed.minMaxState
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}

@@ -134,11 +134,20 @@ public class Projectile : MonoBehaviour
                 if (!hurtEnemies.Contains(enemy.gameObject) && enemy != null)
                 {
                     EnemyHp enemyHp = enemy.GetComponent<EnemyHp>();
-                    if(enemyHp != null)
+                    if(enemyHp != null && !arrowProjectile)
                     {
                         enemyHp.TakeDamage(GetDamage());
                         hurtEnemies.Add(enemy.gameObject);
                         hitEnemy = true;
+                    }
+                    else
+                    {
+                        if (!hitEnemy && arrowProjectile)
+                        {
+                            enemyHp.TakeDamage(GetDamage());
+                            hurtEnemies.Add(enemy.gameObject);
+                            hitEnemy = true;
+                        }
                     }
 
                 }
@@ -154,7 +163,7 @@ public class Projectile : MonoBehaviour
             hitGround = true;
             foreach (Collider2D enemy in hitEnemies)
             {
-                if(enemy != null)
+                if(enemy != null && !arrowProjectile)
                 {
                     enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
                 }

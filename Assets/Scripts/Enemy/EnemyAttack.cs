@@ -23,10 +23,10 @@ public class EnemyAttack : MonoBehaviour
     public float attackSpeed;
     public float attackDmgDelay;
     public float attackRange;
+    public float attackCooldown;
 
     [Header("Ranged Enemy")]
     public bool isRangedAttacker = false;
-    public float rangedAttackCooldown;
     public float rangedProjectileDelay;
     public Transform projectileAttackPoint;
     public GameObject projectile;
@@ -156,6 +156,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if (inRange && canAttack)
         {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             yield return new WaitForSeconds(rangedProjectileDelay);
             if (!enemyHp.isDead)
             {
@@ -180,16 +181,15 @@ public class EnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(attackSpeed);
         isAttacking = false;
         enemyAI.canMove = true;
+        canAttack = false;
 
-        if (canAttack == false)
-        {
-            StartCoroutine(RangedAttackSpeed());
-        }
+        StartCoroutine(attackCD());
+        
     }
 
-    IEnumerator RangedAttackSpeed()
+    IEnumerator attackCD()
     {
-        yield return new WaitForSeconds(rangedAttackCooldown);
+        yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
     }
 

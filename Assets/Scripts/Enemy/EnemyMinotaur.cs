@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyMinotaur : MonoBehaviour
 {
     private Animator anim;
+    public Animator uiAnim;
     private PlayerMovement playerMovement;
     private PlayerState playerState;
     private EnemyAI enemyAI;
@@ -68,6 +69,7 @@ public class EnemyMinotaur : MonoBehaviour
         enemyHealthBar.maxValue = enemyHp.maxHealth;
         easeHealthBar.maxValue = enemyHp.maxHealth;
 
+        StartCoroutine(DiableHealthBarUIAnim());
     }
 
     // Update is called once per frame
@@ -77,6 +79,7 @@ public class EnemyMinotaur : MonoBehaviour
         anim.SetBool("isAttacking", isAttacking);
         anim.SetInteger("attackStyle", attackStyle);
         anim.SetBool("isEnraged", isEnragedAnim);
+
 
         enemyHealthBar.value = enemyHp.enemyHealthBar.value;
         easeHealthBar.value = enemyHp.easeHealthBar.value;
@@ -115,6 +118,12 @@ public class EnemyMinotaur : MonoBehaviour
         {
             waveSpawner.bossDefeated = true;
         }
+    }
+
+    private IEnumerator DiableHealthBarUIAnim()
+    {
+        yield return new WaitForSeconds(2.45f);
+        uiAnim.enabled = false;
     }
 
     private void Enraged()

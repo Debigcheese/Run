@@ -26257,6 +26257,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2953137234100997410}
     m_Modifications:
+    - target: {fileID: 303072984041015071, guid: 0aabe92ad4960d045bf2783d22805594, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 303072984041015071, guid: 0aabe92ad4960d045bf2783d22805594, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769226371405351666, guid: 0aabe92ad4960d045bf2783d22805594, type: 3}
+      propertyPath: attackRange
+      value: 1.37
+      objectReference: {fileID: 0}
     - target: {fileID: 1769226371405351667, guid: 0aabe92ad4960d045bf2783d22805594, type: 3}
       propertyPath: m_Name
       value: BOTRQSwordPrefab
@@ -26267,7 +26279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6593347142041648328, guid: 0aabe92ad4960d045bf2783d22805594, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6593347142041648328, guid: 0aabe92ad4960d045bf2783d22805594, type: 3}
       propertyPath: m_LocalPosition.y
@@ -26585,6 +26597,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4597870370205043910, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
+      propertyPath: attackRange
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 5359245771855391103, guid: 6466f1a5308d31a4e987b0d47b89e705, type: 3}
       propertyPath: m_Name
       value: PunchPrefab
@@ -26611,6 +26627,18 @@ PrefabInstance:
     - target: {fileID: 894082710292327475, guid: 3b991a6ff7c3d4b4897473be58b6ae57, type: 3}
       propertyPath: m_Name
       value: AnchorSwordPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211853385638879711, guid: 3b991a6ff7c3d4b4897473be58b6ae57, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211853385638879711, guid: 3b991a6ff7c3d4b4897473be58b6ae57, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944853093235887760, guid: 3b991a6ff7c3d4b4897473be58b6ae57, type: 3}
+      propertyPath: attackRange
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 5721158348903995912, guid: 3b991a6ff7c3d4b4897473be58b6ae57, type: 3}
       propertyPath: m_RootOrder
@@ -26754,6 +26782,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2953137234100997410}
     m_Modifications:
+    - target: {fileID: 308301258908728633, guid: 1ba281a07c13c164c86431ec16644057, type: 3}
+      propertyPath: attackRange
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1134142774387452321, guid: 1ba281a07c13c164c86431ec16644057, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -26802,6 +26834,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SteelSword
       objectReference: {fileID: 0}
+    - target: {fileID: 5767340733904343670, guid: 1ba281a07c13c164c86431ec16644057, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5767340733904343670, guid: 1ba281a07c13c164c86431ec16644057, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.34
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ba281a07c13c164c86431ec16644057, type: 3}
 --- !u!1 &620808137953396616 stripped
@@ -26821,6 +26861,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2953137234100997410}
     m_Modifications:
+    - target: {fileID: 3370127440006458561, guid: 846a78c809b31754b93ff92afb296d1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 3370127440006458561, guid: 846a78c809b31754b93ff92afb296d1f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637831296110518572, guid: 846a78c809b31754b93ff92afb296d1f, type: 3}
+      propertyPath: attackRange
+      value: 1.33
+      objectReference: {fileID: 0}
     - target: {fileID: 3637831296110518573, guid: 846a78c809b31754b93ff92afb296d1f, type: 3}
       propertyPath: m_Name
       value: RageBladeSwordPrefab
@@ -27022,6 +27074,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2953137234100997410}
     m_Modifications:
+    - target: {fileID: 517582785753754994, guid: 39589dd41532d5e4d8d9eb7c9e7e0cec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 517582785753754994, guid: 39589dd41532d5e4d8d9eb7c9e7e0cec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.34
+      objectReference: {fileID: 0}
     - target: {fileID: 1988312340510236830, guid: 39589dd41532d5e4d8d9eb7c9e7e0cec, type: 3}
       propertyPath: m_Name
       value: LastSwordPrefab
