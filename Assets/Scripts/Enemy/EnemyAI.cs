@@ -80,13 +80,13 @@ public class EnemyAI : MonoBehaviour
         if (isFlyingEnemy)
         {
             abovePlayerYAxisTimer += Time.deltaTime;
-            if(abovePlayerYAxisTimer >= 3f && abovePlayerYAxisBool)
+            if(abovePlayerYAxisTimer >= 1.5f && abovePlayerYAxisBool)
             {
                 abovePlayerYAxis += .5f;
                 abovePlayerYAxisBool = false;
                 abovePlayerYAxisTimer = 0f;
             }
-            if (abovePlayerYAxisTimer >= 3f && !abovePlayerYAxisBool)
+            if (abovePlayerYAxisTimer >= 1.5f && !abovePlayerYAxisBool)
             {
                 abovePlayerYAxis -= .5f;
                 abovePlayerYAxisBool = true;
@@ -197,12 +197,12 @@ public class EnemyAI : MonoBehaviour
         {
             if (canMove && transform.position.y >= playerMovement.transform.position.y + abovePlayerYAxis)
             {
-                rb.velocity = new Vector2(force.x, force.y);
+                rb.velocity = new Vector2(force.x, force.y / 2.5f);
                 isMoving = true;
             }
-            else if(canMove && transform.position.y < playerMovement.transform.position.y + abovePlayerYAxis)
+            else if (canMove && transform.position.y < playerMovement.transform.position.y + abovePlayerYAxis)
             {
-                rb.velocity = new Vector2(force.x, speed);
+                rb.velocity = new Vector2(force.x, speed / 2.5f);
                 isMoving = true;
             }
             else

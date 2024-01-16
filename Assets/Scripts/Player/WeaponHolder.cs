@@ -7,6 +7,9 @@ public class WeaponHolder : MonoBehaviour
     // References
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
+    private MeleeWeapon[] meleeWeapon;
+    private BowWeapon[] bowWeapon;
+    private MagicWeapon[] magicWeapon;
 
     public GameObject[] weapons;
     public GameObject currentWeapon;
@@ -37,6 +40,9 @@ public class WeaponHolder : MonoBehaviour
 
         playerAttack = GetComponent<PlayerAttack>();
         playerMovement = GetComponentInParent<PlayerMovement>();
+        meleeWeapon = GetComponentsInChildren<MeleeWeapon>();
+        bowWeapon = GetComponentsInChildren<BowWeapon>();
+        magicWeapon = GetComponentsInChildren<MagicWeapon>();
 
         int currentWeaponIndex = PlayerPrefs.GetInt("CurrentWeapon", 0);
         int secondWeaponIndex = PlayerPrefs.GetInt("SecondWeapon", 0);
@@ -106,9 +112,41 @@ public class WeaponHolder : MonoBehaviour
         //swap weapons
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("Fire2")) && !isSwappingWeapons)
         {
+            //player
+            playerAttack.canAttack = true;
+            playerAttack.isAttacking = false;
+
+            //melee
+            foreach (MeleeWeapon m in meleeWeapon)
+            {
+                m.attackCounter *= -1f;
+                m.isMeleeAttacking = false;
+            }
+            //bow
+            foreach (BowWeapon b in bowWeapon)
+            {
+                b.canDisableBowCharge = false;
+                b.bowCharge = false;
+                b.isBowAttacking = false;
+                b.isBowShooting = false;
+                b.count = 0;
+                b.damageMultiplier = 1;
+            }
+            //magic
+            foreach (MagicWeapon m in magicWeapon)
+            {
+                m.isMagicAttacking = false;
+            }
+
+            GameObject temp = currentWeapon;
+            currentWeapon.SetActive(false);
+            currentWeapon = secondWeapon;
+            currentWeapon.SetActive(true);
+            secondWeapon = temp;
+
             AudioManager.Instance.PlaySound("playerswitchweapons");
-            isSwappingWeapons = true;
             StartCoroutine(SwitchWeapon());
+            isSwappingWeapons = true;
         }
 
         if(currentWeapon == null)
@@ -191,15 +229,7 @@ public class WeaponHolder : MonoBehaviour
 
     public IEnumerator SwitchWeapon()
     {
-        yield return new WaitForSeconds(.1f);
-        playerAttack.isAttacking = false;
-        playerAttack.canAttack = true;
-
-        GameObject temp = currentWeapon;
-        currentWeapon.SetActive(false);
-        currentWeapon = secondWeapon;
-        currentWeapon.SetActive(true);
-        secondWeapon = temp; 
+        yield return new WaitForSeconds(.75f);
 
         isSwappingWeapons = false;
     }

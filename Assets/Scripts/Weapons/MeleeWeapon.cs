@@ -50,12 +50,12 @@ public class MeleeWeapon : MonoBehaviour
         playerState.GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
 
         //cancels melee
-        if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
-        {
-            attackCounter *= -1f;
-            isMeleeAttacking = false;
-            playerAttack.isAttacking = false;
-        }
+        //if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
+        //{
+        //    attackCounter *= -1f;
+        //    isMeleeAttacking = false;
+        //    playerAttack.isAttacking = false;
+        //}
 
         if(playerState.currentStamina <= staminaPerAttack)
         {

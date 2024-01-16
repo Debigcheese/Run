@@ -64,14 +64,14 @@ public class PlayerState : MonoBehaviour
     public Slider staminaBar;
     public float maxStamina = 100;
     public float currentStamina;
-    public float staminaRegenTimer = 0.07f;
+    public float staminaRegenTimer = 0.075f;
 
     [Space]
     [Header("Mana")]
     public Slider manaBar;
     public float maxMana = 100;
     public float currentMana;
-    public float manaRegenTimer = 0.07f;
+    public float manaRegenTimer = 0.075f;
 
     [Header("Crystals")]
     public int totalCrystalAmount;
@@ -114,7 +114,9 @@ public class PlayerState : MonoBehaviour
 
         currentHealth = maxHealth;
         HealthBar.maxValue = maxHealth;
-        easeHealthBar.value = HealthBar.value;
+        HealthBar.value = maxHealth;
+        easeHealthBar.maxValue = maxHealth;
+        easeHealthBar.value = maxHealth;
 
         originalColor = bloodyScreen.color;
         transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0);

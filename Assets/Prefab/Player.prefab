@@ -14665,7 +14665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2953137234097189982}
   m_LocalRotation: {x: 0, y: 0, z: 0.30070576, w: 0.953717}
-  m_LocalPosition: {x: 0.0760022, y: 0.49, z: 0}
+  m_LocalPosition: {x: 0.0760022, y: 0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20480,11 +20480,11 @@ MonoBehaviour:
   staminaBar: {fileID: 0}
   maxStamina: 100
   currentStamina: 0
-  staminaRegenTimer: 0.07
+  staminaRegenTimer: 0.075
   manaBar: {fileID: 0}
   maxMana: 100
   currentMana: 0
-  manaRegenTimer: 0.07
+  manaRegenTimer: 0.075
   totalCrystalAmount: 0
   tempCrystalAmount: 0
   crystalsLostOnDeath: 0
@@ -26940,6 +26940,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2953137234100997410}
     m_Modifications:
+    - target: {fileID: 6398071669258999510, guid: eb4850209bb350a4a96d9d5d84ca5e92, type: 3}
+      propertyPath: minDmg
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398071669258999510, guid: eb4850209bb350a4a96d9d5d84ca5e92, type: 3}
+      propertyPath: maxDmgMinusOne
+      value: 57
+      objectReference: {fileID: 0}
     - target: {fileID: 6398071669258999511, guid: eb4850209bb350a4a96d9d5d84ca5e92, type: 3}
       propertyPath: m_Name
       value: Brand'sStaffMagicPrefab
@@ -27007,6 +27015,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2953137234100997410}
     m_Modifications:
+    - target: {fileID: 939899059270306588, guid: b673b0ca1deedc945b1f88f86c2e8fb3, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1875
+      objectReference: {fileID: 0}
+    - target: {fileID: 939899059270306588, guid: b673b0ca1deedc945b1f88f86c2e8fb3, type: 3}
+      propertyPath: m_Size.y
+      value: 0.9375
+      objectReference: {fileID: 0}
     - target: {fileID: 939899059494043212, guid: b673b0ca1deedc945b1f88f86c2e8fb3, type: 3}
       propertyPath: m_RootOrder
       value: 6

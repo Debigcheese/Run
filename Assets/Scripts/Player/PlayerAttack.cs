@@ -123,7 +123,7 @@ public class PlayerAttack : MonoBehaviour
         }
         //if attacking and not in air, slow ms
 
-        if (isAttacking && !playerMovement.isFalling && !playerMovement.isDashing && (weaponHolder.isUsingMagic || weaponHolder.isUsingRanged))
+        if (isAttacking && !playerMovement.isDashing && (weaponHolder.isUsingMagic || weaponHolder.isUsingRanged))
         {
             rb.velocity = new Vector2(playerMovement.moveDirection * rangedAttackMoveSpeed, rb.velocity.y);
         }

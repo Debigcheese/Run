@@ -47,11 +47,11 @@ public class MagicWeapon : MonoBehaviour
         playerAttack.VengeanceChangeColor(GetComponentInChildren<SpriteRenderer>());
         playerState.GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
 
-        if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
-        {
-            isMagicAttacking = false;
-            playerAttack.isAttacking = false;
-        }
+        //if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
+        //{
+        //    isMagicAttacking = false;
+        //    playerAttack.isAttacking = false;
+        //}
 
         if (playerState.currentMana < manaPerProjectile)
         {
@@ -81,7 +81,10 @@ public class MagicWeapon : MonoBehaviour
         isMagicAttacking = true;
         playerAttack.canAttack = false;
         yield return new WaitForSeconds(projectileDelay);
-        ShootProjectile(storedMousePos);
+        if (!GetComponentInParent<WeaponHolder>().isSwappingWeapons)
+        {
+            ShootProjectile(storedMousePos);
+        }
     }
 
     public void ShootProjectile(Vector3 storedMousePos)

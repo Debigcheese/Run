@@ -376,7 +376,7 @@ MonoBehaviour:
   isDead: 0
   dontInstaKill: 0
   canTakeDamage: 1
-  maxHealth: 110
+  maxHealth: 88
   currentHealth: 15
   crystalDropAmount: 21
   enemyHealthBar: {fileID: 7525528842184406324}

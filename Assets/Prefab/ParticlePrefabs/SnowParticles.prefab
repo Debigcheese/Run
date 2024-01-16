@@ -89,12 +89,20 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: ShapeModule.m_Scale.x
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: ColorModule.gradient.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
@@ -109,12 +117,20 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 88
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: InitialModule.startSpeed.minMaxState
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: EmissionModule.rateOverTime.minScalar
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3417378241705458747, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: m_RootOrder
@@ -185,7 +201,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
       propertyPath: lengthInSec
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
       propertyPath: ShapeModule.m_Scale.x
@@ -197,7 +213,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 3
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 88
       objectReference: {fileID: 0}
     - target: {fileID: 728706189623405075, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b

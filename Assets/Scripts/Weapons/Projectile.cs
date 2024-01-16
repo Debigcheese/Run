@@ -55,9 +55,9 @@ public class Projectile : MonoBehaviour
         {
             force -= 3f;
         }
-        if (GetArrowDamageMultipler() <= 1.5f)
+        if (GetArrowDamageMultipler() <= 1.75f)
         {
-            force -= 1.5f;
+            force -= 1f;
         }
 
         rb.velocity = new Vector2(direction.x, direction.y) * force;
@@ -86,13 +86,13 @@ public class Projectile : MonoBehaviour
             {
                 rb.gravityScale += arrowGravity * 2.5f * Time.deltaTime;
             }
-            if (GetArrowDamageMultipler() <= 1.5f)
+            if (GetArrowDamageMultipler() <= 1.75f)
             {
-                rb.gravityScale += arrowGravity * 1.8f * Time.deltaTime;
+                rb.gravityScale += arrowGravity * 1.125f * Time.deltaTime;
             }
-            else if(GetArrowDamageMultipler() > 1.5f)
+            else if(GetArrowDamageMultipler() >= 2.5f)
             {
-                rb.gravityScale += ((arrowGravity * Time.deltaTime)/1.5f);
+                rb.gravityScale += arrowGravity * 1.025f * (Time.deltaTime/2);
             }
             if (arrowProjectile && (!(hitGround || hitEnemy)))
             {
