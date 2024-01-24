@@ -181,17 +181,18 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
         }
 
-        if (rb.velocity.y > 0 && !coll.onGround && isJumpPressed)
+        if (rb.velocity.y > 0 && !coll.onGround && !coll.onWall && isJumpPressed)
         {
             isJumping = true;
             isWallSliding = false;
         }
-        else if (rb.velocity.y < 0 && !isWallSliding && !coll.onGround)
+        else if (rb.velocity.y < 0 && !isWallSliding && !coll.onWall && !coll.onGround)
         {
             isWallSliding = false;
             isFalling = true;
             isJumpPressed = false;
         }
+
         if(dashCDImage.fillAmount != 0)
         {
             dashTimer += Time.deltaTime;
@@ -383,6 +384,7 @@ public class PlayerMovement : MonoBehaviour
     private void WallJump()
     {
         AudioManager.Instance.PlaySound("playerjump");
+        isJumping = false;
         isJumping = true;
         StartCoroutine(DisableMovement(.12f));
         isWallJumping = true;

@@ -99,17 +99,18 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4177414082118476308}
+  - component: {fileID: 4177414082118476305}
+  - component: {fileID: 8060098965989923850}
+  - component: {fileID: 4177414082118476307}
+  - component: {fileID: 4177414082118476306}
   - component: {fileID: 4177414082118476319}
   - component: {fileID: 4177414082118476304}
-  - component: {fileID: 4177414082118476305}
-  - component: {fileID: 4177414082118476306}
-  - component: {fileID: 4177414082118476307}
+  - component: {fileID: 4319847001489860982}
   - component: {fileID: 4177414082118476318}
   - component: {fileID: 4177414082118476317}
-  - component: {fileID: 8060098965989923850}
   m_Layer: 8
   m_Name: Chest
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,62 +132,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4177414082118476319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4177414082118476309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1830263547dc9fd4d8d99fde330ae187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropCrystalSwitch: 1
-  dropObjSwitch: 0
-  objToDrop: {fileID: 0}
-  chestOpenAnim: {fileID: 4253680260168401292, guid: 9ddc4c1ce9047f543b1d1d356e72fc8a, type: 3}
-  chestIsHurt: 0
-  chestIsOpen: 0
-  isWaveChest: 0
-  showWaveChest: 0
-  chestHitSFX:
-  - chesthit0
-  - chesthit1
-  - chesthit2
-  - chesthit3
-  chestOpenSFX: chestopen
---- !u!114 &4177414082118476304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4177414082118476309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c45ca62c59e802f46b75452ba038226a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemySFX:
-    EnemyHurtSFX: 
-    EnemyDieSFX: 
-    EnemyAttackSFX: 
-  EnemyKnockback:
-    m_PersistentCalls:
-      m_Calls: []
-  countWaveEnemies: 0
-  isDead: 0
-  dontInstaKill: 1
-  maxHealth: 10
-  currentHealth: 0
-  crystalDropAmount: 21
-  enemyHealthBar: {fileID: 4177414082061767756}
-  easeHealthBar: {fileID: 4177414083925114677}
-  damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}
-  maxOffsetDistanceX: 0.1
-  maxOffsetDistanceY: 0.2
 --- !u!212 &4177414082118476305
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -239,6 +184,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &8060098965989923850
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177414082118476309}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &4177414082118476307
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177414082118476309}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.75, y: 1.25}
+    newSize: {x: 1.75, y: 1.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.75, y: 1.25}
+  m_EdgeRadius: 0
 --- !u!95 &4177414082118476306
 Animator:
   serializedVersion: 5
@@ -260,32 +252,84 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &4177414082118476307
-BoxCollider2D:
+--- !u!114 &4177414082118476319
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4177414082118476309}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.75, y: 1.25}
-    newSize: {x: 1.75, y: 1.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.75, y: 1.25}
-  m_EdgeRadius: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1830263547dc9fd4d8d99fde330ae187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropCrystalSwitch: 1
+  dropObjSwitch: 0
+  objToDrop: {fileID: 0}
+  chestOpenAnim: {fileID: 4253680260168401292, guid: 9ddc4c1ce9047f543b1d1d356e72fc8a, type: 3}
+  chestIsHurt: 0
+  chestIsOpen: 0
+  isWaveChest: 0
+  showWaveChest: 0
+  chestHitSFX:
+  - chesthit0
+  - chesthit1
+  - chesthit2
+  - chesthit3
+  chestOpenSFX: chestopen
+--- !u!114 &4177414082118476304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177414082118476309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45ca62c59e802f46b75452ba038226a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySFX:
+    EnemyHurtSFX: 
+    EnemyDieSFX: 
+    EnemyAttackSFX: 
+  EnemyKnockback:
+    m_PersistentCalls:
+      m_Calls: []
+  countWaveEnemies: 0
+  isDead: 0
+  dontInstaKill: 1
+  canTakeDamage: 1
+  maxHealth: 10
+  currentHealth: 0
+  crystalDropAmount: 21
+  enemyHealthBar: {fileID: 4177414082061767756}
+  easeHealthBar: {fileID: 4177414083925114677}
+  damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}
+  maxOffsetDistanceX: 0.1
+  maxOffsetDistanceY: 0.2
+--- !u!114 &4319847001489860982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177414082118476309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8efa43267fcfb40abf555394e4b721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KnockbackForceX: 0
+  KnockbackForceY: 3
+  delay: 0.15
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDone:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4177414082118476318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +351,7 @@ MonoBehaviour:
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0.3
   jumpCheckOffset: 0.1
+  minVelocity_Y: 8
   waveSpawnerEnemies: 0
   followEnabled: 0
   jumpEnabled: 0
@@ -314,6 +359,10 @@ MonoBehaviour:
   isInAir: 0
   directionLookEnabled: 0
   canMove: 0
+  ledgeCheck: 0
+  ledgeCollider: {fileID: 0}
+  isFlyingEnemy: 0
+  abovePlayerYAxis: 4
   jumpCheck: {fileID: 4177414082118476308}
   GroundLayer:
     serializedVersion: 2
@@ -322,6 +371,7 @@ MonoBehaviour:
   isMoving: 0
   lookingRight: 0
   detected: 0
+  tookDamageDetect: 0
   enemyDetectionAnim: {fileID: 4177414083032525182}
   startOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &4177414082118476317
@@ -374,27 +424,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   dashFlashOn: 0
---- !u!50 &8060098965989923850
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4177414082118476309}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &4177414082170807602
 GameObject:
   m_ObjectHideFlags: 0

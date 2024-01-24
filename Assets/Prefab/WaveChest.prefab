@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1185612646640914275}
   m_Layer: 8
   m_Name: WaveChest
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
   countWaveEnemies: 0
   isDead: 0
   dontInstaKill: 1
+  canTakeDamage: 1
   maxHealth: 16
   currentHealth: 0
   crystalDropAmount: 57
@@ -203,7 +204,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -240,6 +241,7 @@ MonoBehaviour:
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0.3
   jumpCheckOffset: 0.1
+  minVelocity_Y: 8
   waveSpawnerEnemies: 0
   followEnabled: 0
   jumpEnabled: 0
@@ -247,6 +249,10 @@ MonoBehaviour:
   isInAir: 0
   directionLookEnabled: 0
   canMove: 0
+  ledgeCheck: 0
+  ledgeCollider: {fileID: 0}
+  isFlyingEnemy: 0
+  abovePlayerYAxis: 4
   jumpCheck: {fileID: 5068303147253789052}
   GroundLayer:
     serializedVersion: 2
@@ -255,6 +261,7 @@ MonoBehaviour:
   isMoving: 0
   lookingRight: 0
   detected: 0
+  tookDamageDetect: 0
   enemyDetectionAnim: {fileID: 5068303148506069526}
   startOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &5068303147253789045

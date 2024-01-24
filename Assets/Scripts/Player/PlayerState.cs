@@ -129,12 +129,18 @@ public class PlayerState : MonoBehaviour
         staminaBar.maxValue = maxStamina;
         currentStamina = maxStamina;
 
-        transform.position = new Vector3(respawnPosition.transform.position.x, respawnPosition.transform.position.y, respawnPosition.transform.position.z);
-
         isRegeningHpParticles.SetActive(false);
-        
+
+        StartCoroutine(RespawnPos());
+
         InvokeRepeating("RefillMana", 0f, PlayerPrefs.GetFloat("ManaRegen", manaRegenTimer));
         InvokeRepeating("RefillStamina", 0f, PlayerPrefs.GetFloat("StaminaRegen", staminaRegenTimer));
+    }
+
+    private IEnumerator RespawnPos()
+    {
+        yield return new WaitForSeconds(0.05f);
+        transform.position = new Vector3(respawnPosition.transform.position.x, respawnPosition.transform.position.y, respawnPosition.transform.position.z);
     }
 
     // Update is called once per frame
@@ -422,7 +428,7 @@ public class PlayerState : MonoBehaviour
                 currentHealth -= damageAmount;
                 ShowDamagePopup(damageAmount);
             }
-            FindObjectOfType<CameraShake>().ShakeCameraFlex(2f, 0.25f);
+            FindObjectOfType<CameraShake>().ShakeCameraFlex(3f, 0.25f);
             AudioManager.Instance.PlaySound("playerhurt");
             damageFlash.CallDamageFlash();
             bloodyScreenActivateOnFeedback = true;

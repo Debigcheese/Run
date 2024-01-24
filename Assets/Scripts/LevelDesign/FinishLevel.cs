@@ -44,7 +44,9 @@ public class FinishLevel : MonoBehaviour
         if (LevelUnlocked == 4) 
         {
             PlayerPrefs.SetInt("mustShopAfterLevel", 2);
+            PlayerPrefs.SetInt("RespawnPos", 0);
         }
+        PlayerPrefs.Save();
         SceneManager.LoadScene(1);
     }
 

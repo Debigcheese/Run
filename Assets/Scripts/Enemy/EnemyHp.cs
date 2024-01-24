@@ -35,9 +35,10 @@ public class EnemyHp : MonoBehaviour
     public UnityEvent EnemyKnockback;
     public bool countWaveEnemies;
     public bool isDead = false;
-    private bool tookDamage;
+    public bool tookDamage;
     public bool dontInstaKill = false;
     public bool canTakeDamage = true;
+    public bool dontDestroyOnDeath = false;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -50,6 +51,7 @@ public class EnemyHp : MonoBehaviour
     private float lerpSpeed = 0.01f;
     private RectTransform rectHealthbar;
     private RectTransform rectEaseHealthbar;
+    public GameObject EnemyUi;
 
     [Space]
     [Header("DamagePopup")]
@@ -151,7 +153,7 @@ public class EnemyHp : MonoBehaviour
     {
         yield return new WaitForSeconds(.01f);
         tookDamage = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         enemyAi.tookDamageDetect = false;
     }
 
@@ -166,19 +168,24 @@ public class EnemyHp : MonoBehaviour
         isDead = true;
         coll.enabled = false;
         enemyAi.canMove = false;
-        if(GetComponent<EnemyMinotaur>() != null)
+        if (GetComponent<EnemyMinotaur>() != null)
         {
             GetComponent<EnemyMinotaur>().canAttack = false;
         }
         else
         {
-            enemyAttack.canAttack = false;
+            if (enemyAttack != null)
+                enemyAttack.canAttack = false;
         }
         rb.simulated = false;
 
+        if (EnemyUi != null)
+            EnemyUi.SetActive(false);
         yield return new WaitForSeconds(.66f);
+
         //Instantiate(isDeadParticles, transform.position, Quaternion.identity);
-        Destroy(this.gameObject);
+        if (!dontDestroyOnDeath)
+            Destroy(this.gameObject);
     }
 
     protected void ShowDamagePopup(float damageAmount)

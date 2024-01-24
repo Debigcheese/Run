@@ -5,6 +5,7 @@ using Cinemachine;
 
 public class CameraShake : MonoBehaviour
 {
+    public static CameraShake Instance;
     private CinemachineVirtualCamera cinemachineVC;
     public float shakeIntensity = 1f;
     public float frequencyGain = 1f;

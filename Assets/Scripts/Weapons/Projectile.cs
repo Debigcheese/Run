@@ -90,7 +90,7 @@ public class Projectile : MonoBehaviour
             {
                 rb.gravityScale += arrowGravity * 1.125f * Time.deltaTime;
             }
-            else if(GetArrowDamageMultipler() >= 2.5f)
+            else if(GetArrowDamageMultipler() >= 2.25f)
             {
                 rb.gravityScale += arrowGravity * 1.025f * (Time.deltaTime/2);
             }

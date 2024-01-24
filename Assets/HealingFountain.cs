@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealingFountain : MonoBehaviour
 {
     private PlayerState playerState;
+    public int respawnPosIndex;
     public GameObject respawnPos;
     public GameObject checkPointParticles; private bool checkPoint = false;
     public GameObject eKey;
@@ -17,6 +18,10 @@ public class HealingFountain : MonoBehaviour
         if(eKey != null)
         {
             eKey.SetActive(false);
+        }
+        if (PlayerPrefs.GetInt("RespawnPos",0) == respawnPosIndex)
+        {
+            playerState.respawnPosition.transform.position = respawnPos.transform.position;
         }
     }
 
@@ -38,6 +43,7 @@ public class HealingFountain : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            PlayerPrefs.SetInt("RespawnPos", respawnPosIndex);
             playerState.respawnPosition.transform.position = respawnPos.transform.position;
             fountainInRange = true;
 
@@ -50,6 +56,7 @@ public class HealingFountain : MonoBehaviour
                     AudioManager.Instance.PlaySound("healingfountaincheckpoint");
                 }
             }
+            PlayerPrefs.Save();
         }
     }
 

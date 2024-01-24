@@ -106,7 +106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
-      value: 400
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
@@ -126,11 +126,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: EmissionModule.rateOverTime.minScalar
-      value: 300
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 117171922120487073, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841402021723524907, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841402021723524907, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1382259729
       objectReference: {fileID: 0}
     - target: {fileID: 3417378241705458747, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: m_RootOrder
@@ -142,7 +150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3417378241705458747, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.6
+      value: 17.7
       objectReference: {fileID: 0}
     - target: {fileID: 3417378241705458747, guid: 1b97e150a7d1e1340bb422150c8f4870, type: 3}
       propertyPath: m_LocalPosition.z
@@ -278,6 +286,14 @@ PrefabInstance:
     - target: {fileID: 2652710557396051593, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229667250511140249, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
+      propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229667250511140249, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1382259729
       objectReference: {fileID: 0}
     - target: {fileID: 8083983937281336986, guid: 00c2a378c45ccc54f826b27bba0cf52e, type: 3}
       propertyPath: m_Name

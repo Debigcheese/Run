@@ -229,7 +229,7 @@ public class WeaponHolder : MonoBehaviour
 
     public IEnumerator SwitchWeapon()
     {
-        yield return new WaitForSeconds(.75f);
+        yield return new WaitForSeconds(.4f);
 
         isSwappingWeapons = false;
     }

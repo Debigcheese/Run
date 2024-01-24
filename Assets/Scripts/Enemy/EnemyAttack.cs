@@ -11,9 +11,10 @@ public class EnemyAttack : MonoBehaviour
     private Collider2D[] hitPlayersCollider;
     private RaycastHit2D[] hitPlayersRayCollider;
     public Transform attackPoint;
-    public bool useRayCast = false;
+    public Transform secondAttackPoint;
 
     [Header("Booleans")]
+    public bool useRayCast = false;
     public bool isAttacking;
     public bool inRange;
     public bool canAttack = true;
@@ -24,6 +25,14 @@ public class EnemyAttack : MonoBehaviour
     public float attackDmgDelay;
     public float attackRange;
     public float attackCooldown;
+
+    [Header("Second Attack")]
+    public bool turnOnSecondAttack = false;
+    public bool isSecondAttacking = false;
+    public bool useRayCastSecondAttack = false;
+    public float secondAttackSpeed;
+    public float secondAttackDmgDelay;
+    public float secondAttackRange;
 
     [Header("Ranged Enemy")]
     public bool isRangedAttacker = false;
@@ -47,11 +56,11 @@ public class EnemyAttack : MonoBehaviour
     {
         InvokeRepeating("AttackIfInRange", 0f, 0.6f);
 
-        if (!useRayCast)
+        if ((!useRayCast && !isSecondAttacking) || (!useRayCastSecondAttack && isSecondAttacking) )
         {
             CheckForPlayerCircle();
         }
-        else
+        else if((useRayCast && !isSecondAttacking) || (useRayCastSecondAttack && isSecondAttacking))
         {
             CheckForPlayerRayCast();
         }
@@ -59,7 +68,18 @@ public class EnemyAttack : MonoBehaviour
 
     private void CheckForPlayerCircle()
     {
-        hitPlayersCollider = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
+        if (!useRayCastSecondAttack)
+        {
+            hitPlayersCollider = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
+        }
+        else
+        {
+            if(secondAttackPoint != null)
+            {
+                hitPlayersCollider = Physics2D.OverlapCircleAll(secondAttackPoint.position, secondAttackRange);
+            }
+        }
+
 
         foreach (Collider2D hitplayer in hitPlayersCollider)
         {
@@ -79,11 +99,33 @@ public class EnemyAttack : MonoBehaviour
     {
         if (transform.position.x < playerMovement.transform.position.x)
         {
-            hitPlayersRayCollider = Physics2D.RaycastAll(attackPoint.position, Vector2.right, attackRange);
+            if (!useRayCastSecondAttack)
+            {
+                hitPlayersRayCollider = Physics2D.RaycastAll(attackPoint.position, Vector2.right, attackRange);
+            }
+            else
+            {
+                if (secondAttackPoint != null)
+                {
+                    hitPlayersRayCollider = Physics2D.RaycastAll(secondAttackPoint.position, Vector2.right, secondAttackRange);
+                }
+
+            }
+
         }
         else
         {
-            hitPlayersRayCollider = Physics2D.RaycastAll(attackPoint.position, Vector2.left, attackRange);
+            if (!useRayCastSecondAttack)
+            {
+                hitPlayersRayCollider = Physics2D.RaycastAll(attackPoint.position, Vector2.left, attackRange);
+            }
+            else
+            {
+                if (secondAttackPoint != null)
+                {
+                    hitPlayersRayCollider = Physics2D.RaycastAll(secondAttackPoint.position, Vector2.left, secondAttackRange);
+                }
+            }
         }
 
         foreach (RaycastHit2D hitplayer in hitPlayersRayCollider)
@@ -116,7 +158,19 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator AttackDmgDelay()
     {
-        yield return new WaitForSeconds(attackDmgDelay);
+        if (!isRangedAttacker)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+        if (!isSecondAttacking)
+        {
+            yield return new WaitForSeconds(attackDmgDelay);
+        }
+        else
+        {
+            yield return new WaitForSeconds(secondAttackDmgDelay);
+        }
+
         Attack();
     }
 
@@ -138,7 +192,7 @@ public class EnemyAttack : MonoBehaviour
                     playerMovement.KnockFromRight = false;
                 }
             }
-            StartCoroutine("AttackSpeed");
+            StartCoroutine(AttackSpeed());
 
             if (enemyHp.enemySFX.EnemyAttackSFX != null)
             {
@@ -178,7 +232,15 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator AttackSpeed()
     {
-        yield return new WaitForSeconds(attackSpeed);
+        if (!isSecondAttacking)
+        {
+            yield return new WaitForSeconds(attackSpeed);
+        }
+        else
+        {
+            yield return new WaitForSeconds(secondAttackSpeed);
+        }
+
         isAttacking = false;
         enemyAI.canMove = true;
         canAttack = false;
@@ -191,12 +253,25 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+
+        if (!isSecondAttacking && turnOnSecondAttack)
+        {
+            isSecondAttacking = true;
+        }
+        else if (isSecondAttacking && turnOnSecondAttack)
+        {
+            isSecondAttacking = false;
+        }
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if(secondAttackPoint != null)
+        {
+            Gizmos.DrawWireSphere(secondAttackPoint.position, secondAttackRange);
+        }
         if (useRayCast)
         {
             Gizmos.DrawRay(attackPoint.position, Vector2.right * attackRange);

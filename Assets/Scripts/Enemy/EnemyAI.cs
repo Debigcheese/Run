@@ -19,7 +19,7 @@ public class EnemyAI : MonoBehaviour
     public float jumpNodeHeightRequirement = 0.8f;
     public float jumpModifier = 0.3f;
     public float jumpCheckOffset = 0.1f;
-    private float minVelocity_Y = 8f;
+    public float minVelocity_Y = 8f;
 
     [Header("Custom Behavior")]
     public bool waveSpawnerEnemies = false;
@@ -36,6 +36,7 @@ public class EnemyAI : MonoBehaviour
     public float abovePlayerYAxis = 4f;
     private float abovePlayerYAxisTimer = 0f;
     private bool abovePlayerYAxisBool = false;
+    private bool checkIfStuck = false;
 
     [Header("Jump Behavior")]
     public Transform jumpCheck;
@@ -112,6 +113,10 @@ public class EnemyAI : MonoBehaviour
         {
             detectionRadius = originalDetectionRadius;
             enemyDetectionAnim.SetActive(false);
+            if (isFlyingEnemy)
+            {
+                rb.velocity = Vector2.zero;
+            }
             isMoving = false;
             detected = false;
         }
@@ -123,9 +128,9 @@ public class EnemyAI : MonoBehaviour
             PathFollow();
             detectionRadius = 40;
         }
-        
+
         //minimum velocity_Y so enemies dont fall through map
-        if(rb.velocity.y <= -minVelocity_Y && !isFlyingEnemy)
+        if (rb.velocity.y <= -minVelocity_Y && !isFlyingEnemy)
         {
             rb.velocity = new Vector2(rb.velocity.x, -minVelocity_Y);
         }
@@ -195,18 +200,23 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            if (canMove && transform.position.y >= playerMovement.transform.position.y + abovePlayerYAxis)
+            if (canMove && transform.position.y >= playerMovement.transform.position.y + abovePlayerYAxis && detected && !checkIfStuck)
             {
                 rb.velocity = new Vector2(force.x, force.y / 2.5f);
                 isMoving = true;
             }
-            else if (canMove && transform.position.y < playerMovement.transform.position.y + abovePlayerYAxis)
+            else if (canMove && transform.position.y < playerMovement.transform.position.y + abovePlayerYAxis && detected && !checkIfStuck)
             {
                 rb.velocity = new Vector2(force.x, speed / 2.5f);
                 isMoving = true;
             }
+            else if(canMove && detected && checkIfStuck)
+            {
+                rb.velocity = new Vector2(-force.x /2, force.y * 1.5f);
+            }
             else
             {
+                rb.velocity = Vector2.zero;
                 isMoving = false;
             }
         }
@@ -244,6 +254,14 @@ public class EnemyAI : MonoBehaviour
     private bool JumpCheck()
     {
         return Physics2D.OverlapCircle(jumpCheck.position, jumpDetectionRadius, GroundLayer);
+        checkIfStuck = true;
+        StartCoroutine(CheckIfStuck());
+    }
+
+    private IEnumerator CheckIfStuck()
+    {
+        yield return new WaitForSeconds(.8f);
+        checkIfStuck = false;
     }
 
     private void LedgeCheck()

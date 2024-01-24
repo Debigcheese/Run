@@ -175,7 +175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 932302870493419091}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.787, y: -0.673, z: 0}
+  m_LocalPosition: {x: -1.287, y: -0.512, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1082,9 +1082,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6817137572367693735}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.14, y: 1.17, z: 0.3068189}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6817137572662904212}
@@ -1107,6 +1107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 0
+  hasSecondAttack: 0
 --- !u!114 &6817137572367693742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1120,15 +1121,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 6817137572597347199}
+  secondAttackPoint: {fileID: 0}
   useRayCast: 1
   isAttacking: 0
   inRange: 0
   canAttack: 0
-  attackDamage: 4
+  attackDamage: 7
   attackSpeed: 1.1
   attackDmgDelay: 0.42
   attackRange: 0.5
   attackCooldown: 1.2
+  turnOnSecondAttack: 0
+  isSecondAttacking: 0
+  useRayCastSecondAttack: 0
+  secondAttackSpeed: 0
+  secondAttackDmgDelay: 0
+  secondAttackRange: 0
   isRangedAttacker: 0
   rangedProjectileDelay: 0
   projectileAttackPoint: {fileID: 0}
@@ -1149,11 +1157,12 @@ MonoBehaviour:
   detectionRadius: 10
   pathUpdateSeconds: 0.5
   nextWaypointDistance: 1
-  speed: 7.5
+  speed: 5.8
   jumpForce: 12
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0.3
   jumpCheckOffset: 0.1
+  minVelocity_Y: 8
   waveSpawnerEnemies: 0
   followEnabled: 1
   jumpEnabled: 1
@@ -1161,8 +1170,10 @@ MonoBehaviour:
   isInAir: 0
   directionLookEnabled: 1
   canMove: 1
-  ledgeCheck: 1
+  ledgeCheck: 0
   ledgeCollider: {fileID: 5411033430915034386}
+  isFlyingEnemy: 0
+  abovePlayerYAxis: 4
   jumpCheck: {fileID: 932302870493419088}
   GroundLayer:
     serializedVersion: 2
@@ -1232,9 +1243,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySFX:
-    EnemyHurtSFX: enemycrabhurt
-    EnemyDieSFX: enemycrabdie
-    EnemyAttackSFX: enemycrabattack
+    EnemyHurtSFX: enemywolfhurt
+    EnemyDieSFX: enemywolfdie
+    EnemyAttackSFX: enemywolfattack
   EnemyKnockback:
     m_PersistentCalls:
       m_Calls:
@@ -1252,13 +1263,16 @@ MonoBehaviour:
         m_CallState: 2
   countWaveEnemies: 0
   isDead: 0
+  tookDamage: 0
   dontInstaKill: 0
   canTakeDamage: 1
-  maxHealth: 182
+  dontDestroyOnDeath: 0
+  maxHealth: 185
   currentHealth: 15
-  crystalDropAmount: 21
+  crystalDropAmount: 35
   enemyHealthBar: {fileID: 1750575473910462276}
   easeHealthBar: {fileID: 1750575472413074219}
+  EnemyUi: {fileID: 0}
   damagePopupPrefab: {fileID: 4733479131821472654, guid: e8a214b5eb9fd2a4394ec9a7f7b72c4a, type: 3}
   maxOffsetDistanceX: 0.1
   maxOffsetDistanceY: 0.2

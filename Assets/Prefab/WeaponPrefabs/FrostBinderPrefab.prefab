@@ -193,5 +193,7 @@ MonoBehaviour:
   canDisableBowCharge: 0
   minDmg: 40
   maxDmgMinusOne: 90
-  staminaPerCharge: 33
+  staminaPerCharge: 38
   doubleProjectile: 0
+  damageMultiplier: 1
+  count: 0

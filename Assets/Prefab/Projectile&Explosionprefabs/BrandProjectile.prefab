@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ed4afc4dd6430be4c9310e8054605d71, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &6937318359799747236
@@ -161,7 +161,7 @@ MonoBehaviour:
     m_Bits: 64
   explosionPrefab: {fileID: 7510996345560304740, guid: d9a6f9832a15eff43ab8fc79a80ba6d0, type: 3}
   hitGroundDontExplode: 0
-  force: 17
+  force: 15.5
   radiusCollider: 1.7
   radiusColliderOffset: {x: 0.25, y: 0, z: 0}
   rotationOff: 180
@@ -205,6 +205,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.22829819, y: 0.013091207}
+  m_Offset: {x: 0.25454473, y: 0.040920258}
   serializedVersion: 2
-  m_Radius: 0.31842256
+  m_Radius: 0.45917606

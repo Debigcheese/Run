@@ -121,6 +121,10 @@ public class BowWeapon : MonoBehaviour
             {
                 count++;
                 damageMultiplier += (count*0.25f);
+                if(damageMultiplier >= 2.5f)
+                {
+                    damageMultiplier = 2.25f;
+                }
                 timeElapsed = 0f;
             }
         }

@@ -140,7 +140,7 @@ public class EnemyMinotaur : MonoBehaviour
         anim.SetFloat("movementSpeed", 1f);
 
         AudioManager.Instance.PlaySound(spawnSFX);
-        FindObjectOfType<CameraShake>().ShakeCameraFlex(4.5f, 3f);
+        FindObjectOfType<CameraShake>().ShakeCameraFlex(4f, 2.5f);
 
         StartCoroutine(StopEnragedAnim());
     }

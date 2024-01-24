@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Bits: 64
   explosionPrefab: {fileID: 2377003033386128686, guid: 1b5399393a08a4e4d82233c1a780a81c, type: 3}
   hitGroundDontExplode: 0
-  force: 17
+  force: 16
   radiusCollider: 1.8
   radiusColliderOffset: {x: -0.03, y: 0, z: 0}
   rotationOff: 0

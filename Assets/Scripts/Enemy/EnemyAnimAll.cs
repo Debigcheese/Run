@@ -10,6 +10,7 @@ public class EnemyAnimAll : MonoBehaviour
     private EnemyAttack enemyAttack;
 
     public bool isMoving;
+    public bool hasSecondAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,10 @@ public class EnemyAnimAll : MonoBehaviour
     {
         anim.SetBool("isMoving", isMoving);
         anim.SetBool("isAttacking", enemyAttack.isAttacking);
+        if (hasSecondAttack)
+        {
+            anim.SetBool("isSecondAttacking", enemyAttack.isSecondAttacking);
+        }
 
         if (enemyAI.isMoving)
         {

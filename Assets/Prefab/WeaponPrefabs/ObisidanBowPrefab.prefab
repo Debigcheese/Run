@@ -195,3 +195,5 @@ MonoBehaviour:
   maxDmgMinusOne: 10
   staminaPerCharge: 35
   doubleProjectile: 1
+  damageMultiplier: 1
+  count: 0
