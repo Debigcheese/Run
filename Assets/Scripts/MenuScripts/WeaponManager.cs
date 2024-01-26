@@ -254,6 +254,7 @@ public class WeaponManager : MonoBehaviour
             {
                 int weaponCost = pages[pageNumber].weaponCost[btnIndex];
                 PlayerPrefs.SetInt("TotalCrystal", totalCrystalAmount - weaponCost);
+                PlayerPrefs.SetInt("CurrentWeapon", pages[pageNumber].weaponIndex[btnIndex]);
 
                 ownedWeapons.Add(pages[pageNumber].weaponIndex[btnIndex]);
 
