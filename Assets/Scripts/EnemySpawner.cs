@@ -94,6 +94,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     int randomSpawnPoint = Random.Range(0, spawnPoints.Length);
                     Instantiate(enemiesSpawnConstantly[i], spawnPoints[spawnPoints.Length - i - 1].transform.position, Quaternion.identity, spawnPoints[randomSpawnPoint].transform);
+                    enemiesSpawnConstantly[i].GetComponent<EnemyAI>().waveSpawnerEnemies = true;
                     StartCoroutine(EnemySpawnAnim(spawnPoints.Length - i - 1));
                     AudioManager.Instance.PlaySound("enemyspawn");
                 }
@@ -111,6 +112,7 @@ public class EnemySpawner : MonoBehaviour
                 for (int i = 0; i < enemiesSpawnDirect.Length; i++)
                 {
                     Instantiate(enemiesSpawnDirect[i], spawnPoints[spawnPoints.Length - i - 1].transform.position, Quaternion.identity, spawnPoints[spawnPoints.Length - i - 1].transform);
+                    enemiesSpawnDirect[i].GetComponent<EnemyAI>().waveSpawnerEnemies = true;
                     spawnCollider.size = new Vector2(spawnCollider.size.x + 7, spawnCollider.size.y + 7);
                     StartCoroutine(EnemySpawnAllAnim());
                     AudioManager.Instance.PlaySound("enemyspawn");
@@ -170,26 +172,7 @@ public class EnemySpawner : MonoBehaviour
             stopConstantSpawn = true;
             spawnCollider.size = new Vector2(spawnCollider.size.x, spawnCollider.size.y);
         }
-
-        if (collision.CompareTag("Player"))
-        {
-            foreach (GameObject spawnpoint in spawnPoints)
-            {
-                GameObject[] childObjects = new GameObject[spawnpoint.transform.childCount];
-                for (int i = 0; i < spawnpoint.transform.childCount; i++)
-                {
-                    childObjects[i] = spawnpoint.transform.GetChild(i).gameObject;
-                }
-
-                foreach (GameObject childObject in childObjects)
-                {
-                    Destroy(childObject);
-                }
-            }
-        }
     }
-
-
 
     private IEnumerator StopIsHurtAnim()
     {

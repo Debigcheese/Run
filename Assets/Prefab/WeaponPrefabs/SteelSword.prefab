@@ -192,8 +192,8 @@ MonoBehaviour:
   isMeleeAttacking: 0
   minDmg: 4
   maxDmgMinusOne: 11
-  attackRange: 1
+  attackRange: 1.4
   attackSpeed: 0.54
   staminaPerAttack: 6
-  firstSwingDmgDelay: 0.42
-  SecondSwingDmgDelay: 0.18
+  firstSwingDmgDelay: 0.35
+  SecondSwingDmgDelay: 0.16

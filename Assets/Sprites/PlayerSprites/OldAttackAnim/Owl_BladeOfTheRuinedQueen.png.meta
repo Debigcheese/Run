@@ -1,0 +1,355 @@
+fileFormatVersion: 2
+guid: d7bf8210339f0234a8bfa072f6cdf582
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 228
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45531404}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eee63693ceff454baae2edf89c41069
+      internalID: -1287588242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_1
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 227
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.47845548}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7175838976a46d4e95840541b75e6d0
+      internalID: -289246548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_2
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 228
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45404053}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2842e0281d8f0b74ab8d733447850758
+      internalID: -839697275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_3
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 228
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45413473}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2328294e6fe2c546896f8980c9865bd
+      internalID: 501721113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_4
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 226
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49561837}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45186319fa4e6244492b3a3b089636cd
+      internalID: 1914549183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_5
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 132
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45403054}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04f55715cb4a3f44cbdbd6b1e267fc9b
+      internalID: -789520226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_6
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 131
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46896714}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e1cbd7d2c35dcb488d2e53a416c2a54
+      internalID: -121576246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_7
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 132
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.44416106}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 633b81ef3add19d4b860c7f70fe155ad
+      internalID: 408810298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_8
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 132
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4511402}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9c2c23d919c7fc418fc94f9bf348ae3
+      internalID: 361995996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Owl_BladeOfTheRuinedQueen_9
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 132
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5, y: 0.453272}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0969bac9e9067e48a0a33219ff42c19
+      internalID: 2121480390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Owl_BladeOfTheRuinedQueen_0: -1287588242
+      Owl_BladeOfTheRuinedQueen_1: -289246548
+      Owl_BladeOfTheRuinedQueen_2: -839697275
+      Owl_BladeOfTheRuinedQueen_3: 501721113
+      Owl_BladeOfTheRuinedQueen_4: 1914549183
+      Owl_BladeOfTheRuinedQueen_5: -789520226
+      Owl_BladeOfTheRuinedQueen_6: -121576246
+      Owl_BladeOfTheRuinedQueen_7: 408810298
+      Owl_BladeOfTheRuinedQueen_8: 361995996
+      Owl_BladeOfTheRuinedQueen_9: 2121480390
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

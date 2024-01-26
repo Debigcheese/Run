@@ -159,13 +159,13 @@ MonoBehaviour:
   weaponAttackSFX: playerqueensword
   attackCounter: 1
   isMeleeAttacking: 0
-  minDmg: 23
-  maxDmgMinusOne: 41
+  minDmg: 38
+  maxDmgMinusOne: 48
   attackRange: 1
   attackSpeed: 0.43
   staminaPerAttack: 6
-  firstSwingDmgDelay: 0.2
-  SecondSwingDmgDelay: 0.1
+  firstSwingDmgDelay: 0.18
+  SecondSwingDmgDelay: 0.08
 --- !u!1 &5705141135289128867
 GameObject:
   m_ObjectHideFlags: 0
