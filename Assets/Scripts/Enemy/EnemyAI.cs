@@ -20,6 +20,8 @@ public class EnemyAI : MonoBehaviour
     public float jumpModifier = 0.3f;
     public float jumpCheckOffset = 0.1f;
     public float minVelocity_Y = 8f;
+    private float originalGravity = 0;
+    private float increaseGravityTimer = 0;
 
     [Header("Custom Behavior")]
     public bool waveSpawnerEnemies = false;
@@ -43,6 +45,10 @@ public class EnemyAI : MonoBehaviour
     public LayerMask GroundLayer;
     public float jumpDetectionRadius = 10f;
 
+    public bool groundCheckerBool;
+    public Transform groundChecker;
+    public float groundCheckerRadius = 1f;
+
     [Space]
     public bool isMoving;
     public bool lookingRight;
@@ -54,6 +60,7 @@ public class EnemyAI : MonoBehaviour
 
     private Path path;
     private int currentWaypoint = 0;
+    public bool enemyIsGrounded = false;
     [SerializeField] public RaycastHit2D isGrounded;
     Seeker seeker;
     Rigidbody2D rb;
@@ -72,6 +79,7 @@ public class EnemyAI : MonoBehaviour
         isOnCoolDown = false;
         enemyDetectionAnim.SetActive(false);
         originalDetectionRadius = detectionRadius;
+        originalGravity = rb.gravityScale;
 
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
@@ -161,7 +169,7 @@ public class EnemyAI : MonoBehaviour
 
         // See if colliding with anything
         startOffset = transform.position - new Vector3(0f, GetComponent<Collider2D>().bounds.extents.y + jumpCheckOffset, transform.position.z);
-        isGrounded = Physics2D.Raycast(startOffset, -Vector3.up, 0.05f);
+        isGrounded = Physics2D.Raycast(startOffset, -Vector3.up, .1f);
 
         // Direction Calculation
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
@@ -221,7 +229,20 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
+        if (groundChecker != null)
+        {
+            groundCheckerBool = Physics2D.OverlapCircle(groundChecker.position, groundCheckerRadius, GroundLayer);
 
+            if (!isFlyingEnemy && !groundCheckerBool)
+            {
+                increaseGravityTimer += Time.deltaTime;
+                if (increaseGravityTimer >= 1f && rb.gravityScale == originalGravity)
+                {
+                    rb.gravityScale = originalGravity + 6f;
+                    StartCoroutine(ResetGravity());
+                }
+            }
+        }
 
         // Next Waypoint
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
@@ -244,6 +265,13 @@ public class EnemyAI : MonoBehaviour
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
         }
+    }
+
+    private IEnumerator ResetGravity()
+    {
+        yield return new WaitForSeconds(1f);
+        rb.gravityScale = originalGravity;
+        increaseGravityTimer = 0f;
     }
 
     private bool TargetInDistance()
@@ -299,5 +327,12 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
         Gizmos.color = new Color(1, 1, 1, 0.5f);
         Gizmos.DrawWireSphere(jumpCheck.position, jumpDetectionRadius);
+        Gizmos.color = new Color(1, 1, 1, 0.5f);
+        if(groundChecker != null)
+        {
+                    Gizmos.DrawWireSphere(groundChecker.position, groundCheckerRadius);
+        }
+
+
     }
 }
