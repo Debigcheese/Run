@@ -117,7 +117,7 @@ public class PlayerAttack : MonoBehaviour
         
 
         //cant attack when ledgeclimb,wallslide,walljump,hurt
-        if (playerMovement.isClimbingLedge || playerMovement.isWallSliding || playerMovement.isWallJumping)
+        if (playerMovement.isClimbingLedge || playerMovement.isWallSliding)
         {
             isAttacking = false;
         }

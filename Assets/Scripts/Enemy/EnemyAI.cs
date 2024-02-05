@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Physics")]
     public float nextWaypointDistance = 3f;
-    public float speed = 200f, jumpForce = 100f;
+    public float speed = 200f, jumpForce = 100f, originalSpeed;
     public float jumpNodeHeightRequirement = 0.8f;
     public float jumpModifier = 0.3f;
     public float jumpCheckOffset = 0.1f;
@@ -80,6 +80,7 @@ public class EnemyAI : MonoBehaviour
         enemyDetectionAnim.SetActive(false);
         originalDetectionRadius = detectionRadius;
         originalGravity = rb.gravityScale;
+        originalSpeed = speed;
 
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
@@ -105,7 +106,11 @@ public class EnemyAI : MonoBehaviour
 
         if (ledgeCheck)
         {
-            LedgeCheck();
+            if(ledgeCollider != null)
+            {
+                LedgeCheck();
+            }
+
         }
 
         targetPos = target.position;
@@ -176,7 +181,7 @@ public class EnemyAI : MonoBehaviour
         Vector2 force = direction * speed;
 
         // Jump
-        if (jumpEnabled && isGrounded && !isInAir && !isOnCoolDown && JumpCheck())
+        if (jumpEnabled && isGrounded && !isInAir && !isOnCoolDown && JumpCheck() && jumpCheck != null)
         {
             if (isInAir) return;
             isJumping = true;
@@ -238,6 +243,7 @@ public class EnemyAI : MonoBehaviour
                 increaseGravityTimer += Time.deltaTime;
                 if (increaseGravityTimer >= 1f && rb.gravityScale == originalGravity)
                 {
+                    speed = 0f;
                     rb.gravityScale = originalGravity + 6f;
                     StartCoroutine(ResetGravity());
                 }
@@ -272,6 +278,7 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(1f);
         rb.gravityScale = originalGravity;
         increaseGravityTimer = 0f;
+        speed = originalSpeed;
     }
 
     private bool TargetInDistance()
@@ -326,7 +333,11 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = new Color(1, 1, 1, 0.5f);
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
         Gizmos.color = new Color(1, 1, 1, 0.5f);
-        Gizmos.DrawWireSphere(jumpCheck.position, jumpDetectionRadius);
+        if(jumpCheck != null)
+        {
+            Gizmos.DrawWireSphere(jumpCheck.position, jumpDetectionRadius);
+        }
+
         Gizmos.color = new Color(1, 1, 1, 0.5f);
         if(groundChecker != null)
         {

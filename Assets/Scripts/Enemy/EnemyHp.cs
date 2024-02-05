@@ -39,6 +39,7 @@ public class EnemyHp : MonoBehaviour
     public bool dontInstaKill = false;
     public bool canTakeDamage = true;
     public bool dontDestroyOnDeath = false;
+    public float destroyEnemyOnDeathTimer = 0.66f;
 
     [Header("Balancing")]
     public int maxHealth = 100;
@@ -133,7 +134,11 @@ public class EnemyHp : MonoBehaviour
                     }
                     StartCoroutine(Die());
                 }
-                EnemyKnockback.Invoke();
+                if (GetComponent<EnemyIceBoss>() == null || !GetComponent<EnemyIceBoss>().longAttackDisableKnockback) 
+                {
+                    EnemyKnockback.Invoke();
+                }
+
                 damageFlash.CallDamageFlash();
                 ShowDamagePopup(damageAmount);
                 StartCoroutine(CanTakeDamage());
@@ -181,9 +186,8 @@ public class EnemyHp : MonoBehaviour
 
         if (EnemyUi != null)
             EnemyUi.SetActive(false);
-        yield return new WaitForSeconds(.66f);
+        yield return new WaitForSeconds(destroyEnemyOnDeathTimer);
 
-        //Instantiate(isDeadParticles, transform.position, Quaternion.identity);
         if (!dontDestroyOnDeath)
             Destroy(this.gameObject);
     }

@@ -9,8 +9,10 @@ public class EnemySpawner : MonoBehaviour
     private EnemyHp enemyHp;
 
     [SerializeField] private bool mustEliminateToProceed = false;
+    [SerializeField] private bool killEnemiesWhenDestroyed = true;
     [SerializeField] private float spawnTimer = 0f;
     [SerializeField] private float spawnDelay = 8f;
+    [SerializeField] private float extraTimeToSpawn = 1f;
     [SerializeField] private GameObject doorBoundary;
     [SerializeField] private Collider2D[] doorColliders;
 
@@ -28,6 +30,11 @@ public class EnemySpawner : MonoBehaviour
     private bool isHurtAnim;
     private BoxCollider2D spawnCollider;
 
+    [Space]
+    [Header("BossSpawners")]
+    [SerializeField] public bool spawnedByBoss = false;
+    [SerializeField] public bool spawnerDestroyed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,15 +42,20 @@ public class EnemySpawner : MonoBehaviour
         spawnCollider = GetComponent<BoxCollider2D>();
         spawnTimer = spawnDelay;
         anim = GetComponent<Animator>();
+        anim.SetBool("isSpawning", true);
 
-        if (mustEliminateToProceed)
+        if(doorBoundary != null)
         {
-            doorBoundary.SetActive(true);
+            if (mustEliminateToProceed)
+            {
+                doorBoundary.SetActive(true);
+            }
+            else
+            {
+                doorBoundary.SetActive(false);
+            }
         }
-        else
-        {
-            doorBoundary.SetActive(false);
-        }
+        StartCoroutine(IsSpawning());
     }
 
     // Update is called once per frame
@@ -51,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyHp.isDead)
         {
-            if (mustEliminateToProceed)
+            if (mustEliminateToProceed && doorBoundary != null)
             {
                 doorBoundary.GetComponent<Animator>().SetBool("WaveDoorOpen", true);
                 foreach (Collider2D c in doorColliders)
@@ -62,17 +74,25 @@ public class EnemySpawner : MonoBehaviour
             anim.SetBool("isDead", true);
             skullLight.enabled = false;
 
-            foreach (GameObject spawnpoint in spawnPoints)
+            if (killEnemiesWhenDestroyed)
             {
-                GameObject[] childObjects = new GameObject[spawnpoint.transform.childCount];
-                for (int i = 0; i < childObjects.Length; i++)
+                foreach (GameObject spawnpoint in spawnPoints)
                 {
-                    childObjects[i] = spawnpoint.transform.GetChild(i).gameObject;
+                    GameObject[] childObjects = new GameObject[spawnpoint.transform.childCount];
+                    for (int i = 0; i < childObjects.Length; i++)
+                    {
+                        childObjects[i] = spawnpoint.transform.GetChild(i).gameObject;
+                    }
+                    foreach (GameObject childObject in childObjects)
+                    {
+                        Destroy(childObject);
+                    }
                 }
-                foreach (GameObject childObject in childObjects)
-                {
-                    Destroy(childObject);
-                }
+            }
+
+            if (spawnedByBoss)
+            {
+                spawnerDestroyed = true;
             }
         }
         if (enemyHp.tookDamage)
@@ -107,7 +127,7 @@ public class EnemySpawner : MonoBehaviour
         if(startConstantSpawnAfterDelay && !startConstantSpawn && !enemyHp.isDead)
         {
             spawnTimer -= Time.deltaTime;
-            if(spawnTimer <= spawnDelay - 1f)
+            if(spawnTimer <= spawnDelay - extraTimeToSpawn)
             {
                 for (int i = 0; i < enemiesSpawnDirect.Length; i++)
                 {
@@ -179,5 +199,11 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(.4f);
         isHurtAnim = false;
         anim.SetBool("isHurt", false);
+    }
+
+    private IEnumerator IsSpawning()
+    {
+        yield return new WaitForSeconds(2.33f);
+        anim.SetBool("isSpawning", false);
     }
 }

@@ -5,65 +5,79 @@ using UnityEngine;
 public class FallingBlock : MonoBehaviour
 {
     private Animator anim;
-    private Rigidbody2D rb;
-    private Collider2D blockCollider;
-    public GameObject fallingBlock;
-    private Vector3 startPos;
-    public bool startFallingAnim;
-    public float timeBeforeFalling = 2f;
-    public float fallingSpeed;
-    public float timeToMakeNewBlock;
-    private float timer = 0;
+    public Collider2D[] blockCollider;
+
+    private bool shakeStarted = false;
+    private bool cancelShake = false;
+    public float startShake = 3f;
+    public float respawnCooldown = 8f;
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        startPos = transform.position;
-        blockCollider = GetComponent<Collider2D>();
-        blockCollider.enabled = true;
+        anim = GetComponentInChildren<Animator>();
+        for(int i = 0; i< blockCollider.Length; i++)
+        {
+            blockCollider[0].enabled = true;
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        anim.SetBool("startFallingAnim", startFallingAnim);
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        if(blockCollider[0].IsTouchingLayers(LayerMask.GetMask("Player")) && !shakeStarted)
         {
             StartCoroutine(BlockShake());
-
+        }
+        else if(!blockCollider[0].IsTouchingLayers(LayerMask.GetMask("Player")))
+        {
+            cancelShake = true;
         }
     }
 
     private IEnumerator BlockShake()
     {
-        
-        yield return new WaitForSeconds(timeBeforeFalling);
-        startFallingAnim = true;
-        anim.Play("FallingBlock");
+        shakeStarted = true;
+        cancelShake = false;
+        yield return new WaitForSeconds(startShake);
 
-        rb.constraints = RigidbodyConstraints2D.None;
-        timer += Time.deltaTime;
-        rb.velocity = new Vector2(rb.velocity.x, -fallingSpeed * timer);
+        if (!cancelShake)
+        {
+            anim.SetBool("ShakeBlock", true);
 
-        StartCoroutine(MakeNewBlock());
-    }
+            yield return new WaitForSeconds(2f);
+            anim.SetBool("ShakeBlock", false);
+            anim.SetBool("FallBlock", true);
 
-    private IEnumerator MakeNewBlock()
-    {
-        yield return new WaitForSeconds(2f);
-        blockCollider.enabled = false;
-        yield return new WaitForSeconds(timeToMakeNewBlock);
-        startFallingAnim = false;
-        Instantiate(fallingBlock, startPos, Quaternion.identity, transform.parent);
-        Destroy(this.gameObject);
+            yield return new WaitForSeconds(.5f);
+
+            for (int i = 0; i < blockCollider.Length; i++)
+            {
+                blockCollider[i].enabled = false;
+            }
+
+            yield return new WaitForSeconds(.5f);
+            anim.SetBool("FallBlock", false);
+
+            yield return new WaitForSeconds(respawnCooldown);
+            anim.SetBool("RespawnBlock", true);
+
+            yield return new WaitForSeconds(1f);
+            anim.SetBool("RespawnBlock", false);
+            shakeStarted = false;
+
+            for (int i = 0; i < blockCollider.Length; i++)
+            {
+                blockCollider[i].enabled = true;
+            }
+        }
+        else
+        {
+            cancelShake = true;
+            shakeStarted = false;
+        }
+
+
     }
 }

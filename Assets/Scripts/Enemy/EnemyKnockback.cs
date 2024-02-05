@@ -12,6 +12,7 @@ public class EnemyKnockback : MonoBehaviour
     [Space]
     [Header("Knockback")]
     [SerializeField] private float KnockbackForceX = 0f;
+    [SerializeField] private float decreaseknockbackForceX = 0f;
     [SerializeField] private float KnockbackForceY = 3f;
     [SerializeField] private float delay = 0.15f;
 
@@ -33,17 +34,16 @@ public class EnemyKnockback : MonoBehaviour
 
     public void PlayFeedBack()
     {
-
         StopAllCoroutines();
         OnBegin.Invoke();
         Vector2 direction = (transform.position - playerMovement.transform.position).normalized;
         Vector2 newVelocity = rb.velocity;
-        int randomForceX = Random.Range(-8, 12);
+        int randomForceX = Random.Range(8, 12);
         if (!weaponHolder.isUsingMagic || !weaponHolder.isUsingRanged)
         {
             randomForceX = Random.Range(12, 15);
         }
-        KnockbackForceX = randomForceX;
+        KnockbackForceX = randomForceX - decreaseknockbackForceX;
         newVelocity.x = direction.x * KnockbackForceX;
         newVelocity.y = rb.velocity.y + KnockbackForceY;
         rb.velocity = newVelocity;

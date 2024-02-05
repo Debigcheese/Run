@@ -12,11 +12,13 @@ public class WaveSpawner : MonoBehaviour
     private bool readyToCountDown = false;
     public bool endSpawn = false;
     public bool canPressWaveBtn;
-    public bool activateBossSpawner;
+    public bool activateForBossSpawner;
     public bool bossDefeated;
 
     public Wave[] waves;
     public int currentWaveIndex = 0;
+    public GameObject spawnPointBoss;
+    public GameObject[] spawnPointsFlying;
     public GameObject[] spawnPoints;
 
     private Collider2D[] waveBoundaries;
@@ -180,7 +182,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 wavesStarting.SetActive(true);
             }
-            else if (currentWaveIndex == waves.Length - 1 && activateBossSpawner)
+            else if (currentWaveIndex == waves.Length - 1 && activateForBossSpawner)
             {
                 AudioManager.Instance.PlaySound("nextwave");
                 bossFightText.SetActive(true);
@@ -197,9 +199,31 @@ public class WaveSpawner : MonoBehaviour
                 if (!playerState.isRespawnForSpawner)
                 {
                     int random = Random.Range(0, spawnPoints.Length);
-                    GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform.position, Quaternion.identity, spawnPoints[random].transform);
-                    enemy.GetComponent<EnemyAI>().waveSpawnerEnemies = true;
-                    enemy.GetComponent<EnemyHp>().countWaveEnemies = true;
+                    int flyingRandom = 0;
+                    if (spawnPointsFlying != null)
+                    {
+                        flyingRandom = Random.Range(0, spawnPointsFlying.Length);
+                    }
+                    GameObject enemy;
+                    if (waves[currentWaveIndex].enemies[i] != null && waves[currentWaveIndex].enemies[i].GetComponent<EnemyAI>() != null &&
+                        waves[currentWaveIndex].enemies[i].GetComponent<EnemyAI>().isFlyingEnemy && spawnPointsFlying != null)
+                    {
+                        enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPointsFlying[flyingRandom].transform.position, Quaternion.identity, spawnPoints[1].transform);
+                    }
+                    else if (waves[currentWaveIndex].enemies[i] != null && waves[currentWaveIndex].enemies[i].GetComponent<EnemyAttack>() == null && spawnPointBoss != null)
+                    {
+                        enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPointBoss.transform.position, Quaternion.identity, spawnPoints[1].transform);
+                    }
+                    else
+                    {
+                        enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[random].transform.position, Quaternion.identity, spawnPoints[random].transform);
+                    }
+
+                    if (enemy != null)
+                    {
+                        enemy.GetComponentInChildren<EnemyAI>().waveSpawnerEnemies = true;
+                        enemy.GetComponentInChildren<EnemyHp>().countWaveEnemies = true;
+                    }
 
                     yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
 
