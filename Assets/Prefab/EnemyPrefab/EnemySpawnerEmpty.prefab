@@ -367,9 +367,10 @@ MonoBehaviour:
   dontInstaKill: 0
   canTakeDamage: 1
   dontDestroyOnDeath: 1
-  maxHealth: 300
+  destroyEnemyOnDeathTimer: 0.66
+  maxHealth: 475
   currentHealth: 0
-  crystalDropAmount: 72
+  crystalDropAmount: 200
   enemyHealthBar: {fileID: 704882908188588190}
   easeHealthBar: {fileID: 704882909333080340}
   EnemyUi: {fileID: 704882908595664421}
@@ -444,6 +445,7 @@ MonoBehaviour:
   nextWaypointDistance: 3
   speed: 0
   jumpForce: 100
+  originalSpeed: 0
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0.3
   jumpCheckOffset: 0.1
@@ -464,12 +466,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   jumpDetectionRadius: 10
+  groundCheckerBool: 0
+  groundChecker: {fileID: 0}
+  groundCheckerRadius: 1
   isMoving: 0
   lookingRight: 0
   detected: 0
   tookDamageDetect: 0
   enemyDetectionAnim: {fileID: 704882908737736237}
   startOffset: {x: 0, y: 0, z: 0}
+  enemyIsGrounded: 0
 --- !u!61 &704882907579477734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -608,8 +614,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mustEliminateToProceed: 1
+  killEnemiesWhenDestroyed: 1
   spawnTimer: 0
   spawnDelay: 9
+  extraTimeToSpawn: 1
   doorBoundary: {fileID: 704882908673305299}
   doorColliders:
   - {fileID: 704882908673305303}
@@ -625,6 +633,8 @@ MonoBehaviour:
   - {fileID: 3359704025164150231, guid: 5caabf5cb16d0e14daa26945551ed01b, type: 3}
   enemiesSpawnConstantly:
   - {fileID: 3359704025164150231, guid: 5caabf5cb16d0e14daa26945551ed01b, type: 3}
+  spawnedByBoss: 0
+  spawnerDestroyed: 0
 --- !u!61 &704882907643243271
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -453,7 +453,7 @@ MonoBehaviour:
   killEnemiesWhenDestroyed: 0
   spawnTimer: 0
   spawnDelay: 13
-  extraTimeToSpawn: 1.3
+  extraTimeToSpawn: 1.1
   doorBoundary: {fileID: 0}
   doorColliders:
   - {fileID: 0}
@@ -670,6 +670,7 @@ MonoBehaviour:
   dontInstaKill: 0
   canTakeDamage: 1
   dontDestroyOnDeath: 1
+  destroyEnemyOnDeathTimer: 0.66
   maxHealth: 250
   currentHealth: 0
   crystalDropAmount: 72

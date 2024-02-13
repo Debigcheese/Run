@@ -1090,7 +1090,7 @@ MonoBehaviour:
   - {fileID: 272252874126638265}
   - {fileID: 272252873642820401}
   spawnersDestroyed: 0
-  attackDamage: 7
+  attackDamage: 8
   attackCooldown: 0.4
   attackPoint: {fileID: 4960820936458912161}
   attackRange: 1.55
@@ -1100,7 +1100,7 @@ MonoBehaviour:
   longAttackRange: 2.5
   longAttackDmgDelay: 1.1
   longAttackAnimationTime: 2
-  longAttackCooldown: 1.5
+  longAttackCooldown: 1.2
   longAttackTimer: 0
   canLongAttack: 0
   resetLongAttack: 0
@@ -1241,7 +1241,7 @@ MonoBehaviour:
   canTakeDamage: 1
   dontDestroyOnDeath: 0
   destroyEnemyOnDeathTimer: 2.35
-  maxHealth: 1200
+  maxHealth: 1600
   currentHealth: 15
   crystalDropAmount: 520
   enemyHealthBar: {fileID: 146505273264555418}

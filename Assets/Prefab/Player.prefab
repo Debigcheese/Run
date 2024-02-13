@@ -26194,6 +26194,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2456766910391004592, guid: d8988609257950b419d7ca57dd6e0613, type: 3}
+      propertyPath: minDmg
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2456766910391004592, guid: d8988609257950b419d7ca57dd6e0613, type: 3}
+      propertyPath: maxDmgMinusOne
+      value: 52
+      objectReference: {fileID: 0}
     - target: {fileID: 3306279726024558649, guid: d8988609257950b419d7ca57dd6e0613, type: 3}
       propertyPath: attackRange
       value: 1.55

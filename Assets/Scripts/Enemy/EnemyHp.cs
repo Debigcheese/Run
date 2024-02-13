@@ -85,6 +85,7 @@ public class EnemyHp : MonoBehaviour
         enemyHealthBar.maxValue = maxHealth;
         easeHealthBar.maxValue = maxHealth;
         TextMeshPro damageTextComponent = damagePopupPrefab.GetComponentInChildren<TextMeshPro>();
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
     }
 
     // Update is called once per frame
@@ -128,10 +129,6 @@ public class EnemyHp : MonoBehaviour
                 //play hurt animation
                 if (currentHealth <= 0 && !dontInstaKill)
                 {
-                    if (enemySFX.EnemyDieSFX != null)
-                    {
-                        enemySFX.PlayEnemySound(enemySFX.EnemyDieSFX);
-                    }
                     StartCoroutine(Die());
                 }
                 if (GetComponent<EnemyIceBoss>() == null || !GetComponent<EnemyIceBoss>().longAttackDisableKnockback) 
@@ -162,34 +159,46 @@ public class EnemyHp : MonoBehaviour
         enemyAi.tookDamageDetect = false;
     }
 
+    public void CallEnemyDeath()
+    {
+        StartCoroutine(Die());
+    }
+
     private IEnumerator Die()
     {
-        if (countWaveEnemies)
+        if (!isDead)
         {
-            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
-        }
-        crystalDropper.DropCrystal(crystalDropAmount);
+            if (enemySFX.EnemyDieSFX != null)
+            {
+                enemySFX.PlayEnemySound(enemySFX.EnemyDieSFX);
+            }
+            if (countWaveEnemies)
+            {
+                waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            }
+            crystalDropper.DropCrystal(crystalDropAmount);
 
-        isDead = true;
-        coll.enabled = false;
-        enemyAi.canMove = false;
-        if (GetComponent<EnemyMinotaur>() != null)
-        {
-            GetComponent<EnemyMinotaur>().canAttack = false;
-        }
-        else
-        {
-            if (enemyAttack != null)
-                enemyAttack.canAttack = false;
-        }
-        rb.simulated = false;
+            isDead = true;
+            coll.enabled = false;
+            enemyAi.canMove = false;
+            if (GetComponent<EnemyMinotaur>() != null)
+            {
+                GetComponent<EnemyMinotaur>().canAttack = false;
+            }
+            else
+            {
+                if (enemyAttack != null)
+                    enemyAttack.canAttack = false;
+            }
+            rb.simulated = false;
 
-        if (EnemyUi != null)
-            EnemyUi.SetActive(false);
-        yield return new WaitForSeconds(destroyEnemyOnDeathTimer);
+            if (EnemyUi != null)
+                EnemyUi.SetActive(false);
+            yield return new WaitForSeconds(destroyEnemyOnDeathTimer);
 
-        if (!dontDestroyOnDeath)
-            Destroy(this.gameObject);
+            if (!dontDestroyOnDeath)
+                Destroy(this.gameObject);
+        }
     }
 
     protected void ShowDamagePopup(float damageAmount)

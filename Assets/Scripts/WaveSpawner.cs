@@ -14,6 +14,7 @@ public class WaveSpawner : MonoBehaviour
     public bool canPressWaveBtn;
     public bool activateForBossSpawner;
     public bool bossDefeated;
+    private bool isBossDefeated = false;
 
     public Wave[] waves;
     public int currentWaveIndex = 0;
@@ -71,8 +72,9 @@ public class WaveSpawner : MonoBehaviour
             IterateColliders(false, true, true);
         }
 
-        if (bossDefeated)
+        if (bossDefeated && !isBossDefeated)
         {
+            isBossDefeated = true;
             KillAllEnemies();
             currentWaveIndex = waves.Length;
         }
@@ -141,7 +143,7 @@ public class WaveSpawner : MonoBehaviour
             //player dies (restart spawner)
             if (playerState.isRespawnForSpawner)
             {
-                KillAllEnemies();
+                DestroyAllEnemies();
 
                 startButton.transform.GetChild(0).gameObject.SetActive(false);
                 buttonAnim.SetBool("isPressed", false);
@@ -157,7 +159,7 @@ public class WaveSpawner : MonoBehaviour
         } 
     }
 
-    private void KillAllEnemies()
+    private void DestroyAllEnemies()
     {
         foreach (GameObject spawnpoint in spawnPoints)
         {
@@ -170,6 +172,22 @@ public class WaveSpawner : MonoBehaviour
             foreach (GameObject childObject in childObjects)
             {
                 Destroy(childObject);
+            }
+        }
+    }
+
+    private void KillAllEnemies()
+    {
+        foreach (GameObject spawnpoint in spawnPoints)
+        {
+            for (int i = 0; i < spawnpoint.transform.childCount; i++)
+            {
+                GameObject childObject = spawnpoint.transform.GetChild(i).gameObject;
+                EnemyHp enemy = childObject.GetComponent<EnemyHp>();
+                if(enemy != null)
+                {
+                    enemy.CallEnemyDeath();
+                }
             }
         }
     }
@@ -212,7 +230,7 @@ public class WaveSpawner : MonoBehaviour
                     }
                     else if (waves[currentWaveIndex].enemies[i] != null && waves[currentWaveIndex].enemies[i].GetComponent<EnemyAttack>() == null && spawnPointBoss != null)
                     {
-                        enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPointBoss.transform.position, Quaternion.identity, spawnPoints[1].transform);
+                        enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPointBoss.transform.position, Quaternion.identity, spawnPoints[0].transform);
                     }
                     else
                     {

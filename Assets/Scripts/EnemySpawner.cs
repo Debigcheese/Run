@@ -22,7 +22,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject[] enemiesSpawnDirect;
     [SerializeField] private GameObject[] enemiesSpawnConstantly;
 
-
     private bool startConstantSpawnAfterDelay = false;
     private bool startConstantSpawn = false;
     private bool stopConstantSpawn = false;
@@ -78,14 +77,14 @@ public class EnemySpawner : MonoBehaviour
             {
                 foreach (GameObject spawnpoint in spawnPoints)
                 {
-                    GameObject[] childObjects = new GameObject[spawnpoint.transform.childCount];
-                    for (int i = 0; i < childObjects.Length; i++)
+                    for (int i = 0; i < spawnpoint.transform.childCount; i++)
                     {
-                        childObjects[i] = spawnpoint.transform.GetChild(i).gameObject;
-                    }
-                    foreach (GameObject childObject in childObjects)
-                    {
-                        Destroy(childObject);
+                        GameObject childObject = spawnpoint.transform.GetChild(i).gameObject;
+                        EnemyHp enemy = childObject.GetComponent<EnemyHp>();
+                        if (enemy != null)
+                        {
+                            enemy.CallEnemyDeath();
+                        }
                     }
                 }
             }
@@ -134,7 +133,7 @@ public class EnemySpawner : MonoBehaviour
                     Instantiate(enemiesSpawnDirect[i], spawnPoints[spawnPoints.Length - i - 1].transform.position, Quaternion.identity, spawnPoints[spawnPoints.Length - i - 1].transform);
                     enemiesSpawnDirect[i].GetComponent<EnemyAI>().waveSpawnerEnemies = true;
                     spawnCollider.size = new Vector2(spawnCollider.size.x + 7, spawnCollider.size.y + 7);
-                    StartCoroutine(EnemySpawnAllAnim());
+                    StartCoroutine(EnemySpawnAnim(spawnPoints.Length - i - 1));
                     AudioManager.Instance.PlaySound("enemyspawn");
                 }
                 FindObjectOfType<CameraShake>().ShakeCameraFlex(3f, .25f);

@@ -223,6 +223,7 @@ public class EnemyIceBoss : MonoBehaviour
 
     private IEnumerator GoHide()
     {
+        enemyAI.directionLookEnabled = false;
         GetComponent<Rigidbody2D>().simulated = false;
 
         yield return new WaitForSeconds(0.55f);
@@ -254,6 +255,7 @@ public class EnemyIceBoss : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().enabled = true;
 
         yield return new WaitForSeconds(1.5f);
+        enemyAI.directionLookEnabled = true;
         isShowing = false;
         enemyAI.canMove = true;
         canAttack = true;
@@ -365,6 +367,7 @@ public class EnemyIceBoss : MonoBehaviour
 
     IEnumerator LongAttackDmgDelay()
     {
+        enemyAI.directionLookEnabled = false;
         longAttackDisableKnockback = true;
         if (!switchToSpecial)
         {
@@ -409,6 +412,7 @@ public class EnemyIceBoss : MonoBehaviour
         yield return new WaitForSeconds(longAttackAnimationTime);
         isAttacking = false;
         longAttackDisableKnockback = false;
+        enemyAI.directionLookEnabled = true;
         StartCoroutine(AttackCooldown());
     }
 
