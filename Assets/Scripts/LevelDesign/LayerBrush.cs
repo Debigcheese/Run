@@ -42,7 +42,7 @@ namespace UnityEditor.Tilemaps
                 brushTargets[i] = tilemaps[i].gameObject;
             }
         }
-        
+
         private void CacheGridLayout(GridLayout gridLayout)
         {
             if (cachedGridLayout == gridLayout)
@@ -220,7 +220,7 @@ namespace UnityEditor.Tilemaps
             {
                 if (gridLayout is Tilemap)
                 {
-                    return layerBrush.ValidateAndCacheBrushTargetsFromGridLayout(((Tilemap) gridLayout).layoutGrid);
+                    return layerBrush.ValidateAndCacheBrushTargetsFromGridLayout(((Tilemap)gridLayout).layoutGrid);
                 }
 
                 return layerBrush.ValidateAndCacheBrushTargetsFromGridLayout(gridLayout);
@@ -230,7 +230,7 @@ namespace UnityEditor.Tilemaps
 
         public override void RegisterUndo(GameObject brushTarget, GridBrushBase.Tool tool)
         {
-            if (layerBrush.brushTargets == null 
+            if (layerBrush.brushTargets == null
                 || layerBrush.brushTargets.Length == 0)
                 return;
 

@@ -218,6 +218,7 @@ public class EnemyIceBoss : MonoBehaviour
         {
             canAttack = false;
             isAttacking = false;
+            healthUI.SetActive(false);
         }
     }
 

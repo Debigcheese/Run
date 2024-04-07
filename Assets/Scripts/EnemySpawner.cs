@@ -34,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] public bool spawnedByBoss = false;
     [SerializeField] public bool spawnerDestroyed = false;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +43,9 @@ public class EnemySpawner : MonoBehaviour
         spawnTimer = spawnDelay;
         anim = GetComponent<Animator>();
         anim.SetBool("isSpawning", true);
+        Debug.Log("start");
 
-        if(doorBoundary != null)
+        if (doorBoundary != null)
         {
             if (mustEliminateToProceed)
             {
@@ -204,5 +206,6 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(2.33f);
         anim.SetBool("isSpawning", false);
+        Debug.Log("done");
     }
 }
