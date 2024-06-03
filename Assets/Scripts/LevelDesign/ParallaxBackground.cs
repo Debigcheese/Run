@@ -14,6 +14,8 @@ public class ParallaxBackground : MonoBehaviour
     private float textureUnitSizeY;
 
     public bool permaActive;
+    public bool levelSelectPermaActive;
+    public float levelSelectConstantMovement;
     [SerializeField] private bool inRangeActivate;
 
     // Start is called before the first frame update
@@ -30,6 +32,10 @@ public class ParallaxBackground : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if (levelSelectPermaActive)
+        {
+            cameraTransform.position += new Vector3(levelSelectConstantMovement, 0,0);
+        }
         if (permaActive)
         {
             inRangeActivate = true;

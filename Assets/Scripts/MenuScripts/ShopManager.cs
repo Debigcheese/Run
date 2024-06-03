@@ -11,6 +11,7 @@ public class ShopManager : MonoBehaviour
     public int equippedAbility;
     public int[] abilityIndex;
     public GameObject[] AbilitiesUI;
+    public TransitionScript transitionScript;
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +49,7 @@ public class ShopManager : MonoBehaviour
     public void LeaveShop()
     {
         AudioManager.Instance.PlaySound("uibutton");
-        FindObjectOfType<TransitionScript>().TransitionStart();
+        transitionScript.TransitionStart();
         StartCoroutine(LoadLevelSelect());
     }
 

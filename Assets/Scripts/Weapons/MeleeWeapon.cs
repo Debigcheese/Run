@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
-    private WeaponHolder weaponHolder;
     private PlayerAttack playerAttack;
     private PlayerState playerState;
     private Animator weaponAnimator;
@@ -36,8 +34,6 @@ public class MeleeWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = GetComponentInParent<PlayerMovement>();
-        weaponHolder = GetComponentInParent<WeaponHolder>();
         playerState = GetComponentInParent<PlayerState>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
@@ -48,14 +44,6 @@ public class MeleeWeapon : MonoBehaviour
     {
         playerAttack.VengeanceChangeColor(GetComponentInChildren<SpriteRenderer>());
         playerState.GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
-
-        //cancels melee
-        //if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
-        //{
-        //    attackCounter *= -1f;
-        //    isMeleeAttacking = false;
-        //    playerAttack.isAttacking = false;
-        //}
 
         if(playerState.currentStamina <= staminaPerAttack)
         {
@@ -73,7 +61,7 @@ public class MeleeWeapon : MonoBehaviour
             Attack();
         }
 
-        if (!playerAttack.isAttacking )
+        if (!playerAttack.isAttacking)
         {
             attackCounterTimer += Time.deltaTime;
             float delay = 1.2f;
@@ -139,7 +127,6 @@ public class MeleeWeapon : MonoBehaviour
                 enemyHp.TakeDamage(roundedDamage);
             }
         }
-
     }
 
     IEnumerator MeleeCD()
@@ -155,7 +142,6 @@ public class MeleeWeapon : MonoBehaviour
     {
         if (attackPoint == null)
             return;
-
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
 
     }

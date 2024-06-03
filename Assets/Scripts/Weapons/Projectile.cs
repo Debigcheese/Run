@@ -27,6 +27,7 @@ public class Projectile : MonoBehaviour
     [Header("Arrow")]
     public bool arrowProjectile;
     public float arrowGravity = 0.01f;
+    private float decreaseArrowGravity = 0f;
     public float arrowGravityDelay = 2f;
     private float timer;
     private float dmgMultiplier;
@@ -59,8 +60,12 @@ public class Projectile : MonoBehaviour
         {
             force -= 1f;
         }
+        else if (GetArrowDamageMultipler() >= 2.25f)
+        {
+            decreaseArrowGravity = 1.025f;
+        }
 
-        rb.velocity = new Vector2(direction.x, direction.y) * force;
+        rb.velocity = direction * force;
 
         
         if (!arrowProjectile)
@@ -94,6 +99,7 @@ public class Projectile : MonoBehaviour
             {
                 rb.gravityScale += arrowGravity * 1.025f * (Time.deltaTime/2);
             }
+
             if (arrowProjectile && (!(hitGround || hitEnemy)))
             {
                 float rot = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
@@ -119,7 +125,6 @@ public class Projectile : MonoBehaviour
         {
             rb.simulated = false;
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -167,14 +172,13 @@ public class Projectile : MonoBehaviour
                 {
                     enemy.GetComponent<EnemyHp>().TakeDamage(GetDamage());
                 }
-
             }
 
             if (!arrowProjectile)
             {
                 BeforeExplosion();
             }
-            // Destroy the projectile when it collides with the ground layer
+
             if(!(transform.position.x > FindObjectOfType<PlayerMovement>().transform.position.x + 25 || transform.position.x < FindObjectOfType<PlayerMovement>().transform.position.x - 25))
             {
                 AudioManager.Instance.PlaySound(GetHitSound());
@@ -191,12 +195,7 @@ public class Projectile : MonoBehaviour
         renderer.enabled = false;
         rb.velocity = Vector2.zero;
 
-
-        if(hitGroundDontExplode && hitGround)
-        {
-           
-        }
-        else
+        if(!(hitGroundDontExplode && hitGround))
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
@@ -249,10 +248,10 @@ public class Projectile : MonoBehaviour
     {
         dmgMultiplier = damageMultiplier;
     }
+
     public float GetArrowDamageMultipler()
     {
         return dmgMultiplier;
-
     }
 
     private void OnDrawGizmos()

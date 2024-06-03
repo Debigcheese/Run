@@ -43,7 +43,6 @@ public class EnemySpawner : MonoBehaviour
         spawnTimer = spawnDelay;
         anim = GetComponent<Animator>();
         anim.SetBool("isSpawning", true);
-        Debug.Log("start");
 
         if (doorBoundary != null)
         {
@@ -145,19 +144,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator EnemySpawnAllAnim()
-    {
-        for (int i = 0; i < spawnPoints.Length; i++)
-        {
-            spawnPoints[spawnPoints.Length - i - 1].GetComponent<Animator>().SetBool("isEnemySpawning", true);
-        }
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < spawnPoints.Length; i++)
-        {
-            spawnPoints[spawnPoints.Length - i - 1].GetComponent<Animator>().SetBool("isEnemySpawning", false);
-        }
-    }
-
     private IEnumerator EnemySpawnAnim(int spawnPoint)
     {
         spawnPoints[spawnPoint].GetComponent<Animator>().SetBool("isEnemySpawning", true);
@@ -170,7 +156,6 @@ public class EnemySpawner : MonoBehaviour
         anim.SetBool("changeSkullIntensity", true);
         yield return new WaitForSeconds(1f);
         anim.SetBool("changeSkullIntensity", false);
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

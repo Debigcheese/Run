@@ -68,11 +68,13 @@ public class BowWeapon : MonoBehaviour
 
         if (playerState.currentStamina < staminaPerCharge)
         {
+            playerAttack.insufficientEnergyAttack = true;
             playerAttack.stopAttacking = true;
             playerState.lowMana = true;
         }
-        else
+        else if(!playerAttack.isAttacking)
         {
+            playerAttack.insufficientEnergyAttack = false;
             playerState.lowMana = false;
         }
 

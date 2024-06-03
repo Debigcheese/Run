@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MagicWeapon : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
-    private WeaponHolder weaponHolder;
     private PlayerState playerState;
     private PlayerAttack playerAttack;
     private Animator weaponAnimator;
@@ -34,8 +32,6 @@ public class MagicWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = GetComponentInParent<PlayerMovement>();
-        weaponHolder = GetComponentInParent<WeaponHolder>();
         playerState = GetComponentInParent<PlayerState>();
         playerAttack = GetComponentInParent<PlayerAttack>();
         weaponAnimator = transform.Find("weaponAnim").GetComponent<Animator>();
@@ -46,12 +42,6 @@ public class MagicWeapon : MonoBehaviour
     {
         playerAttack.VengeanceChangeColor(GetComponentInChildren<SpriteRenderer>());
         playerState.GuardianChangeColor(GetComponentInChildren<SpriteRenderer>());
-
-        //if (weaponHolder.isSwappingWeapons || playerMovement.isDashing)
-        //{
-        //    isMagicAttacking = false;
-        //    playerAttack.isAttacking = false;
-        //}
 
         if (playerState.currentMana < manaPerProjectile)
         {
