@@ -10,6 +10,7 @@ public class LevelSelectBackgroundMoving : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] private int level = 0;
     [SerializeField] private bool isSwitchingLevelBackground = false;
+    [SerializeField] private int levelsUnlocked;
 
     [SerializeField] GameObject[] backgrounds;
 
@@ -17,6 +18,7 @@ public class LevelSelectBackgroundMoving : MonoBehaviour
     void Start()
     {
         level = PlayerPrefs.GetInt("LevelBackground", 0);
+        levelsUnlocked = PlayerPrefs.GetInt("LevelsUnlocked", 3);
 
         for (int i = 0; i < backgrounds.Length; i++)
         {
@@ -38,11 +40,16 @@ public class LevelSelectBackgroundMoving : MonoBehaviour
 
     public void SetIsHoveringLevel(int getLevel)
     {
-        if (level != getLevel && !isSwitchingLevelBackground)
+
+        if (level != getLevel  && !isSwitchingLevelBackground )
         {
             level = getLevel;
-            PlayerPrefs.SetInt("LevelBackground", level);
-            StartCoroutine(SetBackground());
+
+            if(level <= levelsUnlocked)
+            {
+                PlayerPrefs.SetInt("LevelBackground", level);
+                StartCoroutine(SetBackground());
+            }
         }
     }
 
