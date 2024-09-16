@@ -65,6 +65,8 @@ public class Projectile : MonoBehaviour
             decreaseArrowGravity = 1.025f;
         }
 
+        rb.gravityScale = decreaseArrowGravity;
+
         rb.velocity = direction * force;
 
         

@@ -30,7 +30,7 @@ public class EnemyAnimAll : MonoBehaviour
             anim.SetBool("isSecondAttacking", enemyAttack.isSecondAttacking);
         }
 
-        if (enemyAI.isMoving)
+        if (GetComponent<Rigidbody2D>().velocity.x != 0 || (enemyAI.isFlyingEnemy && GetComponent<Rigidbody2D>().velocity.y != 0))
         {
             isMoving = true;
         }

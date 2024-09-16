@@ -500,6 +500,7 @@ public class PlayerState : MonoBehaviour
         waitColorChange = false;
         bloodyScreen.color = transparentColor;
         bloodyScreenActivateOnFeedback = false;
+        bloodyScreen.enabled = false;
     }
 
     public void ReduceStamina(float staminaToReduce)

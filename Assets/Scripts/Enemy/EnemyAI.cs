@@ -1,6 +1,7 @@
 using System.Collections;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class EnemyAI : MonoBehaviour
     public bool detected = false;
     public bool tookDamageDetect;
     public GameObject enemyDetectionAnim;
+    public Light2D EnemyLight;
 
     [SerializeField] Vector3 startOffset;
 
@@ -78,6 +80,11 @@ public class EnemyAI : MonoBehaviour
         isInAir = false;
         isOnCoolDown = false;
         enemyDetectionAnim.SetActive(false);
+        if (EnemyLight != null)
+        {
+            EnemyLight.enabled = false;
+        }
+
         originalDetectionRadius = detectionRadius;
         originalGravity = rb.gravityScale;
         originalSpeed = speed;
@@ -120,6 +127,12 @@ public class EnemyAI : MonoBehaviour
             detectionRadius = (originalDetectionRadius * 1.3f);
             detected = true;
             enemyDetectionAnim.SetActive(true);
+
+            if (EnemyLight != null)
+            {
+                EnemyLight.enabled = true;
+            }
+
             PathFollow();
         }
         else
@@ -289,15 +302,15 @@ public class EnemyAI : MonoBehaviour
     private bool JumpCheck()
     {
         return Physics2D.OverlapCircle(jumpCheck.position, jumpDetectionRadius, GroundLayer);
-        checkIfStuck = true;
-        StartCoroutine(CheckIfStuck());
+        //checkIfStuck = true;
+        //StartCoroutine(CheckIfStuck());
     }
 
-    private IEnumerator CheckIfStuck()
-    {
-        yield return new WaitForSeconds(.8f);
-        checkIfStuck = false;
-    }
+    //private IEnumerator CheckIfStuck()
+    //{
+    //    yield return new WaitForSeconds(.8f);
+    //    checkIfStuck = false;
+    //}
 
     private void LedgeCheck()
     {

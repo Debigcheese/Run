@@ -26,7 +26,13 @@ public class EnemyAttack : MonoBehaviour
     public float attackRange;
     public float attackCooldown;
 
+    [Header("Double Attack")]
+    //attacks two times in one attack anim
+    public bool turnOnDoubleAttack = false;
+    public float DoubleAttackDmgDelay;
+
     [Header("Second Attack")]
+    //toggle one attack after first attack is finished
     public bool turnOnSecondAttack = false;
     public bool isSecondAttacking = false;
     public bool useRayCastSecondAttack = false;
@@ -148,7 +154,7 @@ public class EnemyAttack : MonoBehaviour
         if (inRange)
         {
             enemyAI.canMove = false;
-            if (!isAttacking )
+            if (!isAttacking && canAttack)
             {
                 isAttacking = true;
                 StartCoroutine("AttackDmgDelay");
@@ -192,7 +198,15 @@ public class EnemyAttack : MonoBehaviour
                     playerMovement.KnockFromRight = false;
                 }
             }
-            StartCoroutine(AttackSpeed());
+            if (turnOnDoubleAttack)
+            {
+                StartCoroutine(DoubleAttack());
+            }
+            else
+            {
+                StartCoroutine(AttackSpeed());
+            }
+
 
             if (enemyHp.enemySFX.EnemyAttackSFX != null)
             {
@@ -204,6 +218,34 @@ public class EnemyAttack : MonoBehaviour
             StartCoroutine(RangedAttack());
         }
         
+    }
+
+    private IEnumerator DoubleAttack()
+    {
+     
+        yield return new WaitForSeconds(DoubleAttackDmgDelay);
+
+        if (inRange)
+        {
+            playerState.TakeDamage(attackDamage);
+            //knockback the player
+            playerMovement.KBCounter = playerMovement.KBTotalTime;
+            if (playerMovement.transform.position.x <= transform.position.x)
+            {
+                playerMovement.KnockFromRight = true;
+            }
+            if (playerMovement.transform.position.x >= transform.position.x)
+            {
+                playerMovement.KnockFromRight = false;
+            }
+
+            if (enemyHp.enemySFX.EnemyAttackSFX != null)
+            {
+                enemyHp.enemySFX.PlayEnemySound(enemyHp.enemySFX.EnemyAttackSFX);
+            }
+        }
+
+        StartCoroutine(AttackSpeed());
     }
 
     private IEnumerator RangedAttack()

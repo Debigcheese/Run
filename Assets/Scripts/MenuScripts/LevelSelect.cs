@@ -7,6 +7,7 @@ using TMPro;
 
 public class LevelSelect : MonoBehaviour
 {
+    public LevelSelectBackgroundMoving lvlSelectBGMoving;
     public Animator transitionAnim;
     public Animator[] letterAnim;
     public Animator[] LockAnim;
@@ -30,7 +31,7 @@ public class LevelSelect : MonoBehaviour
         StartCoroutine(EndTransition());
         levelsUnlocked = PlayerPrefs.GetInt("LevelsUnlocked", 3);
         keyUnlocked = PlayerPrefs.GetInt("isUnlocked", 3);
-
+        lvlSelectBGMoving = FindObjectOfType<LevelSelectBackgroundMoving>();
 
         for (int i = 0; i < letterAnim.Length; i++)
         {
@@ -80,19 +81,22 @@ public class LevelSelect : MonoBehaviour
 
     public IEnumerator LoadLevel(int level)
     {
-        if (levelsUnlocked >= level && (mustShopAfterLevel == 1 || mustShopAfterLevel == 3))
+        if (!lvlSelectBGMoving.isSwitchingLevelBackground)
         {
-            letterAnim[level - 3].SetBool("LetterOpen", true);
-            AudioManager.Instance.PlaySound("uibuttonturnpage");
+            if (levelsUnlocked >= level && (mustShopAfterLevel == 1 || mustShopAfterLevel == 3))
+            {
+                letterAnim[level - 3].SetBool("LetterOpen", true);
+                AudioManager.Instance.PlaySound("uibuttonturnpage");
 
-            transitionImage.SetActive(true);
-            transitionAnim.SetBool("TransitionStart", true);
-            yield return new WaitForSeconds(transitionDuration);
-            SceneManager.LoadScene(level);
-        }
-        else
-        {
-            AudioManager.Instance.PlaySound("uibuttonwrong");
+                transitionImage.SetActive(true);
+                transitionAnim.SetBool("TransitionStart", true);
+                yield return new WaitForSeconds(transitionDuration);
+                SceneManager.LoadScene(level);
+            }
+            else
+            {
+                AudioManager.Instance.PlaySound("uibuttonwrong");
+            }
         }
     }
 

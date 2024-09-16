@@ -251,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
-
+        
         CheckForLedge();
         
         GetComponent<BetterJump>().enabled = true;
